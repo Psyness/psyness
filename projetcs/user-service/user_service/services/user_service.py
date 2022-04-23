@@ -7,7 +7,7 @@ class UserService:
         self._user_repository = user_repository
 
     async def save(self, provider: str, username: str):
-        return await self._user_repository.save(username, provider)
+        return await self._user_repository.save(provider, username)
 
     async def get(self, provider: str, username: str):
         return await self._user_repository.get(provider, username)
