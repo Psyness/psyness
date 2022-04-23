@@ -26,6 +26,6 @@ async def login_callback(request: Request,
                          user_client: UserClient = Depends(Provide[Container.user_client]),
                          settings: Settings = Depends(Provide[Container.settings])):
     oauth_user_info = await google_client.get_user_info(request)
-    user = await user_client.save_or_get('GOOGLE', oauth_user_info)
+    user = await user_client.save_or_get('GOOGLE', oauth_user_info['email'])
     request.session['user'] = user
     return RedirectResponse(settings.frontend_url)

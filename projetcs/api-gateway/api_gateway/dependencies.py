@@ -8,7 +8,6 @@ from configs.settings import Settings
 
 
 class Container(containers.DeclarativeContainer):
-    wiring_config = containers.WiringConfiguration(modules=["routes"])
     settings = providers.Singleton(
         Settings
     )
