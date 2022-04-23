@@ -1,17 +1,18 @@
 users = {}
 
 
-async def save(provider: str, username: str):
-    key = f'{provider}|{username}'
-    user = users.get(key)
+class UserService:
 
-    if not user:
-        print(f'User saved. Provider: {provider} Username: {username}')
-        user = {'username': username, 'provider': provider}
-        users[f'{provider}|{username}'] = user
+    async def save(self, provider: str, username: str):
+        key = f'{provider}|{username}'
+        user = users.get(key)
 
-    return user
+        if not user:
+            print(f'User saved. Provider: {provider} Username: {username}')
+            user = {'username': username, 'provider': provider}
+            users[f'{provider}|{username}'] = user
 
+        return user
 
-async def get(provider: str, username: str):
-    return users.get(f'{provider}|{username}')
+    async def get(self, provider: str, username: str):
+        return users.get(f'{provider}|{username}')

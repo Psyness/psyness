@@ -10,6 +10,7 @@ fastapi = "^0.75.2"
 uvicorn = {extras = ["standard"], version = "^0.17.6"}
 yoyo-migrations = "^7.3.2"
 psycopg2-binary = "^2.9.3"
+dependency-injector = "^4.39.1"
 
 [tool.poetry.dev-dependencies]
 
