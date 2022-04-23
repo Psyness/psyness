@@ -1,20 +1,27 @@
 """Containers module."""
 
 from dependency_injector import containers, providers
+from sqlalchemy import create_engine
 
-from configs.database import get_session
+from configs.settings import Settings
 from repositories.user_repository import UserRepository
 from services.user_service import UserService
 
 
 class Container(containers.DeclarativeContainer):
-    session = providers.Resource(
-        get_session
+    settings = Settings()
+    database_url = f'postgresql://{settings.database_user}:{settings.database_password}' \
+                   f'@{settings.database_url}:{settings.database_port}' \
+                   f'/{settings.database_name}'
+
+    engine = providers.Singleton(
+        create_engine,
+        database_url
     )
 
     user_repository = providers.Singleton(
         UserRepository,
-        session=session
+        engine=engine
     )
 
     user_service = providers.Singleton(

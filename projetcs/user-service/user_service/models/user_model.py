@@ -1,10 +1,8 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Table, Column, String, MetaData
 
-from configs.database import Base
+metadata_obj = MetaData()
 
-
-class User(Base):
-    __tablename__ = "app_user"
-
-    username = Column(String, primary_key=True)
-    provider = Column(String, primary_key=True)
+users_table = Table('app_user',
+              metadata_obj,
+              Column('username', String, primary_key=True),
+              Column('provider', String, primary_key=True))

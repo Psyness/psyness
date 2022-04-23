@@ -1,7 +1,4 @@
-from models.user_model import User
 from repositories.user_repository import UserRepository
-
-users = {}
 
 
 class UserService:
@@ -10,8 +7,7 @@ class UserService:
         self._user_repository = user_repository
 
     async def save(self, provider: str, username: str):
-        user = User(provider=provider, username=username)
-        return await self._user_repository.save(user)
+        return await self._user_repository.save(username, provider)
 
     async def get(self, provider: str, username: str):
         return await self._user_repository.get(provider, username)
