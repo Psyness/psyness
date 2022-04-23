@@ -8,6 +8,8 @@ authors = ["Andrey Kozel <andrey.kozel@spanning.com>"]
 python = "^3.9"
 fastapi = "^0.75.2"
 uvicorn = {extras = ["standard"], version = "^0.17.6"}
+yoyo-migrations = "^7.3.2"
+psycopg2-binary = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
 
