@@ -2,14 +2,18 @@ import json
 
 import httpx
 
-from configs.settings import settings
+from configs.settings import Settings
 
 
-async def get(provider: str, username: str):
-    r = httpx.get(f'{settings.user_service_url}/providers/{provider}/users/{username}')
-    return json.loads(r.content)
+class UserClient:
 
+    def __init__(self, settings: Settings):
+        self._settings = settings
 
-async def save_or_get(provider: str, username: str):
-    r = httpx.post(f'{settings.user_service_url}/providers/{provider}/users/{username}')
-    return json.loads(r.content)
+    async def get(self, provider: str, username: str):
+        r = httpx.get(f'{self._settings.user_service_url}/providers/{provider}/users/{username}')
+        return json.loads(r.content)
+
+    async def save_or_get(self, provider: str, username: str):
+        r = httpx.post(f'{self._settings.user_service_url}/providers/{provider}/users/{username}')
+        return json.loads(r.content)
