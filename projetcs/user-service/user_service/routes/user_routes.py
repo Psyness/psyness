@@ -1,23 +1,14 @@
 from fastapi import APIRouter
 
+from services import user_service
+
 router = APIRouter()
-
-users = {}
-
 
 @router.get("/providers/{provider}/users/{username}")
 async def get(provider: str, username: str):
-    return users.get(f'{provider}|{username}')
+    return await user_service.get(provider, username)
 
 
 @router.post("/providers/{provider}/users/{username}")
 async def save(provider: str, username: str):
-    print(f'User saved. Provider: {provider} Username: {username}')
-    key = f'{provider}|{username}'
-    user = users.get(key)
-
-    if not user:
-        user = {'username': username, 'provider': provider}
-        users[f'{provider}|{username}'] = user
-
-    return user
+    return await user_service.save(provider, username)
