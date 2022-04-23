@@ -3,7 +3,8 @@ from fastapi import APIRouter
 from fastapi.responses import RedirectResponse
 from starlette.requests import Request
 
-from config.settings import settings
+from configs.settings import settings
+from services import user_service
 
 router = APIRouter()
 oauth = OAuth()
@@ -29,9 +30,7 @@ async def login(request: Request):
 @router.get("/auth/google")
 async def login_callback(request: Request):
     token = await oauth.google.authorize_access_token(request)
-    user = token['userinfo']
-    request.session['user'] = dict({
-        'email': user.get('email'),
-        'provider': 'GOOGLE'
-    })
+
+    user = await user_service.save_or_get('GOOGLE', token)
+    request.session['user'] = user
     return RedirectResponse(settings.frontend_url)
