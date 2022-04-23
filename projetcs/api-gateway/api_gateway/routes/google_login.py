@@ -1,5 +1,6 @@
 from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter
+from fastapi.responses import RedirectResponse
 from starlette.requests import Request
 
 from config.settings import settings
@@ -29,5 +30,8 @@ async def login(request: Request):
 async def login_callback(request: Request):
     token = await oauth.google.authorize_access_token(request)
     user = token['userinfo']
-    request.session['user'] = dict({'email': user.get('email')})
-    return dict(user)
+    request.session['user'] = dict({
+        'email': user.get('email'),
+        'provider': 'GOOGLE'
+    })
+    return RedirectResponse(settings.frontend_url)
