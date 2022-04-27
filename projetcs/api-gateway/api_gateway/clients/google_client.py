@@ -1,6 +1,7 @@
 from authlib.integrations.starlette_client import OAuth
 
 from configs.settings import Settings
+from dto.user_dto import UserDto, CreateUserDto
 
 
 class GoogleClient:
@@ -21,6 +22,9 @@ class GoogleClient:
     async def authorize_redirect(self, request, redirect_uri):
         return await self._google.authorize_redirect(request, redirect_uri)
 
-    async def get_user_info(self, request):
+    async def get_user_info(self, request) -> CreateUserDto:
         token = await self._google.authorize_access_token(request)
-        return token['userinfo']
+        return CreateUserDto(provider='GOOGLE',
+                             username=token['userinfo']['email'],
+                             first_name=token['userinfo']['given_name'],
+                             last_name=token['userinfo']['family_name'])

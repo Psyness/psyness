@@ -9,9 +9,11 @@ __depends__ = {}
 steps = [
     step("""
         CREATE TABLE app_user (
-            provider text,
-            username text,
-            
+            provider TEXT NOT NULL,
+            username TEXT NOT NULL,
+            first_name TEXT,
+            last_name TEXT,
+            roles TEXT[],
             PRIMARY KEY (username, provider)
         );
     """)
