@@ -3,7 +3,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.sql import select
 
 from dto.user_dto import UserDto
-from models.user_model import users_table
+from tables.user_model import users_table
 
 
 class UserRepository:

@@ -1,8 +1,7 @@
 from enum import Enum
+from typing import List
 
-from sqlalchemy import Table, Column, String, MetaData, ARRAY
-
-metadata_obj = MetaData()
+from pydantic import BaseModel
 
 
 class UserRole(str, Enum):
@@ -10,10 +9,16 @@ class UserRole(str, Enum):
     CLIENT = 'CLIENT'
 
 
-users_table = Table('app_user',
-                    metadata_obj,
-                    Column('username', String, primary_key=True),
-                    Column('provider', String, primary_key=True),
-                    Column('first_name', String),
-                    Column('last_name', String),
-                    Column('roles', ARRAY(String)))
+class CreateUser(BaseModel):
+    username: str
+    provider: str
+    first_name: str
+    last_name: str
+
+
+class User(BaseModel):
+    username: str
+    provider: str
+    first_name: str
+    last_name: str
+    roles: List[UserRole]
