@@ -16,7 +16,7 @@ export class SplashService {
 
   getSession(): Observable<any> {
     console.log('Get session!!');
-    return this.httpClient.get('http://localhost:8000/sessions/me');
+    return this.httpClient.get('http://localhost:8000/sessions/me', { withCredentials: true });
   }
 
 }
