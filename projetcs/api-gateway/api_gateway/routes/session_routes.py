@@ -2,13 +2,15 @@ from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends
 from starlette.requests import Request
 
-from dependencies import Container
+from auth.auth import secure
 from clients.user_client import UserClient
+from dependencies import Container
 
 router = APIRouter()
 
 
 @router.get("/sessions/me")
+@secure()
 @inject
 async def login(request: Request,
                 user_client: UserClient = Depends(Provide(Container.user_client))):

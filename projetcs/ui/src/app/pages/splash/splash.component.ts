@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SplashService } from './splash.service';
 
 @Component({
   selector: 'app-splash',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SplashComponent implements OnInit {
 
-  constructor() { }
+  constructor(private readonly splashService: SplashService) {
+  }
 
   ngOnInit(): void {
+    this.splashService.getSession().subscribe(session => console.log(session));
   }
 
 }
