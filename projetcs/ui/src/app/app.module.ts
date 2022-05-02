@@ -20,13 +20,19 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from "@angular/material/menu";
+import { ClientsComponent } from './pages/clients/clients.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    AuthorizedLayoutComponent
+    AuthorizedLayoutComponent,
+    ClientsComponent,
+    CalendarComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,

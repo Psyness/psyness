@@ -14,6 +14,7 @@ import { Router } from "@angular/router";
 export class AuthorizedLayoutComponent implements OnInit {
 
   navigationItems = [
+    {title: 'LAYOUT.NAV_ITEM_HOME', link: '/home'},
     {title: 'LAYOUT.NAV_ITEM_CLIENTS', link: '/clients'},
     {title: 'LAYOUT.NAV_ITEM_CALENDAR', link: '/calendar'},
     {title: 'LAYOUT.NAV_ITEM_TASKS', link: '/tasks'}
