@@ -17,3 +17,10 @@ async def login(request: Request,
     current_user = request.session['user']
     user = await user_client.get(current_user['provider'], current_user['username'])
     return user
+
+
+@router.get("/logout")
+@secure()
+@inject
+async def logout(request: Request):
+    request.session.pop('user', None)

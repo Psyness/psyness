@@ -1,4 +1,13 @@
 {
-  "LOGIN": "Логин",
-  "LOGIN_WITH_GOOGLE": "Войти с помощью Google"
+  "LOGIN": {
+    "LOGIN": "Логин",
+    "LOGIN_WITH_GOOGLE": "Войти с помощью Google"
+  },
+  "LAYOUT": {
+    "MENU": "Меню",
+    "NAV_ITEM_CLIENTS": "Клиенты",
+    "NAV_ITEM_CALENDAR": "Календарь",
+    "NAV_ITEM_TASKS": "Задания",
+    "LOGOUT": "Выйти"
+  }
 }

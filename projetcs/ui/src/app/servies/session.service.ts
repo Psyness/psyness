@@ -41,4 +41,8 @@ export class SessionService {
     return `${this.apiGatewayUrl}/login/google`;
   }
 
+  logout(): Observable<void> {
+    return this.httpClient.get<void>(`${this.apiGatewayUrl}/logout`, {withCredentials: true})
+  }
+
 }
