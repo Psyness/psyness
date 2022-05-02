@@ -13,12 +13,19 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { HttpLoaderFactory } from "./core/translation.factory";
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { MatButtonModule } from "@angular/material/button";
+import { AuthorizedLayoutComponent } from './components/authorized-layout/authorized-layout.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AuthorizedLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +42,12 @@ import { MatButtonModule } from "@angular/material/button";
       }
     }),
     FlexLayoutModule,
-    MatButtonModule
+    MatButtonModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [
     {
