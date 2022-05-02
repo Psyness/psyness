@@ -9,16 +9,10 @@ The platform that helps to psychologists to consult their clients
 * Poetry (dependency management tool)
 * Docker
 
-
 #Setup infrastructure
 
 * Run `cd ${PSYNESS_HOME}`
 * Run `docker-compose up -d`
-
-# Run migration
-
-* Run `cd ${PSYNESS_HOME}/projects/use-service`
-* Run `yoyo apply --database postgresql://postgres:postgres@localhost:15432/psyness_users ./migrations`
 
 # Run api-gateway
 
@@ -51,6 +45,11 @@ The platform that helps to psychologists to consult their clients
       DATABASE_NAME=psyness_users
   ```
 * Run `uvicorn main:app --reload --port 8001`
+
+# Run migration
+
+* Run `cd ${PSYNESS_HOME}/projects/use-service`
+* Run `yoyo apply --database postgresql://postgres:postgres@localhost:15432/psyness_users ./migrations`
 
 # Run the frontend
 
