@@ -17,7 +17,7 @@ app.include_router(session_routes.router)
 settings = Settings()
 app.add_middleware(SessionMiddleware, secret_key=settings.jwt_secret)
 app.add_middleware(CORSMiddleware,
-                   allow_origins=["*"],
+                   allow_origins=[settings.frontend_url],
                    allow_credentials=True,
                    allow_methods=["*"],
                    allow_headers=["*"], )

@@ -17,7 +17,6 @@ export class UserService {
   }
 
   getSession(): Observable<any> {
-    console.log('Get session!!');
     return this.httpClient.get(`${this.apiGatewayUrl}/sessions/me`, {withCredentials: true});
   }
 
