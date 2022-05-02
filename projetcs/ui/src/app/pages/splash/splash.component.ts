@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../servies/user.service';
+import { SessionService } from '../../servies/session.service';
+import { User } from "../../models/user";
 
 @Component({
   selector: 'app-splash',
@@ -8,11 +9,17 @@ import { UserService } from '../../servies/user.service';
 })
 export class SplashComponent implements OnInit {
 
-  constructor(private readonly splashService: UserService) {
+  public user?: User;
+
+  constructor(private readonly splashService: SessionService) {
   }
 
   ngOnInit(): void {
-    this.splashService.getSession().subscribe(session => console.log(session));
+    this.splashService.getSession()
+      .subscribe(session => {
+        console.log(session)
+        this.user = session
+      });
   }
 
 }

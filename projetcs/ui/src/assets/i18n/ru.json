@@ -1,3 +1,4 @@
 {
-  "LOGIN": "Логин"
+  "LOGIN": "Логин",
+  "LOGIN_WITH_GOOGLE": "Войти с помощью Google"
 }

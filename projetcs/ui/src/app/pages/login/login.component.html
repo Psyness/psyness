@@ -3,5 +3,10 @@
     <mat-card-title>
       {{ 'LOGIN' | translate }}
     </mat-card-title>
+    <mat-card-content>
+      <button mat-button (click)="redirectToGoogleLogin()">
+        {{ 'LOGIN_WITH_GOOGLE' | translate}}
+      </button>
+    </mat-card-content>
   </mat-card>
 </div>
