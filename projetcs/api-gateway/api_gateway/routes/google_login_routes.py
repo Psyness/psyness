@@ -28,4 +28,4 @@ async def login_callback(request: Request,
     user_details = await google_client.get_user_info(request)
     user = await user_client.save_or_get(user_details)
     request.session['user'] = user.dict()
-    return RedirectResponse(settings.frontend_url)
+    return RedirectResponse(settings.success_redirect_url)
