@@ -1,3 +1,4 @@
+from uuid import UUID
 from enum import Enum
 from typing import List
 
@@ -17,6 +18,7 @@ class CreateUser(BaseModel):
 
 
 class User(BaseModel):
+    id: UUID
     username: str
     provider: str
     first_name: str

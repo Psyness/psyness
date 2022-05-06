@@ -2,7 +2,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 from sqlalchemy.sql import select
 
-from dto.user_dto import UserDto
+from models.user_model import User
 from tables.user_model import users_table
 
 
@@ -11,10 +11,11 @@ class UserRepository:
     def __init__(self, engine: Engine):
         self._engine = engine
 
-    async def save(self, provider: str, username: str, user: UserDto):
+    async def save(self, provider: str, username: str, user: User):
         with self._engine.connect() as conn:
             query = insert(users_table) \
-                .values(username=username,
+                .values(id=user.id,
+                        username=username,
                         provider=provider,
                         last_name=user.last_name,
                         first_name=user.first_name,

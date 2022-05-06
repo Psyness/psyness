@@ -51,6 +51,13 @@ The platform that helps to psychologists to consult their clients
 * Run `cd ${PSYNESS_HOME}/projects/use-service`
 * Run `yoyo apply --database postgresql://postgres:postgres@localhost:15432/psyness_users ./migrations`
 
+# Create new migration
+
+* Run `cd ${PSYNESS_HOME}/projects/use-service`
+* Run `yoyo new ./migrations -m "EXPLANATION_OF_THE_MIGRATION"`
+* Run `:w` to save you changes
+* Run `:q` to exit vim
+
 # Run the frontend
 
 * Run `cd ${PSYNESS_HOME}/projects/ui`
