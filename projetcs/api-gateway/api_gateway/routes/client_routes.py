@@ -13,4 +13,13 @@ router = APIRouter()
 @secure()
 @inject
 async def find_clients(request: Request, user_client: UserClient = Depends(Provide(Container.user_client))):
-    return {'users': [{'username': 'username',  'first_name': 'first', 'last_name': 'last'}]}
+    current_user = request.session['user']
+    return await user_client.find_users(current_user['id'])
+
+
+@router.post("/clients/invitations")
+@secure()
+@inject
+async def create_invitation(request: Request, user_client: UserClient = Depends(Provide(Container.user_client))):
+    current_user = request.session['user']
+    return await user_client.create_invitation(current_user['id'])

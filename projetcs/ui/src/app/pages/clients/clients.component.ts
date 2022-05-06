@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { InvitationService } from "../../services/invitation.service";
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user";
 
@@ -14,7 +13,6 @@ export class ClientsComponent implements OnInit {
   public users: User[] = [];
 
   constructor(
-    private readonly invitationService: InvitationService,
     private readonly userService: UserService
   ) {
   }
@@ -27,7 +25,7 @@ export class ClientsComponent implements OnInit {
   }
 
   createInvitation() {
-    this.invitationService.createInvitation()
+    this.userService.createInvitation()
       .subscribe(res => console.log(res))
   }
 

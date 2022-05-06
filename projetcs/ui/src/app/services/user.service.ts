@@ -24,5 +24,9 @@ export class UserService {
       );
   }
 
+  createInvitation() {
+    return this.httpClient.post(`${environment.apiGatewayUrl}/clients/invitations`, null, {withCredentials: true})
+  }
+
 
 }

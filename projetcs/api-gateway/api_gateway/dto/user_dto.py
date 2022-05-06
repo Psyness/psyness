@@ -17,8 +17,13 @@ class CreateUserDto(BaseModel):
 
 
 class UserDto(BaseModel):
+    id: str
     username: str
     provider: str
     first_name: str
     last_name: str
     roles: List[UserRole]
+
+
+class UserListDto(BaseModel):
+    users: List[UserDto]
