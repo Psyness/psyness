@@ -10,24 +10,19 @@ import { User, UserResponse } from "../models/user";
 })
 export class SessionService {
 
-  private readonly apiGatewayUrl: string = environment.apiGatewayUrl
-  private readonly httpClient: HttpClient;
   private currentUser?: User;
 
-
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
+  constructor(private readonly httpClient: HttpClient) {
   }
 
   getSession(): Observable<User> {
     if (this.currentUser) {
       return of(this.currentUser)
     }
-    return this.httpClient.get<UserResponse>(`${this.apiGatewayUrl}/sessions/me`, {withCredentials: true})
+    return this.httpClient.get<UserResponse>(`${environment.apiGatewayUrl}/sessions/me`, {withCredentials: true})
       .pipe(
         map(event => ({
           username: event.username,
-          provider: event.provider,
           lastName: event.last_name,
           firstName: event.first_name
         })),
@@ -38,11 +33,11 @@ export class SessionService {
   }
 
   getGoogleLoginUrl(): string {
-    return `${this.apiGatewayUrl}/login/google`;
+    return `${environment.apiGatewayUrl}/login/google`;
   }
 
   logout(): Observable<void> {
-    return this.httpClient.get<void>(`${this.apiGatewayUrl}/logout`, {withCredentials: true})
+    return this.httpClient.get<void>(`${environment.apiGatewayUrl}/logout`, {withCredentials: true})
   }
 
 }

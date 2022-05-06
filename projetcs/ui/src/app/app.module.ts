@@ -23,6 +23,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { ClientsComponent } from './pages/clients/clients.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { TasksComponent } from './pages/tasks/tasks.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule
   ],
   providers: [
     {

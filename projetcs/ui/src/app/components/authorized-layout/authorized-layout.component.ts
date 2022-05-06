@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { SessionService } from "../../servies/session.service";
+import { SessionService } from "../../services/session.service";
 import { User } from "../../models/user";
 import { Router } from "@angular/router";
 
@@ -38,7 +38,6 @@ export class AuthorizedLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.sessionService.getSession()
       .subscribe(session => {
-        console.log(session)
         this.user = session
       });
   }

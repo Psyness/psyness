@@ -10,5 +10,11 @@
     "NAV_ITEM_CALENDAR": "Календарь",
     "NAV_ITEM_TASKS": "Задания",
     "LOGOUT": "Выйти"
+  },
+  "CLIENTS": {
+    "USERNAME_COLUMN": "Логин",
+    "FIRST_NAME_COLUMN": "Имя",
+    "LAST_NAME_COLUMN": "Фамилия",
+    "INVITE": "Пригласить клиента"
   }
 }
