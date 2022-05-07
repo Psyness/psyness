@@ -26,6 +26,8 @@ import { TasksComponent } from './pages/tasks/tasks.component';
 import { MatTableModule } from "@angular/material/table";
 import { InvitationComponent } from './pages/invitation/invitation.component';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { CalendarModule, DateAdapter } from "angular-calendar";
+import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 
 @NgModule({
   declarations: [
@@ -61,7 +63,11 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatListModule,
     MatMenuModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     {

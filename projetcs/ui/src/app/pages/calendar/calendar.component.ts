@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarComponent implements OnInit {
 
+  public events = []
+  public viewDate = new Date()
+  public locale: string = 'ru';
+
   constructor() { }
 
   ngOnInit(): void {
