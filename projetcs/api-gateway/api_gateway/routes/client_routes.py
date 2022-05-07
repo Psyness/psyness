@@ -14,7 +14,7 @@ router = APIRouter()
 @inject
 async def find_clients(request: Request, user_client: UserClient = Depends(Provide(Container.user_client))):
     current_user = request.session['user']
-    return await user_client.find_users(current_user['id'])
+    return await user_client.find_clients(current_user['id'])
 
 
 @router.post("/clients/invitations")

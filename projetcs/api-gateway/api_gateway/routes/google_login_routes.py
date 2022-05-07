@@ -26,6 +26,6 @@ async def login_callback(request: Request,
                          user_client: UserClient = Depends(Provide[Container.user_client]),
                          settings: Settings = Depends(Provide[Container.settings])):
     user_details = await google_client.get_user_info(request)
-    user = await user_client.save_or_get(user_details)
+    user = await user_client.upsert_psychologist(user_details)
     request.session['user'] = user.dict()
     return RedirectResponse(settings.success_redirect_url)
