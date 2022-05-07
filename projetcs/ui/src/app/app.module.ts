@@ -24,6 +24,7 @@ import { ClientsComponent } from './pages/clients/clients.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { MatTableModule } from "@angular/material/table";
+import { InvitationComponent } from './pages/invitation/invitation.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MatTableModule } from "@angular/material/table";
     AuthorizedLayoutComponent,
     ClientsComponent,
     CalendarComponent,
-    TasksComponent
+    TasksComponent,
+    InvitationComponent
   ],
   imports: [
     BrowserModule,

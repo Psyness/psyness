@@ -28,5 +28,9 @@ export class UserService {
     return this.httpClient.post(`${environment.apiGatewayUrl}/clients/invitations`, null, {withCredentials: true})
   }
 
+  getAcceptInvitationLink(invitationId: string) {
+    return `${environment.apiGatewayUrl}/login/google/${invitationId}`;
+  }
+
 
 }

@@ -19,8 +19,8 @@ class GoogleClient:
             },
         )
 
-    async def authorize_redirect(self, request, redirect_uri):
-        return await self._google.authorize_redirect(request, redirect_uri)
+    async def authorize_redirect(self, request, redirect_uri, **kwargs):
+        return await self._google.authorize_redirect(request, redirect_uri, **kwargs)
 
     async def get_user_info(self, request) -> CreateUserDto:
         token = await self._google.authorize_access_token(request)

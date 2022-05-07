@@ -6,11 +6,16 @@ import { AuthorizedLayoutComponent } from "../components/authorized-layout/autho
 import { ClientsComponent } from "../pages/clients/clients.component";
 import { CalendarComponent } from "../pages/calendar/calendar.component";
 import { TasksComponent } from "../pages/tasks/tasks.component";
+import { InvitationComponent } from "../pages/invitation/invitation.component";
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'invitations/:invitationId',
+    component: InvitationComponent
   },
   {
     path: '',

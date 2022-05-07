@@ -40,19 +40,19 @@ async def login_callback(request: Request,
 async def client_login(request: Request,
                        invitation_id: str,
                        google_client: GoogleClient = Depends(Provide[Container.google_client])):
-    redirect_uri = request.url_for('client_login_callback', invitation_id=invitation_id)
-    return await google_client.authorize_redirect(request, redirect_uri)
+    redirect_uri = request.url_for('invitations_login_callback')
+    return await google_client.authorize_redirect(request, redirect_uri, state=invitation_id)
 
 
-@router.get("/auth/google/{invitation_id}")
+@router.get("/auth/google/invitations")
 @inject
-async def client_login_callback(request: Request,
-                                invitation_id: str,
-                                google_client: GoogleClient = Depends(Provide[Container.google_client]),
-                                user_client: UserClient = Depends(Provide[Container.user_client]),
-                                settings: Settings = Depends(Provide[Container.settings])):
+async def invitations_login_callback(request: Request,
+                                     state: str,
+                                     google_client: GoogleClient = Depends(Provide[Container.google_client]),
+                                     user_client: UserClient = Depends(Provide[Container.user_client]),
+                                     settings: Settings = Depends(Provide[Container.settings])):
     user_details = await google_client.get_user_info(request)
     user = await user_client.save_client(user_details)
-    await user_client.accept_invitation(user.id, invitation_id)
+    await user_client.accept_invitation(user.id, state)
     request.session['user'] = user.dict()
     return RedirectResponse(settings.success_redirect_url)

@@ -3,6 +3,10 @@
     "LOGIN": "Логин",
     "LOGIN_WITH_GOOGLE": "Войти с помощью Google"
   },
+  "INVITATION": {
+    "INVITATION": "Приглашение",
+    "LOGIN_WITH_GOOGLE": "Войти с помощью Google"
+  },
   "LAYOUT": {
     "MENU": "Меню",
     "NAV_ITEM_HOME": "Главная",
