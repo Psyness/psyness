@@ -26,6 +26,15 @@ class UserClient:
                        content=user.json())
         return UserDto.parse_raw(r.content.decode('utf-8'))
 
+    async def save_client(self, user: CreateUserDto) -> UserDto:
+        r = httpx.post(url=f'{self._user_service_url}/users/{user.username}/providers/{user.provider}/clients',
+                       content=user.json())
+        return UserDto.parse_raw(r.content.decode('utf-8'))
+
+    async def accept_invitation(self, client_id: str, invitation_id: str) -> UserDto:
+        r = httpx.post(url=f'{self._user_service_url}/users/{client_id}/invitations/{invitation_id}')
+        return UserDto.parse_raw(r.content.decode('utf-8'))
+
     async def find_clients(self, psychologist_id: UUID):
         r = httpx.get(url=f'{self._user_service_url}/users/{psychologist_id}/clients')
         return UserListDto.parse_raw(r.content.decode('utf-8'))

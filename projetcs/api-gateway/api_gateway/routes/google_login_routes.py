@@ -33,3 +33,26 @@ async def login_callback(request: Request,
 
     request.session['user'] = user.dict()
     return RedirectResponse(settings.success_redirect_url)
+
+
+@router.get("/login/google/{invitation_id}")
+@inject
+async def client_login(request: Request,
+                       invitation_id: str,
+                       google_client: GoogleClient = Depends(Provide[Container.google_client])):
+    redirect_uri = request.url_for('client_login_callback', invitation_id=invitation_id)
+    return await google_client.authorize_redirect(request, redirect_uri)
+
+
+@router.get("/auth/google/{invitation_id}")
+@inject
+async def client_login_callback(request: Request,
+                                invitation_id: str,
+                                google_client: GoogleClient = Depends(Provide[Container.google_client]),
+                                user_client: UserClient = Depends(Provide[Container.user_client]),
+                                settings: Settings = Depends(Provide[Container.settings])):
+    user_details = await google_client.get_user_info(request)
+    user = await user_client.save_client(user_details)
+    await user_client.accept_invitation(user.id, invitation_id)
+    request.session['user'] = user.dict()
+    return RedirectResponse(settings.success_redirect_url)
