@@ -1,7 +1,7 @@
 from uuid import uuid4, UUID
 
 from dto.user_dto import CreateUserDto
-from models.user_model import UserRole, User
+from models.user_model import UserRole, User, UserList
 from repositories.user_repository import UserRepository
 
 
@@ -21,6 +21,6 @@ class UserService:
         user = User(**create_user_dto.dict(), roles=[UserRole.CLIENT], id=uuid4())
         return await self._user_repository.save(provider, username, user)
 
-    async def link_client_with_psychologist(self, psychologist_id: UUID, client_id: UUID):
-        return None
-
+    async def find_clients(self, psychologist_id: UUID) -> UserList:
+        users = await self._user_repository.find_users(psychologist_id=psychologist_id)
+        return UserList(users=users)

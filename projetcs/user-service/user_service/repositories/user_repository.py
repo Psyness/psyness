@@ -3,6 +3,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.sql import select
 
 from models.user_model import User
+from tables.contract_table import app_user_contract_table
 from tables.user_table import users_table
 
 
@@ -32,3 +33,12 @@ class UserRepository:
                 .where(users_table.c.provider == provider)
             user = conn.execute(query)
             return user.first()
+
+    async def find_users(self, **kwargs):
+        psychologist_id = kwargs['psychologist_id']
+        with self._engine.connect() as conn:
+            query = select(users_table) \
+                .join(app_user_contract_table, app_user_contract_table.c.client_id == users_table.c.id) \
+                .where(app_user_contract_table.c.psychologist_id == psychologist_id)
+            user = conn.execute(query)
+            return user.all()

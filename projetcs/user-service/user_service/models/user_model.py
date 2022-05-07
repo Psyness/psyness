@@ -1,6 +1,6 @@
-from uuid import UUID
 from enum import Enum
 from typing import List
+from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -24,3 +24,7 @@ class User(BaseModel):
     first_name: str
     last_name: str
     roles: List[UserRole]
+
+
+class UserList(BaseModel):
+    users: List[User]
