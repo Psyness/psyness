@@ -5,7 +5,9 @@ from fastapi import APIRouter, Depends
 
 from dependencies import Container
 from dto.user_dto import CreateUserDto
+from models.invitation_model import Invitation
 from models.user_model import User
+from services.invitation_service import InvitationService
 from services.user_service import UserService
 
 router = APIRouter()
@@ -45,11 +47,10 @@ async def find_users(uuid: UUID):
     }
 
 
-@router.post("/users/{uuid}/invitations")
+@router.post("/users/{inviter}/invitations")
 @inject
-async def find_users(uuid: UUID):
-    return {
-        'id': 'id',
-        'inviter': 'inviter',
-        'status': 'status'
-    }
+async def create_invitation(
+        inviter: UUID,
+        invitation_service: InvitationService = Depends(Provide[Container.invitation_service])
+) -> Invitation:
+    return await invitation_service.save(inviter)

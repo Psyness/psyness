@@ -4,7 +4,9 @@ from dependency_injector import containers, providers
 from sqlalchemy import create_engine
 
 from configs.settings import Settings
+from repositories.invitation_repository import InvitationRepository
 from repositories.user_repository import UserRepository
+from services.invitation_service import InvitationService
 from services.user_service import UserService
 
 
@@ -27,4 +29,14 @@ class Container(containers.DeclarativeContainer):
     user_service = providers.Singleton(
         UserService,
         user_repository=user_repository
+    )
+
+    invitation_repository = providers.Singleton(
+        InvitationRepository,
+        engine=engine
+    )
+
+    invitation_service = providers.Singleton(
+        InvitationService,
+        invitation_repository=invitation_repository
     )
