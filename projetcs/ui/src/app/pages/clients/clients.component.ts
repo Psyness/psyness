@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-clients',
@@ -13,6 +14,7 @@ export class ClientsComponent implements OnInit {
   public users: User[] = [];
 
   constructor(
+    private readonly snackBar: MatSnackBar,
     private readonly userService: UserService
   ) {
   }
@@ -26,7 +28,7 @@ export class ClientsComponent implements OnInit {
 
   createInvitation() {
     this.userService.createInvitation()
-      .subscribe(res => console.log(res))
+      .subscribe(invitationUrl => this.snackBar.open(invitationUrl, 'Close'))
   }
 
 }

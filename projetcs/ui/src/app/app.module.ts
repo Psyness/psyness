@@ -25,6 +25,7 @@ import { CalendarComponent } from './pages/calendar/calendar.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { MatTableModule } from "@angular/material/table";
 import { InvitationComponent } from './pages/invitation/invitation.component';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { InvitationComponent } from './pages/invitation/invitation.component';
     MatIconModule,
     MatListModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule
   ],
   providers: [
     {
