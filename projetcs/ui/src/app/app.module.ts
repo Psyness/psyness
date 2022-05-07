@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './core/app-routing.module';
@@ -81,6 +83,7 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 export class AppModule {
 
   constructor(translate: TranslateService) {
+    registerLocaleData(localeRu)
     translate.setDefaultLang('ru');
     translate.use('ru');
   }
