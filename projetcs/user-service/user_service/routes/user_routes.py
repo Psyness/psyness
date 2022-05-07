@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from dependencies import Container
 from dto.user_dto import CreateUserDto
@@ -18,7 +18,12 @@ router = APIRouter()
 async def get(provider: str,
               username: str,
               user_service: UserService = Depends(Provide[Container.user_service])) -> User:
-    return await user_service.get(provider, username)
+    user = await user_service.get(provider, username)
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return user
 
 
 @router.post("/users/{username}/providers/{provider}/psychologists")

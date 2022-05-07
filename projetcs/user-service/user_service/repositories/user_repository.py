@@ -20,8 +20,6 @@ class UserRepository:
                         last_name=user.last_name,
                         first_name=user.first_name,
                         roles=user.roles) \
-                .on_conflict_do_update(index_elements=['username', 'provider'],
-                                       set_={'first_name': user.first_name, 'last_name': user.last_name}) \
                 .returning(users_table)
 
             user = conn.execute(query)

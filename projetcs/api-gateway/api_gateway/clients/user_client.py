@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 
 import httpx
@@ -12,11 +13,15 @@ class UserClient:
     def __init__(self, settings: Settings):
         self._user_service_url = settings.user_service_url
 
-    async def get(self, provider: str, username: str) -> UserDto:
+    async def get(self, provider: str, username: str) -> Optional[UserDto]:
         r = httpx.get(f'{self._user_service_url}/users/{username}/providers/{provider}')
+
+        if (r.status_code == 404):
+            return None
+
         return UserDto.parse_raw(r.content)
 
-    async def upsert_psychologist(self, user: CreateUserDto) -> UserDto:
+    async def save_psychologist(self, user: CreateUserDto) -> UserDto:
         r = httpx.post(url=f'{self._user_service_url}/users/{user.username}/providers/{user.provider}/psychologists',
                        content=user.json())
         return UserDto.parse_raw(r.content.decode('utf-8'))
