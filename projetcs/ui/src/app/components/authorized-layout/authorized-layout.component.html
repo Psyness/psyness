@@ -7,7 +7,7 @@
     <mat-nav-list>
       <a *ngFor="let item of navigationItems"
          mat-list-item
-         href="{{item.link}}">
+         routerLink="{{item.link}}">
         {{item.title | translate}}
       </a>
     </mat-nav-list>
