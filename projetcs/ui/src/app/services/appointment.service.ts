@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from "rxjs";
+import { debounce, interval, Observable, of } from "rxjs";
 import { Appointment } from "../models/appointment";
 import { CalendarEvent } from "angular-calendar";
 import { endOfHour, startOfHour } from 'date-fns';
@@ -21,15 +21,19 @@ export class AppointmentService {
   }
 
   getAppointments(): Observable<CalendarEvent[]> {
-    return of(this.appointments);
+    return of(this.appointments)
+      .pipe(
+        debounce(() => interval(500))
+      );
   }
 
   saveAppointment(appointment: Appointment): Observable<CalendarEvent[]> {
-    this.appointments.push({
+    const calendarEvent = {
       start: appointment.start,
       end: appointment.end,
       title: appointment.title
-    });
+    }
+    this.appointments = [...this.appointments, calendarEvent];
 
     return this.getAppointments()
   }

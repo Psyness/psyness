@@ -26,6 +26,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.appointments$ = this.appointmentService.getAppointments()
+    console.log(this.appointments$);
   }
 
   public showCreateEventDialog(event: { date: Date, sourceEvent: MouseEvent }) {
@@ -37,6 +38,7 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: Appointment) => {
       if (result) {
         this.appointments$ = this.appointmentService.saveAppointment(result);
+        console.log(this.appointments$);
       }
     });
   }
