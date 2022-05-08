@@ -7,11 +7,11 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>{{ 'EVENTS.DIALOG.START' | translate }}</mat-label>
-    <input matInput [(ngModel)]="appointment.start">
+    <input matInput type="datetime-local" [(ngModel)]="appointment.start">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>{{ 'EVENTS.DIALOG.END' | translate }}</mat-label>
-    <input matInput [(ngModel)]="appointment.end">
+    <input matInput type="datetime-local" [(ngModel)]="appointment.end">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
