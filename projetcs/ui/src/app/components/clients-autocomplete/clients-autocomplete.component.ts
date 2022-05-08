@@ -14,7 +14,6 @@ import { MatOption } from "@angular/material/core";
 export class ClientsAutocompleteComponent implements OnInit {
 
   public clientsControl = new FormControl();
-  public appointment: Appointment = { start: new Date(), end: new Date() }
   public clients?: Observable<User[]>
 
   @Output() public setClientId = new EventEmitter<UserInfo>();
