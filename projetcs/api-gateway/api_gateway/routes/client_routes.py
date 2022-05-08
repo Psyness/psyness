@@ -16,7 +16,7 @@ router = APIRouter()
 @inject
 async def find_clients(
         request: Request,
-        filter: Optional[str],
+        filter: Optional[str] = None,
         user_client: UserClient = Depends(Provide(Container.user_client))):
     current_user = request.session['user']
     return await user_client.find_clients(current_user['id'], filter)

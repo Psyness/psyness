@@ -13,6 +13,11 @@ export interface UserFilter {
   filter?: string
 }
 
+export interface UserInfo {
+  clientId: string;
+  clientFullName: string;
+}
+
 export interface User {
   id: string
   username: string

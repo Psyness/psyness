@@ -35,6 +35,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { ClientsAutocompleteComponent } from './components/clients-autocomplete/clients-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
     CalendarComponent,
     TasksComponent,
     InvitationComponent,
-    EventDialogComponent
+    EventDialogComponent,
+    ClientsAutocompleteComponent
   ],
   imports: [
     BrowserModule,

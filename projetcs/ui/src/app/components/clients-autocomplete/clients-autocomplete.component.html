@@ -1,0 +1,16 @@
+<mat-form-field appearance="fill">
+  <mat-label>{{ 'EVENTS.DIALOG.CLIENT' | translate }}</mat-label>
+  <input type="text"
+         placeholder="Pick one"
+         aria-label="Number"
+         matInput
+         [formControl]="clientsControl"
+         [matAutocomplete]="auto">
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                    (optionSelected)="onClientSelected($event)">
+    <mat-option *ngFor="let client of clients | async " [value]="client.firstName + ' ' + client.lastName"
+                [id]="client.id">
+      {{client.firstName}} {{client.lastName}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

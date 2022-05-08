@@ -69,6 +69,6 @@ async def accept_invitation(
 @router.get("/users/{psychologist_id}/clients")
 @inject
 async def find_users(psychologist_id: UUID,
-                     filter: Optional[str],
+                     filter: Optional[str] = None,
                      user_service: UserService = Depends(Provide[Container.user_service])) -> UserList:
     return await user_service.find_clients(psychologist_id, filter)

@@ -23,7 +23,7 @@ export class CalendarComponent implements OnInit {
   public showCreateEventDialog(event: { date: Date, sourceEvent: MouseEvent }) {
     const dialogRef = this.dialog.open(EventDialogComponent, {
       width: '450px',
-      data: { title: 'title', start: event.date, end: event.date },
+      data: { start: event.date, end: event.date },
     });
 
     dialogRef.afterClosed().subscribe(result => {
