@@ -36,6 +36,12 @@ import { MatInputModule } from "@angular/material/input";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { ClientsAutocompleteComponent } from './components/clients-autocomplete/clients-autocomplete.component';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from '@angular-material-components/datetime-picker';
+import { MatDatepickerModule } from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -83,6 +89,10 @@ import { ClientsAutocompleteComponent } from './components/clients-autocomplete/
     FormsModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
+    MatDatepickerModule
   ],
   providers: [
     {

@@ -5,13 +5,23 @@
     <mat-label>{{ 'EVENTS.DIALOG.TITLE' | translate }}</mat-label>
     <input matInput [(ngModel)]="appointment.title">
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field>
     <mat-label>{{ 'EVENTS.DIALOG.START' | translate }}</mat-label>
-    <input matInput type="datetime-local" [(ngModel)]="appointment.start">
+    <input matInput
+           [ngxMatDatetimePicker]="picker"
+           [formControl]="startDateControl"
+           [(ngModel)]="appointment.start">
+    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker [showSpinners]="true"></ngx-mat-datetime-picker>
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field>
     <mat-label>{{ 'EVENTS.DIALOG.END' | translate }}</mat-label>
-    <input matInput type="datetime-local" [(ngModel)]="appointment.end">
+    <input matInput
+           [ngxMatDatetimePicker]="picker"
+           [formControl]="endDateControl"
+           [(ngModel)]="appointment.end">
+    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker [showSpinners]="true"></ngx-mat-datetime-picker>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
