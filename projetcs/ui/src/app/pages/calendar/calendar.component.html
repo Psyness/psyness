@@ -1,5 +1,7 @@
 <mwl-calendar-week-view
   [viewDate]="viewDate"
   [locale]="locale"
-  [events]="events">
+  [events]="events"
+  (hourSegmentClicked)="showCreateEventDialog($event)"
+>
 </mwl-calendar-week-view>

@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>{{ 'EVENTS.DIALOG.TITLE' | translate }}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'EVENTS.DIALOG.CLIENT' | translate }}</mat-label>
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Number"
+           matInput
+           [formControl]="clientsControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let client of filteredClients | async " [value]="client.name" [id]="client.id">
+        {{client.name}}
+      </mat-option>
+    </mat-autocomplete>
+    <input matInput [(ngModel)]="appointment.clientId">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'EVENTS.DIALOG.TITLE' | translate }}</mat-label>
+    <input matInput [(ngModel)]="appointment.title">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'EVENTS.DIALOG.START' | translate }}</mat-label>
+    <input matInput [(ngModel)]="appointment.start">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'EVENTS.DIALOG.END' | translate }}</mat-label>
+    <input matInput [(ngModel)]="appointment.end">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Close</button>
+  <button mat-button (click)="save()">Ok</button>
+</div>

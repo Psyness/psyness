@@ -30,6 +30,11 @@ import { InvitationComponent } from './pages/invitation/invitation.component';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { CalendarModule, DateAdapter } from "angular-calendar";
 import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
+import { EventDialogComponent } from './pages/calendar/event-dialog/event-dialog.component';
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatInputModule } from "@angular/material/input";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -40,7 +45,8 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
     ClientsComponent,
     CalendarComponent,
     TasksComponent,
-    InvitationComponent
+    InvitationComponent,
+    EventDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +76,11 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
