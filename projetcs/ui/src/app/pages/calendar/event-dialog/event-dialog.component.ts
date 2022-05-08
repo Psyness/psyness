@@ -11,7 +11,8 @@ import { FormControl } from "@angular/forms";
 })
 export class EventDialogComponent {
 
-  @ViewChild('picker') picker: any;
+  @ViewChild('picker') startPicker: any;
+  @ViewChild('picker') endPicker: any;
   public startDateControl = new FormControl();
   public endDateControl = new FormControl();
 
@@ -27,7 +28,7 @@ export class EventDialogComponent {
   }
 
   save() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.appointment);
   }
 
   close() {

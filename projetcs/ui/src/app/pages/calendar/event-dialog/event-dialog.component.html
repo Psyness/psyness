@@ -8,20 +8,20 @@
   <mat-form-field>
     <mat-label>{{ 'EVENTS.DIALOG.START' | translate }}</mat-label>
     <input matInput
-           [ngxMatDatetimePicker]="picker"
+           [ngxMatDatetimePicker]="startPicker"
            [formControl]="startDateControl"
            [(ngModel)]="appointment.start">
-    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker [showSpinners]="true"></ngx-mat-datetime-picker>
+    <mat-datepicker-toggle matSuffix [for]="$any(startPicker)"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #startPicker [showSpinners]="true" [showSeconds]="false"></ngx-mat-datetime-picker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>{{ 'EVENTS.DIALOG.END' | translate }}</mat-label>
     <input matInput
-           [ngxMatDatetimePicker]="picker"
+           [ngxMatDatetimePicker]="endPicker"
            [formControl]="endDateControl"
            [(ngModel)]="appointment.end">
-    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker [showSpinners]="true"></ngx-mat-datetime-picker>
+    <mat-datepicker-toggle matSuffix [for]="$any(endPicker)"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #endPicker [showSpinners]="true" [showSeconds]="false"></ngx-mat-datetime-picker>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
