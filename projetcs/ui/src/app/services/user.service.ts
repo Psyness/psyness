@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { map, Observable } from "rxjs";
-import { User, UserListResponse } from "../models/user";
+import { User, UserFilter, UserListResponse } from "../models/user";
 import { InvitationResponse } from "../models/invitation";
 
 @Injectable({
@@ -13,10 +13,14 @@ export class UserService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  findPsychologistClients(): Observable<User[]> {
-    return this.httpClient.get<UserListResponse>(`${environment.apiGatewayUrl}/clients`, {withCredentials: true})
+  findPsychologistClients(options: UserFilter = {}): Observable<User[]> {
+    return this.httpClient.get<UserListResponse>(`${environment.apiGatewayUrl}/clients`, {
+      params: { ...options },
+      withCredentials: true
+    })
       .pipe(
         map(result => result.users.map(user => ({
+            id: user.id,
             username: user.username,
             lastName: user.last_name,
             firstName: user.first_name
@@ -30,7 +34,7 @@ export class UserService {
       .post<InvitationResponse>(
         `${environment.apiGatewayUrl}/clients/invitations`,
         null,
-        {withCredentials: true}
+        { withCredentials: true }
       )
       .pipe(
         map(result => (`${window.location.origin}/invitations/${result.id}`))

@@ -2,7 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Appointment } from "../../../models/appointment";
 import { FormControl } from "@angular/forms";
-import { map, Observable, startWith } from "rxjs";
+import { debounce, interval, map, Observable, startWith } from "rxjs";
+import { UserService } from "../../../services/user.service";
+import { User } from "../../../models/user";
 
 @Component({
   selector: 'app-event-dialog',
@@ -11,23 +13,22 @@ import { map, Observable, startWith } from "rxjs";
 })
 export class EventDialogComponent implements OnInit {
   public clientsControl = new FormControl();
-  public clients = [
-    { id: '1', name: 'name1' },
-    { id: '2', name: 'name2' }
-  ]
-  public filteredClients?: Observable<{ id: string, name: string }[]>
+  public clients?: Observable<User[]>
 
   constructor(
-    public dialogRef: MatDialogRef<EventDialogComponent>,
+    public readonly dialogRef: MatDialogRef<EventDialogComponent>,
+    private readonly userService: UserService,
     @Inject(MAT_DIALOG_DATA) public appointment: Appointment
   ) {
   }
 
   ngOnInit(): void {
-    this.filteredClients = this.clientsControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.filter(value)),
-    );
+    this.clientsControl.valueChanges
+      .pipe(
+        startWith(''),
+        debounce(() => interval(400))
+      )
+      .subscribe(filter => this.clients = this.userService.findPsychologistClients({ filter }));
   }
 
   save() {
@@ -36,12 +37,6 @@ export class EventDialogComponent implements OnInit {
 
   close() {
     this.dialogRef.close();
-  }
-
-  private filter(value: string) {
-    const filterValue = value.toLowerCase();
-
-    return this.clients.filter(client => client.name.toLowerCase().includes(filterValue));
   }
 
 }

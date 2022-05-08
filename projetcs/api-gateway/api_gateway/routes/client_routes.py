@@ -1,3 +1,5 @@
+from typing import Optional
+
 from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends
 from starlette.requests import Request
@@ -12,9 +14,12 @@ router = APIRouter()
 @router.get("/clients")
 @secure()
 @inject
-async def find_clients(request: Request, user_client: UserClient = Depends(Provide(Container.user_client))):
+async def find_clients(
+        request: Request,
+        filter: Optional[str],
+        user_client: UserClient = Depends(Provide(Container.user_client))):
     current_user = request.session['user']
-    return await user_client.find_clients(current_user['id'])
+    return await user_client.find_clients(current_user['id'], filter)
 
 
 @router.post("/clients/invitations")

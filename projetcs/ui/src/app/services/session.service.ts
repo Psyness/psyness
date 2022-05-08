@@ -21,10 +21,11 @@ export class SessionService {
     }
     return this.httpClient.get<UserResponse>(`${environment.apiGatewayUrl}/sessions/me`, {withCredentials: true})
       .pipe(
-        map(event => ({
-          username: event.username,
-          lastName: event.last_name,
-          firstName: event.first_name
+        map(user => ({
+          id: user.id,
+          username: user.username,
+          lastName: user.last_name,
+          firstName: user.first_name
         })),
         tap(currentUser => {
           this.currentUser = currentUser

@@ -9,8 +9,8 @@
            [formControl]="clientsControl"
            [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option *ngFor="let client of filteredClients | async " [value]="client.name" [id]="client.id">
-        {{client.name}}
+      <mat-option *ngFor="let client of clients | async " [value]="client.firstName + ' ' + client.lastName" [id]="client.id">
+        {{client.firstName}} {{client.lastName}}
       </mat-option>
     </mat-autocomplete>
     <input matInput [(ngModel)]="appointment.clientId">

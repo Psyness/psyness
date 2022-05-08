@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 
 from dependency_injector.wiring import Provide, inject
@@ -68,5 +69,6 @@ async def accept_invitation(
 @router.get("/users/{psychologist_id}/clients")
 @inject
 async def find_users(psychologist_id: UUID,
+                     filter: Optional[str],
                      user_service: UserService = Depends(Provide[Container.user_service])) -> UserList:
-    return await user_service.find_clients(psychologist_id)
+    return await user_service.find_clients(psychologist_id, filter)

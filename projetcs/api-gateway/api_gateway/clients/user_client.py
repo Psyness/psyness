@@ -31,8 +31,8 @@ class UserClient:
                        content=user.json())
         return UserDto.parse_raw(r.content.decode('utf-8'))
 
-    async def find_clients(self, psychologist_id: UUID):
-        r = httpx.get(url=f'{self._user_service_url}/users/{psychologist_id}/clients')
+    async def find_clients(self, psychologist_id: UUID, filter: str):
+        r = httpx.get(url=f'{self._user_service_url}/users/{psychologist_id}/clients', params={'filter': filter})
         return UserListDto.parse_raw(r.content.decode('utf-8'))
 
     async def create_invitation(self, psychologist_id: UUID):

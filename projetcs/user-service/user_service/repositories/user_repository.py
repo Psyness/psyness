@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 from sqlalchemy.sql import select
@@ -34,11 +35,19 @@ class UserRepository:
             user = conn.execute(query)
             return user.first()
 
-    async def find_users(self, **kwargs):
+    async def find_clients(self, **kwargs):
         psychologist_id = kwargs['psychologist_id']
+        filter = kwargs['filter']
         with self._engine.connect() as conn:
             query = select(users_table) \
                 .join(app_user_contract_table, app_user_contract_table.c.client_id == users_table.c.id) \
                 .where(app_user_contract_table.c.psychologist_id == psychologist_id)
+
+            if filter:
+                query = query.where(or_(
+                    users_table.c.first_name.ilike(f'{filter}%'),
+                    users_table.c.last_name.ilike(f'{filter}%'),
+                ))
+
             user = conn.execute(query)
             return user.all()
