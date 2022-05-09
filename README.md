@@ -48,8 +48,10 @@ The platform that helps to psychologists to consult their clients
 
 # Run migration
 
-* Run `cd ${PSYNESS_HOME}/projects/use-service`
+* Run `cd ${PSYNESS_HOME}/projects/user-service`
 * Run `yoyo apply --database postgresql://postgres:postgres@localhost:15432/psyness_users ./migrations`
+* Run `cd ${PSYNESS_HOME}/projects/event-service`
+* Run `yoyo apply --database postgresql://postgres:postgres@localhost:15432/psyness_events ./migrations`
 
 # Create new migration
 
@@ -64,3 +66,8 @@ The platform that helps to psychologists to consult their clients
 * Run `nvm use 14`
 * Run `npm install`
 * Run `ng serve`
+
+# Add new dependency
+
+* Run `cd <POETRY-DIRECTORY>`
+* Run `poetry add <dependency-name>`

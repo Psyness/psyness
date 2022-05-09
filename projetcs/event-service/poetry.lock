@@ -1,0 +1,54 @@
+[[package]]
+name = "sqlparse"
+version = "0.4.2"
+description = "A non-validating SQL parser."
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[[package]]
+name = "tabulate"
+version = "0.8.9"
+description = "Pretty-print tabular data"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+widechars = ["wcwidth"]
+
+[[package]]
+name = "yoyo-migrations"
+version = "7.3.2"
+description = "Database migrations with SQL"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+sqlparse = "*"
+tabulate = "*"
+
+[package.extras]
+mysql = ["pymysql"]
+postgres = ["psycopg2"]
+pyodbc = ["pyodbc"]
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.9"
+content-hash = "0d1925ac88f713dd6d177783c132e757fb4e703ca55c4a56ef496b92395bc59e"
+
+[metadata.files]
+sqlparse = [
+    {file = "sqlparse-0.4.2-py3-none-any.whl", hash = "sha256:48719e356bb8b42991bdbb1e8b83223757b93789c00910a616a071910ca4a64d"},
+    {file = "sqlparse-0.4.2.tar.gz", hash = "sha256:0c00730c74263a94e5a9919ade150dfc3b19c574389985446148402998287dae"},
+]
+tabulate = [
+    {file = "tabulate-0.8.9-py3-none-any.whl", hash = "sha256:d7c013fe7abbc5e491394e10fa845f8f32fe54f8dc60c6622c6cf482d25d47e4"},
+    {file = "tabulate-0.8.9.tar.gz", hash = "sha256:eb1d13f25760052e8931f2ef80aaf6045a6cceb47514db8beab24cded16f13a7"},
+]
+yoyo-migrations = [
+    {file = "yoyo-migrations-7.3.2.tar.gz", hash = "sha256:44840828e1a0169f541e702d5aedca8185ada68087e7bad4850a6fc5d71e77a4"},
+    {file = "yoyo_migrations-7.3.2-py3-none-any.whl", hash = "sha256:a6e6bc990732d4951c4e2a5b2815d60fe47a445f1c0d1b3433b9ef5f36bca8df"},
+]

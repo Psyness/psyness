@@ -1,41 +1,46 @@
 import { Injectable } from '@angular/core';
-import { debounce, interval, Observable, of } from "rxjs";
-import { Appointment } from "../models/appointment";
+import { map, mergeMap, Observable } from "rxjs";
+import { Appointment, AppointmentListResponse, AppointmentRequest } from "../models/appointment";
 import { CalendarEvent } from "angular-calendar";
-import { endOfHour, startOfHour } from 'date-fns';
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
 
-  private appointments: CalendarEvent[] = [
-    {
-      start: startOfHour(new Date()),
-      end: endOfHour(new Date()),
-      title: 'title'
-    }
-  ];
-
-  constructor() {
+  constructor(private readonly httpClient: HttpClient) {
   }
 
   getAppointments(): Observable<CalendarEvent[]> {
-    return of(this.appointments)
+    return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/events`, {
+      withCredentials: true
+    })
       .pipe(
-        debounce(() => interval(500))
+        map(result => result.events.map(event => ({
+            title: event.title,
+            start: new Date(event.start_time),
+            end: new Date(event.end_time),
+          }))
+        )
       );
   }
 
   saveAppointment(appointment: Appointment): Observable<CalendarEvent[]> {
-    const calendarEvent = {
-      start: appointment.start,
-      end: appointment.end,
-      title: appointment.title
+    const event: AppointmentRequest = {
+      title: appointment.title,
+      start_time: appointment.start.getTime(),
+      end_time: appointment.end.getTime(),
+      //TODO make not required
+      client_id: appointment.clientId || '',
     }
-    this.appointments = [...this.appointments, calendarEvent];
-
-    return this.getAppointments()
+    return this.httpClient.post<void>(`${environment.apiGatewayUrl}/events`, event, {
+      withCredentials: true
+    })
+      .pipe(
+        mergeMap(() => this.getAppointments())
+      );
   }
 
 }
