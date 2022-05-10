@@ -32,7 +32,8 @@ class EventRepository:
                         status=event.status,
                         start_time=event.start_time,
                         end_time=event.end_time,
-                        title=event.title) \
+                        title=event.title,
+                        initiator=event.initiator) \
                 .returning(events_table)
 
             user = conn.execute(query)

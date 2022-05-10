@@ -11,12 +11,13 @@ class EventStatus(str, Enum):
 
 class Event(BaseModel):
     id: UUID
-    psychologist_id: UUID
-    client_id: UUID
+    title: str
     status: EventStatus
     start_time: int
     end_time: int
-    title: str
+    psychologist_id: UUID
+    client_id: UUID
+    initiator: UUID
 
 
 class EventList(BaseModel):

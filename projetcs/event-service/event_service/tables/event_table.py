@@ -11,4 +11,5 @@ events_table = Table('events',
                      Column('status', String, nullable=False),
                      Column('start_time', BigInteger, nullable=False),
                      Column('end_time', BigInteger, nullable=False),
+                     Column('initiator', String, nullable=False),
                      Column('title', String, nullable=False))

@@ -17,5 +17,6 @@ class EventService:
         event = Event(**create_event.dict(),
                       id=uuid4(),
                       status=EventStatus.PENDING,
-                      psychologist_id=psychologist_id)
+                      psychologist_id=psychologist_id,
+                      initiator=psychologist_id)
         return await self._event_repository.save(event)
