@@ -2,7 +2,7 @@ from uuid import UUID
 
 from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends
-from models.event import CreateEvent, EventList, Event
+from models.event import CreateEvent, EventList, Event, UpdateEventStatus
 from services.event_service import EventService
 
 from dependencies import Container
@@ -23,3 +23,12 @@ async def save_events(psychologist_id: UUID,
                       event: CreateEvent,
                       event_service: EventService = Depends(Provide[Container.event_service])) -> Event:
     return await event_service.save_psychologist_event(psychologist_id, event)
+
+
+@router.post("/users/{user_id}/events/{event_id}/statuses")
+@inject
+async def save_events(user_id: UUID,
+                      event_id: UUID,
+                      event: UpdateEventStatus,
+                      event_service: EventService = Depends(Provide[Container.event_service])) -> Event:
+    return await event_service.update_event_status(user_id, event_id, event)

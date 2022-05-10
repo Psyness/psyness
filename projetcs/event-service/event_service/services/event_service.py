@@ -1,6 +1,6 @@
 from uuid import UUID, uuid4
 
-from models.event import CreateEvent, EventStatus, Event, EventList
+from models.event import CreateEvent, EventStatus, Event, EventList, UpdateEventStatus
 from repositories.event_repository import EventRepository
 
 
@@ -20,3 +20,6 @@ class EventService:
                       psychologist_id=psychologist_id,
                       initiator=psychologist_id)
         return await self._event_repository.save(event)
+
+    async def update_event_status(self, user_id: UUID, event_id: UUID, update_event: UpdateEventStatus) -> Event:
+        return await self._event_repository.update_status(user_id, event_id, update_event.status)

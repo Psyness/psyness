@@ -4,10 +4,11 @@ import { MatDialog } from "@angular/material/dialog";
 import { EventDialogComponent } from "./event-dialog/event-dialog.component";
 import { endOfHour, startOfHour } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
-import { Appointment, AppointmentInfo } from "../../models/appointment";
+import { Appointment, AppointmentInfo, AppointmentStatus } from "../../models/appointment";
 import { Observable } from "rxjs";
 import { SessionService } from "../../services/session.service";
 import { User } from "../../models/user";
+import { UpdateAppointmentDialogComponent } from "./approve-event-dialog/update-appointment-dialog.component";
 
 @Component({
   selector: 'app-calendar',
@@ -32,7 +33,6 @@ export class CalendarComponent implements OnInit {
     this.appointments$ = this.appointmentService.getAppointments()
     this.sessionService.getSession()
       .subscribe(user => this.user = user)
-    console.log(this.appointments$);
   }
 
   public showCreateEventDialog(event: { date: Date, sourceEvent: MouseEvent }) {
@@ -41,16 +41,37 @@ export class CalendarComponent implements OnInit {
       data: { start: startOfHour(event.date), end: endOfHour(event.date), title: '' },
     });
 
-    dialogRef.afterClosed().subscribe((result: Appointment) => {
+    dialogRef.afterClosed().subscribe((result: Required<Appointment>) => {
       if (result) {
         this.appointments$ = this.appointmentService.saveAppointment(result);
-        console.log(this.appointments$);
       }
     });
   }
 
   public showEditEventDialog(event: { event: CalendarEvent<AppointmentInfo> }) {
-    console.log('initiated by me', event.event.meta?.initiator === this.user?.id)
+    if (event.event.meta?.initiator === this.user?.id) {
+      this.showCancelDialog()
+      return
+    }
+
+    this.showApproveDialog(event.event)
+  }
+
+  private showApproveDialog(event: CalendarEvent<AppointmentInfo>) {
+    const dialogRef = this.dialog.open(UpdateAppointmentDialogComponent, {
+      width: '450px',
+      data: event.id,
+    });
+
+    dialogRef.afterClosed().subscribe((result: { appointmentId: string, status: AppointmentStatus }) => {
+      if (result) {
+        this.appointments$ = this.appointmentService.updateAppointment(result.appointmentId, result.status);
+      }
+    });
+  }
+
+  private showCancelDialog() {
+
   }
 
 }

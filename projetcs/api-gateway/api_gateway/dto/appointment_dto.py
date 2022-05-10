@@ -6,6 +6,8 @@ from pydantic import BaseModel
 
 class AppointmentStatus(str, Enum):
     PENDING = 'PENDING'
+    APPROVED = 'APPROVED'
+    CANCELLED = 'CANCELLED'
 
 
 class EventDto(BaseModel):
@@ -28,3 +30,7 @@ class CreateEventDto(BaseModel):
     client_id: str
     start_time: int
     end_time: int
+
+
+class UpdateEventStatusDto(BaseModel):
+    status: AppointmentStatus

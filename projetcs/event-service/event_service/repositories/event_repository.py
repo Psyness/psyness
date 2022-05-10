@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from models.event import Event
-from sqlalchemy import select, or_
+from models.event import Event, EventStatus
+from sqlalchemy import select, or_, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 from tables.event_table import events_table
@@ -16,9 +16,9 @@ class EventRepository:
         with self._engine.connect() as conn:
             query = select(events_table) \
                 .where(or_(
-                events_table.c.psychologist_id == user_id,
-                events_table.c.client_id == user_id,
-            ))
+                    events_table.c.psychologist_id == user_id,
+                    events_table.c.client_id == user_id,
+                ))
 
             events = conn.execute(query)
             return events.all()
@@ -38,3 +38,16 @@ class EventRepository:
 
             user = conn.execute(query)
             return user.first()
+
+    async def update_status(self, user_id: UUID, event_id: UUID, status: EventStatus):
+        with self._engine.connect() as conn:
+            query = update(events_table) \
+                .values(status=status) \
+                .where(events_table.c.id == event_id) \
+                .where(or_(
+                    events_table.c.client_id == user_id,
+                    events_table.c.psychologist_id == user_id
+                )) \
+                .returning(events_table)
+            invitation = conn.execute(query)
+            return invitation.first()

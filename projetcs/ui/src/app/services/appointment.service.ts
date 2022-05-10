@@ -17,7 +17,9 @@ import { environment } from "../../environments/environment";
 export class AppointmentService {
 
   private eventColors: { [key in AppointmentStatus]: string } = {
-    PENDING: '#d9d7d7'
+    PENDING: '#d9d7d7',
+    APPROVED: 'blue',
+    CANCELLED: 'red',
   }
 
   constructor(private readonly httpClient: HttpClient) {
@@ -29,6 +31,7 @@ export class AppointmentService {
     })
       .pipe(
         map(result => result.events.map(event => ({
+            id: event.id,
             title: event.title,
             start: new Date(event.start_time),
             end: new Date(event.end_time),
@@ -44,15 +47,23 @@ export class AppointmentService {
       );
   }
 
-  saveAppointment(appointment: Appointment): Observable<CalendarEvent<AppointmentInfo>[]> {
+  saveAppointment(appointment: Required<Appointment>): Observable<CalendarEvent<AppointmentInfo>[]> {
     const event: AppointmentRequest = {
       title: appointment.title,
       start_time: appointment.start.getTime(),
       end_time: appointment.end.getTime(),
-      //TODO make not required
-      client_id: appointment.clientId || '',
+      client_id: appointment.clientId,
     }
     return this.httpClient.post<void>(`${environment.apiGatewayUrl}/events`, event, {
+      withCredentials: true
+    })
+      .pipe(
+        mergeMap(() => this.getAppointments())
+      );
+  }
+
+  updateAppointment(eventId: string, status: AppointmentStatus): Observable<CalendarEvent<AppointmentInfo>[]> {
+    return this.httpClient.post<void>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, { status }, {
       withCredentials: true
     })
       .pipe(

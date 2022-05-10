@@ -7,6 +7,8 @@ from pydantic import BaseModel
 
 class EventStatus(str, Enum):
     PENDING = 'PENDING'
+    APPROVED = 'APPROVED'
+    CANCELLED = 'CANCELLED'
 
 
 class Event(BaseModel):
@@ -29,3 +31,7 @@ class CreateEvent(BaseModel):
     start_time: int
     end_time: int
     title: str
+
+
+class UpdateEventStatus(BaseModel):
+    status: EventStatus
