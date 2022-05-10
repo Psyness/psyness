@@ -1,3 +1,7 @@
+export enum AppointmentStatus {
+  PENDING = 'PENDING'
+}
+
 export interface Appointment {
   title: string;
   clientId?: string;
@@ -8,6 +12,7 @@ export interface Appointment {
 export interface AppointmentResponse {
   title: string;
   client_id: string;
+  status: AppointmentStatus;
   start_time: number;
   end_time: number;
 }
