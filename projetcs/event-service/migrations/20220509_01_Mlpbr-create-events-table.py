@@ -10,6 +10,7 @@ steps = [
     step("""
         CREATE TABLE events (
             id UUID NOT NULL,
+            title TEXT NOT NULL,
             psychologist_id UUID NOT NULL,
             client_id UUID NOT NULL,
             start_time BIGINT NOT NULL,

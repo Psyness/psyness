@@ -7,6 +7,10 @@ authors = ["Andrey Kozel <andrey.kozel@spanning.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 yoyo-migrations = "^7.3.2"
+psycopg2-binary = "^2.9.3"
+dependency-injector = "^4.39.1"
+SQLAlchemy = "^1.4.35"
+uvicorn = "^0.17.6"
 
 [tool.poetry.dev-dependencies]
 
