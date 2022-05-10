@@ -11,6 +11,7 @@
     [locale]="locale"
     [events]="appointments"
     (hourSegmentClicked)="showCreateEventDialog($event)"
+    (eventClicked)="showEditEventDialog($event)"
   >
   </mwl-calendar-week-view>
 </div>

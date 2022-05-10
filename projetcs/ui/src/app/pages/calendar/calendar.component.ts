@@ -4,8 +4,10 @@ import { MatDialog } from "@angular/material/dialog";
 import { EventDialogComponent } from "./event-dialog/event-dialog.component";
 import { endOfHour, startOfHour } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
-import { Appointment } from "../../models/appointment";
+import { Appointment, AppointmentInfo } from "../../models/appointment";
 import { Observable } from "rxjs";
+import { SessionService } from "../../services/session.service";
+import { User } from "../../models/user";
 
 @Component({
   selector: 'app-calendar',
@@ -14,18 +16,22 @@ import { Observable } from "rxjs";
 })
 export class CalendarComponent implements OnInit {
 
-  public appointments$?: Observable<CalendarEvent[]>;
+  public appointments$?: Observable<CalendarEvent<AppointmentInfo>[]>;
+  public user?: User;
   public viewDate = new Date()
   public locale: string = 'ru';
 
   constructor(
     private readonly dialog: MatDialog,
-    private readonly appointmentService: AppointmentService
+    private readonly appointmentService: AppointmentService,
+    private readonly sessionService: SessionService
   ) {
   }
 
   ngOnInit(): void {
     this.appointments$ = this.appointmentService.getAppointments()
+    this.sessionService.getSession()
+      .subscribe(user => this.user = user)
     console.log(this.appointments$);
   }
 
@@ -41,6 +47,10 @@ export class CalendarComponent implements OnInit {
         console.log(this.appointments$);
       }
     });
+  }
+
+  public showEditEventDialog(event: { event: CalendarEvent<AppointmentInfo> }) {
+    console.log('initiated by me', event.event.meta?.initiator === this.user?.id)
   }
 
 }

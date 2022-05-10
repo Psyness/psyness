@@ -11,11 +11,12 @@ class AppointmentStatus(str, Enum):
 class EventDto(BaseModel):
     id: str
     title: str
-    psychologist_id: str
-    client_id: str
     start_time: int
     end_time: int
     status: AppointmentStatus
+    psychologist_id: str
+    client_id: str
+    initiator: str
 
 
 class EventListDto(BaseModel):

@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { map, mergeMap, Observable } from "rxjs";
-import { Appointment, AppointmentListResponse, AppointmentRequest, AppointmentStatus } from "../models/appointment";
+import {
+  Appointment,
+  AppointmentInfo,
+  AppointmentListResponse,
+  AppointmentRequest,
+  AppointmentStatus
+} from "../models/appointment";
 import { CalendarEvent } from "angular-calendar";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
@@ -17,7 +23,7 @@ export class AppointmentService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  getAppointments(): Observable<CalendarEvent[]> {
+  getAppointments(): Observable<CalendarEvent<AppointmentInfo>[]> {
     return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/events`, {
       withCredentials: true
     })
@@ -29,13 +35,16 @@ export class AppointmentService {
             color: {
               primary: this.eventColors[event.status],
               secondary: this.eventColors[event.status]
+            },
+            meta: {
+              initiator: event.initiator
             }
           }))
         )
       );
   }
 
-  saveAppointment(appointment: Appointment): Observable<CalendarEvent[]> {
+  saveAppointment(appointment: Appointment): Observable<CalendarEvent<AppointmentInfo>[]> {
     const event: AppointmentRequest = {
       title: appointment.title,
       start_time: appointment.start.getTime(),
