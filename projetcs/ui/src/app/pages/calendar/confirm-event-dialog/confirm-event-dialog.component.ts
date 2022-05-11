@@ -3,14 +3,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AppointmentStatus } from "../../../models/appointment";
 
 @Component({
-  selector: 'app-approve-event-dialog',
-  templateUrl: './update-appointment-dialog.component.html',
-  styleUrls: ['./update-appointment-dialog.component.css']
+  selector: 'app-confirm-event-dialog',
+  templateUrl: './confirm-event-dialog.component.html',
+  styleUrls: ['./confirm-event-dialog.component.css']
 })
-export class UpdateAppointmentDialogComponent {
+export class ConfirmEventDialogComponent {
 
   constructor(
-    public readonly dialogRef: MatDialogRef<UpdateAppointmentDialogComponent>,
+    public readonly dialogRef: MatDialogRef<ConfirmEventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public appointmentId: string
   ) {
     console.log(appointmentId)

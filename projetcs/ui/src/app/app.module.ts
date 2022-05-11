@@ -42,7 +42,8 @@ import {
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { UpdateAppointmentDialogComponent } from './pages/calendar/approve-event-dialog/update-appointment-dialog.component';
+import { ConfirmEventDialogComponent } from './pages/calendar/confirm-event-dialog/confirm-event-dialog.component';
+import { ViewEventDialogComponent } from './pages/calendar/view-event-dialog/view-event-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { UpdateAppointmentDialogComponent } from './pages/calendar/approve-event
     InvitationComponent,
     EventDialogComponent,
     ClientsAutocompleteComponent,
-    UpdateAppointmentDialogComponent
+    ConfirmEventDialogComponent,
+    ViewEventDialogComponent
   ],
   imports: [
     BrowserModule,

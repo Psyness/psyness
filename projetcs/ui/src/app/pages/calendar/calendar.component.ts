@@ -8,7 +8,8 @@ import { Appointment, AppointmentInfo, AppointmentStatus } from "../../models/ap
 import { Observable } from "rxjs";
 import { SessionService } from "../../services/session.service";
 import { User } from "../../models/user";
-import { UpdateAppointmentDialogComponent } from "./approve-event-dialog/update-appointment-dialog.component";
+import { ConfirmEventDialogComponent } from "./confirm-event-dialog/confirm-event-dialog.component";
+import { ViewEventDialogComponent } from "./view-event-dialog/view-event-dialog.component";
 
 @Component({
   selector: 'app-calendar',
@@ -50,7 +51,7 @@ export class CalendarComponent implements OnInit {
 
   public showEditEventDialog(event: { event: CalendarEvent<AppointmentInfo> }) {
     if (event.event.meta?.initiator === this.user?.id) {
-      this.showCancelDialog()
+      this.showViewDialog(event.event)
       return
     }
 
@@ -58,7 +59,7 @@ export class CalendarComponent implements OnInit {
   }
 
   private showApproveDialog(event: CalendarEvent<AppointmentInfo>) {
-    const dialogRef = this.dialog.open(UpdateAppointmentDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmEventDialogComponent, {
       width: '450px',
       data: event.id,
     });
@@ -70,8 +71,17 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  private showCancelDialog() {
+  private showViewDialog(event: CalendarEvent<AppointmentInfo>) {
+    const dialogRef = this.dialog.open(ViewEventDialogComponent, {
+      width: '450px',
+      data: event.id,
+    });
 
+    dialogRef.afterClosed().subscribe((result: { appointmentId: string, status: AppointmentStatus }) => {
+      if (result) {
+        this.appointments$ = this.appointmentService.updateAppointment(result.appointmentId, result.status);
+      }
+    });
   }
 
 }
