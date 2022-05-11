@@ -5,6 +5,7 @@ import {
   AppointmentInfo,
   AppointmentListResponse,
   AppointmentRequest,
+  AppointmentResponse,
   AppointmentStatus
 } from "../models/appointment";
 import { CalendarEvent } from "angular-calendar";
@@ -31,10 +32,7 @@ export class AppointmentService {
     })
       .pipe(
         map(result => result.events.map(event => {
-            const initiatedByCurrentUser = result.user_id === event.initiator;
-            const status = event.attendees.find(attendee => attendee.uuid !== result.user_id)?.status || AppointmentStatus.PENDING
-            const colorSet = this.eventColors[status];
-            const color = initiatedByCurrentUser ? colorSet.initiatorColor : colorSet.color
+            const color = this.calculateColor(event, result.user_id);
             return {
               id: event.id,
               title: event.title,
@@ -51,6 +49,23 @@ export class AppointmentService {
           })
         )
       );
+  }
+
+  private calculateColor(appointment: AppointmentResponse, user_id: string): string {
+    const { attendees, initiator } = appointment;
+    const isCancelled = attendees.filter(a => a.status === AppointmentStatus.CANCELLED).length > 0
+    if (isCancelled) {
+      return this.eventColors[AppointmentStatus.CANCELLED].color;
+    }
+
+    const isApproved = attendees.filter(a => a.status === AppointmentStatus.APPROVED).length === attendees.length
+    if (isApproved) {
+      return this.eventColors[AppointmentStatus.APPROVED].color;
+    }
+
+    const initiatedByCurrentUser = user_id === initiator;
+    const colors = this.eventColors[AppointmentStatus.PENDING];
+    return initiatedByCurrentUser ? colors.initiatorColor : colors.color;
   }
 
   saveAppointment(appointment: Required<Appointment>): Observable<CalendarEvent<AppointmentInfo>[]> {
