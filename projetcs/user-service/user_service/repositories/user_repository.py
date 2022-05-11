@@ -1,9 +1,9 @@
-from sqlalchemy import or_, union
+from sqlalchemy import or_, union, text
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 from sqlalchemy.sql import select
 
-from models.user_model import User
+from models.user_model import User, UserRole
 from tables.contract_table import app_user_contract_table
 from tables.user_table import users_table
 
@@ -39,11 +39,11 @@ class UserRepository:
         user_id = kwargs['user_id']
         query = kwargs['filter']
         with self._engine.connect() as conn:
-            clients_query = select(users_table) \
+            clients_query = select(users_table, text("'CLIENT' AS relation")) \
                 .join(app_user_contract_table, app_user_contract_table.c.client_id == users_table.c.id) \
                 .where(app_user_contract_table.c.psychologist_id == user_id)
 
-            psychologist_query = select(users_table) \
+            psychologist_query = select(users_table, text("'PSYCHOLOGIST' AS relation")) \
                 .join(app_user_contract_table, app_user_contract_table.c.psychologist_id == users_table.c.id) \
                 .where(app_user_contract_table.c.client_id == user_id)
 

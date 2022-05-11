@@ -11,7 +11,7 @@ from dependencies import Container
 router = APIRouter()
 
 
-@router.get("/clients")
+@router.get("/contacts")
 @secure()
 @inject
 async def find_clients(

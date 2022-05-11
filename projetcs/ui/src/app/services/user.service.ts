@@ -14,7 +14,7 @@ export class UserService {
   }
 
   findPsychologistClients(options: UserFilter = {}): Observable<User[]> {
-    return this.httpClient.get<UserListResponse>(`${environment.apiGatewayUrl}/clients`, {
+    return this.httpClient.get<UserListResponse>(`${environment.apiGatewayUrl}/contacts`, {
       params: { ...options },
       withCredentials: true
     })
