@@ -4,10 +4,15 @@ from typing import List
 from pydantic import BaseModel
 
 
-class AppointmentStatus(str, Enum):
+class EventStatus(str, Enum):
     PENDING = 'PENDING'
     APPROVED = 'APPROVED'
     CANCELLED = 'CANCELLED'
+
+
+class EventAttendee(BaseModel):
+    uuid: str
+    status: EventStatus
 
 
 class EventDto(BaseModel):
@@ -15,10 +20,8 @@ class EventDto(BaseModel):
     title: str
     start_time: int
     end_time: int
-    status: AppointmentStatus
-    psychologist_id: str
-    client_id: str
     initiator: str
+    attendees: List[EventAttendee]
 
 
 class EventListDto(BaseModel):
@@ -28,10 +31,10 @@ class EventListDto(BaseModel):
 
 class CreateEventDto(BaseModel):
     title: str
-    client_id: str
+    attendee_id: str
     start_time: int
     end_time: int
 
 
 class UpdateEventStatusDto(BaseModel):
-    status: AppointmentStatus
+    status: EventStatus

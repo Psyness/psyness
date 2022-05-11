@@ -15,7 +15,7 @@ export interface UserFilter {
 }
 
 export interface UserInfo {
-  clientId: string;
+  userId: string;
   clientFullName: string;
 }
 

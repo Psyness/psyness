@@ -23,7 +23,7 @@ export class EventDialogComponent {
   }
 
   onClientSelected(event: UserInfo) {
-    this.appointment.clientId = event.clientId
+    this.appointment.attendeeId = event.userId
     this.appointment.title = event.clientFullName
   }
 

@@ -6,7 +6,7 @@ export enum AppointmentStatus {
 
 export interface Appointment {
   title: string;
-  clientId?: string;
+  attendeeId?: string;
   start: Date;
   end: Date;
 }
@@ -15,17 +15,26 @@ export interface AppointmentInfo {
   initiator: string
 }
 
+export interface AppointmentAttendee {
+  uuid: string;
+  status: AppointmentStatus;
+}
+
 export interface AppointmentResponse {
   id: string;
   title: string;
-  client_id: string;
-  status: AppointmentStatus;
   start_time: number;
   end_time: number;
   initiator: string;
+  attendees: AppointmentAttendee[]
 }
 
-export type AppointmentRequest = Pick<AppointmentResponse, 'title' | 'start_time' | 'end_time' | 'client_id'>
+export interface AppointmentRequest {
+  title: string;
+  attendee_id: string;
+  start_time: number;
+  end_time: number;
+}
 
 export interface AppointmentListResponse {
   user_id: string

@@ -32,7 +32,8 @@ export class AppointmentService {
       .pipe(
         map(result => result.events.map(event => {
             const initiatedByCurrentUser = result.user_id === event.initiator;
-            const colorSet = this.eventColors[event.status];
+            const status = event.attendees.find(attendee => attendee.uuid !== result.user_id)?.status || AppointmentStatus.PENDING
+            const colorSet = this.eventColors[status];
             const color = initiatedByCurrentUser ? colorSet.initiatorColor : colorSet.color
             return {
               id: event.id,
@@ -57,7 +58,7 @@ export class AppointmentService {
       title: appointment.title,
       start_time: appointment.start.getTime(),
       end_time: appointment.end.getTime(),
-      client_id: appointment.clientId,
+      attendee_id: appointment.attendeeId,
     }
     return this.httpClient.post<void>(`${environment.apiGatewayUrl}/events`, event, {
       withCredentials: true

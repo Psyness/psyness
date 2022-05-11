@@ -11,15 +11,18 @@ class EventStatus(str, Enum):
     CANCELLED = 'CANCELLED'
 
 
+class EventAttendee(BaseModel):
+    uuid: UUID
+    status: EventStatus
+
+
 class Event(BaseModel):
     id: UUID
     title: str
-    status: EventStatus
     start_time: int
     end_time: int
-    psychologist_id: UUID
-    client_id: UUID
     initiator: UUID
+    attendees: List[EventAttendee]
 
 
 class EventList(BaseModel):
@@ -27,7 +30,7 @@ class EventList(BaseModel):
 
 
 class CreateEvent(BaseModel):
-    client_id: UUID
+    attendee_id: UUID
     start_time: int
     end_time: int
     title: str

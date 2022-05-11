@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from models.event import Event, EventStatus
-from sqlalchemy import select, or_, update
+from sqlalchemy import select, text
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 from tables.event_table import events_table
@@ -15,10 +15,7 @@ class EventRepository:
     async def find_events(self, user_id: UUID):
         with self._engine.connect() as conn:
             query = select(events_table) \
-                .where(or_(
-                    events_table.c.psychologist_id == user_id,
-                    events_table.c.client_id == user_id,
-                ))
+                .where(events_table.c.attendees.op('@>')([{'uuid': str(user_id)}]))
 
             events = conn.execute(query)
             return events.all()
@@ -27,13 +24,11 @@ class EventRepository:
         with self._engine.connect() as conn:
             query = insert(events_table) \
                 .values(id=event.id,
-                        psychologist_id=event.psychologist_id,
-                        client_id=event.client_id,
-                        status=event.status,
                         start_time=event.start_time,
                         end_time=event.end_time,
                         title=event.title,
-                        initiator=event.initiator) \
+                        initiator=event.initiator,
+                        attendees=[{'uuid': str(a.uuid), 'status': a.status} for a in event.attendees]) \
                 .returning(events_table)
 
             user = conn.execute(query)
@@ -41,13 +36,17 @@ class EventRepository:
 
     async def update_status(self, user_id: UUID, event_id: UUID, status: EventStatus):
         with self._engine.connect() as conn:
-            query = update(events_table) \
-                .values(status=status) \
-                .where(events_table.c.id == event_id) \
-                .where(or_(
-                    events_table.c.client_id == user_id,
-                    events_table.c.psychologist_id == user_id
-                )) \
-                .returning(events_table)
-            invitation = conn.execute(query)
-            return invitation.first()
+            statement = text("""
+                WITH attendee_status AS (SELECT ('{' || index - 1 || ',status}')::TEXT[] AS path
+                           FROM events,
+                                jsonb_array_elements(attendees) WITH ORDINALITY arr(attendee, index)
+                           WHERE id = :event_id AND attendee ->> 'uuid' = :attendee_id)
+                UPDATE events
+                SET attendees = jsonb_set(attendees, attendee_status.path, :status, false)
+                    FROM attendee_status
+                WHERE id = :event_id
+                RETURNING *;
+            """)
+
+            result = conn.execute(statement, attendee_id=str(user_id), event_id=str(event_id), status=f'"{status}"')
+            return result.first()
