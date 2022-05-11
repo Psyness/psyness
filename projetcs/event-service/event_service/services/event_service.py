@@ -24,7 +24,9 @@ class EventService:
                       end_time=create_event.end_time,
                       initiator=user_id,
                       attendees=attendees)
-        return await self._event_repository.save(event)
+        saved_event = await self._event_repository.save(event)
+        return Event(**saved_event)
 
     async def update_event_status(self, user_id: UUID, event_id: UUID, update_event: UpdateEventStatus) -> Event:
-        return await self._event_repository.update_status(user_id, event_id, update_event.status)
+        event = await self._event_repository.update_status(user_id, event_id, update_event.status)
+        return Event(**event)

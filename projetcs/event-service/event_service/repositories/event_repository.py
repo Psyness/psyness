@@ -35,7 +35,7 @@ class EventRepository:
             return user.first()
 
     async def update_status(self, user_id: UUID, event_id: UUID, status: EventStatus):
-        with self._engine.connect() as conn:
+        with self._engine.connect().execution_options(autocommit=True) as conn:
             statement = text("""
                 WITH attendee_status AS (SELECT ('{' || index - 1 || ',status}')::TEXT[] AS path
                            FROM events,
@@ -45,7 +45,7 @@ class EventRepository:
                 SET attendees = jsonb_set(attendees, attendee_status.path, :status, false)
                     FROM attendee_status
                 WHERE id = :event_id
-                RETURNING *;
+                RETURNING events.*;
             """)
 
             result = conn.execute(statement, attendee_id=str(user_id), event_id=str(event_id), status=f'"{status}"')
