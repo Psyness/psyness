@@ -22,6 +22,7 @@ class EventDto(BaseModel):
 
 
 class EventListDto(BaseModel):
+    user_id: str
     events: List[EventDto]
 
 

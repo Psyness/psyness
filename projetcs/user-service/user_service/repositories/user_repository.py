@@ -1,4 +1,4 @@
-from sqlalchemy import or_
+from sqlalchemy import or_, union
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 from sqlalchemy.sql import select
@@ -35,19 +35,27 @@ class UserRepository:
             user = conn.execute(query)
             return user.first()
 
-    async def find_clients(self, **kwargs):
-        psychologist_id = kwargs['psychologist_id']
-        filter = kwargs['filter']
+    async def find_contacts(self, **kwargs):
+        user_id = kwargs['user_id']
+        query = kwargs['filter']
         with self._engine.connect() as conn:
-            query = select(users_table) \
+            clients_query = select(users_table) \
                 .join(app_user_contract_table, app_user_contract_table.c.client_id == users_table.c.id) \
-                .where(app_user_contract_table.c.psychologist_id == psychologist_id)
+                .where(app_user_contract_table.c.psychologist_id == user_id)
 
-            if filter:
-                query = query.where(or_(
-                    users_table.c.first_name.ilike(f'{filter}%'),
-                    users_table.c.last_name.ilike(f'{filter}%'),
+            psychologist_query = select(users_table) \
+                .join(app_user_contract_table, app_user_contract_table.c.psychologist_id == users_table.c.id) \
+                .where(app_user_contract_table.c.client_id == user_id)
+
+            if query:
+                clients_query = clients_query.where(or_(
+                    users_table.c.first_name.ilike(f'{query}%'),
+                    users_table.c.last_name.ilike(f'{query}%'),
+                ))
+                psychologist_query = psychologist_query.where(or_(
+                    users_table.c.first_name.ilike(f'{query}%'),
+                    users_table.c.last_name.ilike(f'{query}%'),
                 ))
 
-            user = conn.execute(query)
+            user = conn.execute(union(clients_query, psychologist_query))
             return user.all()

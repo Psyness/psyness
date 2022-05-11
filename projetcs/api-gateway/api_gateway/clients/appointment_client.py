@@ -1,3 +1,4 @@
+import json
 from uuid import UUID
 
 import httpx
@@ -13,7 +14,7 @@ class AppointmentClient:
 
     async def find_events(self, user_id: str) -> EventListDto:
         r = httpx.get(f'{self._event_service_url}/users/{user_id}/events')
-        return EventListDto.parse_raw(r.content)
+        return EventListDto(**json.loads(r.content), user_id=user_id)
 
     async def create_event(self, user_id, event: CreateEventDto) -> EventDto:
         r = httpx.post(f'{self._event_service_url}/users/{user_id}/events', content=event.json())

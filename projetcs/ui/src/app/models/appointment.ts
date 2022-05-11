@@ -28,5 +28,6 @@ export interface AppointmentResponse {
 export type AppointmentRequest = Pick<AppointmentResponse, 'title' | 'start_time' | 'end_time' | 'client_id'>
 
 export interface AppointmentListResponse {
+  user_id: string
   events: AppointmentResponse[]
 }

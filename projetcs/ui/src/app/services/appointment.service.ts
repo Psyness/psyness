@@ -16,10 +16,10 @@ import { environment } from "../../environments/environment";
 })
 export class AppointmentService {
 
-  private eventColors: { [key in AppointmentStatus]: string } = {
-    PENDING: '#d9d7d7',
-    APPROVED: 'blue',
-    CANCELLED: 'red',
+  private eventColors: { [key in AppointmentStatus]: { initiatorColor: string, color: string } } = {
+    PENDING: { color: '#d9d7d7', initiatorColor: 'yellow' },
+    APPROVED: { color: 'blue', initiatorColor: 'blue' },
+    CANCELLED: { color: 'red', initiatorColor: 'red' },
   }
 
   constructor(private readonly httpClient: HttpClient) {
@@ -30,19 +30,24 @@ export class AppointmentService {
       withCredentials: true
     })
       .pipe(
-        map(result => result.events.map(event => ({
-            id: event.id,
-            title: event.title,
-            start: new Date(event.start_time),
-            end: new Date(event.end_time),
-            color: {
-              primary: this.eventColors[event.status],
-              secondary: this.eventColors[event.status]
-            },
-            meta: {
-              initiator: event.initiator
+        map(result => result.events.map(event => {
+            const initiatedByCurrentUser = result.user_id === event.initiator;
+            const colorSet = this.eventColors[event.status];
+            const color = initiatedByCurrentUser ? colorSet.initiatorColor : colorSet.color
+            return {
+              id: event.id,
+              title: event.title,
+              start: new Date(event.start_time),
+              end: new Date(event.end_time),
+              color: {
+                primary: color,
+                secondary: color
+              },
+              meta: {
+                initiator: event.initiator
+              }
             }
-          }))
+          })
         )
       );
   }

@@ -4,11 +4,11 @@ import { User } from "../../models/user";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-clients',
-  templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.css']
+  selector: 'app-contacts',
+  templateUrl: './contacts.component.html',
+  styleUrls: ['./contacts.component.css']
 })
-export class ClientsComponent implements OnInit {
+export class ContactsComponent implements OnInit {
 
   public displayedColumns: string[] = ['username', 'firstName', 'lastName']
   public users: User[] = [];

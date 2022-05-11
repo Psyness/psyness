@@ -22,7 +22,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from "@angular/material/menu";
-import { ClientsComponent } from './pages/clients/clients.component';
+import { ContactsComponent } from './pages/contacts/contacts.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { MatTableModule } from "@angular/material/table";
@@ -50,7 +50,7 @@ import { UpdateAppointmentDialogComponent } from './pages/calendar/approve-event
     LoginComponent,
     HomeComponent,
     AuthorizedLayoutComponent,
-    ClientsComponent,
+    ContactsComponent,
     CalendarComponent,
     TasksComponent,
     InvitationComponent,

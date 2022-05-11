@@ -3,7 +3,6 @@ import { debounce, interval, Observable, startWith } from "rxjs";
 import { FormControl } from "@angular/forms";
 import { UserService } from "../../services/user.service";
 import { User, UserInfo } from "../../models/user";
-import { Appointment } from "../../models/appointment";
 import { MatOption } from "@angular/material/core";
 
 @Component({
