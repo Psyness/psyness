@@ -41,7 +41,6 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
-import { MatDatepickerModule } from "@angular/material/datepicker";
 import { ConfirmEventDialogComponent } from './pages/calendar/confirm-event-dialog/confirm-event-dialog.component';
 import { ViewEventDialogComponent } from './pages/calendar/view-event-dialog/view-event-dialog.component';
 
@@ -95,8 +94,7 @@ import { ViewEventDialogComponent } from './pages/calendar/view-event-dialog/vie
     ReactiveFormsModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
-    NgxMatTimepickerModule,
-    MatDatepickerModule
+    NgxMatTimepickerModule
   ],
   providers: [
     {

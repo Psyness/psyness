@@ -5,7 +5,9 @@
 <table mat-table [dataSource]="users" class="mat-elevation-z8">
   <ng-container matColumnDef="username">
     <th mat-header-cell *matHeaderCellDef> {{ 'CLIENTS.USERNAME_COLUMN' | translate }}</th>
-    <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    <td mat-cell *matCellDef="let element">
+      {{element.username}} {{element.relation}}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="firstName">

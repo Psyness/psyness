@@ -23,7 +23,8 @@ export class UserService {
             id: user.id,
             username: user.username,
             lastName: user.last_name,
-            firstName: user.first_name
+            firstName: user.first_name,
+            relation: user.relation
           }))
         )
       );

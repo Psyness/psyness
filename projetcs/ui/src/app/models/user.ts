@@ -2,7 +2,8 @@ export interface UserResponse {
   id: string
   username: string
   first_name: string
-  last_name: string
+  last_name: string,
+  relation: string
 }
 
 export interface UserListResponse {
@@ -23,4 +24,8 @@ export interface User {
   username: string
   firstName: string
   lastName: string
+}
+
+export interface Contact extends User{
+  relation: string
 }
