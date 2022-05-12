@@ -26,6 +26,7 @@ export interface AppointmentResponse {
   start_time: number;
   end_time: number;
   initiator: string;
+  hidden?: boolean;
   attendees: AppointmentAttendee[]
 }
 

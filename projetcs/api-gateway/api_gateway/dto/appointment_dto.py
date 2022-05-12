@@ -46,6 +46,7 @@ class ContractorEventDto(BaseModel):
     start_time: int
     end_time: int
     initiator: Optional[str]
+    hidden: bool
     attendees: List[EventAttendee]
 
 

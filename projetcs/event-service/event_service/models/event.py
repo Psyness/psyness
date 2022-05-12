@@ -47,6 +47,7 @@ class ContractorEvent(BaseModel):
     end_time: int
     initiator: Optional[UUID]
     attendees: List[EventAttendee]
+    hidden: bool
 
 
 class ContractorEventList(BaseModel):

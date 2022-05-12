@@ -78,6 +78,11 @@ export class AppointmentService {
 
   private calculateColor(appointment: AppointmentResponse, user_id: string): string {
     const { attendees, initiator } = appointment;
+
+    if (appointment.hidden) {
+      return 'black';
+    }
+
     const isCancelled = attendees.filter(a => a.status === AppointmentStatus.CANCELLED).length > 0
     if (isCancelled) {
       return this.eventColors[AppointmentStatus.CANCELLED].color;

@@ -21,13 +21,14 @@ class EventService:
 
     def _adjust_event(self, event, user_id: UUID):
         attendee_uuids = [attendee.get('uuid') for attendee in event.attendees]
-        if user_id in attendee_uuids:
-            return event
+        if str(user_id) in attendee_uuids:
+            return {**event, 'hidden': False}
 
         return {
             'title': 'Busy',
             'start_time': event.start_time,
             'end_time': event.end_time,
+            'hidden': True,
             'attendees': []
         }
 
