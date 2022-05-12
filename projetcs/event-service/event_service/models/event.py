@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -38,3 +38,16 @@ class CreateEvent(BaseModel):
 
 class UpdateEventStatus(BaseModel):
     status: EventStatus
+
+
+class ContractorEvent(BaseModel):
+    id: Optional[UUID]
+    title: str
+    start_time: int
+    end_time: int
+    initiator: Optional[UUID]
+    attendees: List[EventAttendee]
+
+
+class ContractorEventList(BaseModel):
+    events: List[ContractorEvent]

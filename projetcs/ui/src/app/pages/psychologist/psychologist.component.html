@@ -1,1 +1,15 @@
-<p>psychologist works!</p>
+<ng-template #loading>
+  <div class="text-center">
+    <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
+    Loading events...
+  </div>
+</ng-template>
+
+<div *ngIf="appointments$ | async; else loading; let appointments">
+  <mwl-calendar-week-view
+    [viewDate]="viewDate"
+    [locale]="locale"
+    [events]="appointments"
+  >
+  </mwl-calendar-week-view>
+</div>

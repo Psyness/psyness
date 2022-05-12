@@ -1,6 +1,7 @@
 from uuid import UUID, uuid4
 
-from models.event import CreateEvent, EventStatus, Event, EventList, UpdateEventStatus, EventAttendee
+from models.event import CreateEvent, EventStatus, Event, EventList, UpdateEventStatus, EventAttendee, \
+    ContractorEventList
 from repositories.event_repository import EventRepository
 
 
@@ -12,6 +13,23 @@ class EventService:
     async def find_events(self, user_id: UUID) -> EventList:
         events = await self._event_repository.find_events(user_id)
         return EventList(events=events)
+
+    async def find_contractor_events(self, user_id: UUID, contractor_id: UUID) -> ContractorEventList:
+        raw_events = await self._event_repository.find_events(contractor_id)
+        adjusted_events = [self._adjust_event(event, user_id) for event in raw_events]
+        return ContractorEventList(events=adjusted_events)
+
+    def _adjust_event(self, event, user_id: UUID):
+        attendee_uuids = [attendee.get('uuid') for attendee in event.attendees]
+        if user_id in attendee_uuids:
+            return event
+
+        return {
+            'title': 'Busy',
+            'start_time': event.start_time,
+            'end_time': event.end_time,
+            'attendees': []
+        }
 
     async def save_event(self, user_id, create_event: CreateEvent) -> Event:
         attendees = [

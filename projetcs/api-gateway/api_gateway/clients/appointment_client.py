@@ -4,7 +4,7 @@ from uuid import UUID
 import httpx
 
 from configs.settings import Settings
-from dto.appointment_dto import EventListDto, EventDto, CreateEventDto, UpdateEventStatusDto
+from dto.appointment_dto import EventListDto, EventDto, CreateEventDto, UpdateEventStatusDto, ContractorEventListDto
 
 
 class AppointmentClient:
@@ -15,6 +15,10 @@ class AppointmentClient:
     async def find_events(self, user_id: str) -> EventListDto:
         r = httpx.get(f'{self._event_service_url}/users/{user_id}/events')
         return EventListDto(**json.loads(r.content), user_id=user_id)
+
+    async def find_contractor_events(self, user_id, contractor_id):
+        r = httpx.get(f'{self._event_service_url}/users/{user_id}/contractor-events/{contractor_id}')
+        return ContractorEventListDto(**json.loads(r.content), user_id=user_id)
 
     async def create_event(self, user_id, event: CreateEventDto) -> EventDto:
         r = httpx.post(f'{self._event_service_url}/users/{user_id}/events', content=event.json())

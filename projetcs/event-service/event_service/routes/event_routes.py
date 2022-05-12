@@ -2,7 +2,7 @@ from uuid import UUID
 
 from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends
-from models.event import CreateEvent, EventList, Event, UpdateEventStatus
+from models.event import CreateEvent, EventList, Event, UpdateEventStatus, ContractorEventList
 from services.event_service import EventService
 
 from dependencies import Container
@@ -15,6 +15,14 @@ router = APIRouter()
 async def get_events(user_id: UUID,
                      event_service: EventService = Depends(Provide[Container.event_service])) -> EventList:
     return await event_service.find_events(user_id)
+
+
+@router.get("/users/{user_id}/contractor-events/{contractor_id}")
+@inject
+async def get_events(user_id: UUID,
+                     contractor_id: UUID,
+                     event_service: EventService = Depends(Provide[Container.event_service])) -> ContractorEventList:
+    return await event_service.find_contractor_events(user_id, contractor_id)
 
 
 @router.post("/users/{user_id}/events")

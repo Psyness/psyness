@@ -51,6 +51,31 @@ export class AppointmentService {
       );
   }
 
+  getContractorAppointments(contractorId: string): Observable<CalendarEvent[]> {
+    return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/contractor-events/${contractorId}`, {
+      withCredentials: true
+    })
+      .pipe(
+        map(result => result.events.map(event => {
+            const color = this.calculateColor(event, result.user_id);
+            return {
+              id: event.id,
+              title: event.title,
+              start: new Date(event.start_time),
+              end: new Date(event.end_time),
+              color: {
+                primary: color,
+                secondary: color
+              },
+              meta: {
+                initiator: event.initiator
+              }
+            }
+          })
+        )
+      );
+  }
+
   private calculateColor(appointment: AppointmentResponse, user_id: string): string {
     const { attendees, initiator } = appointment;
     const isCancelled = attendees.filter(a => a.status === AppointmentStatus.CANCELLED).length > 0

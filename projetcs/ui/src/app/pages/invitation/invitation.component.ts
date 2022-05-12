@@ -16,7 +16,7 @@ export class InvitationComponent {
   }
 
   getAcceptInvitationLink(): void {
-    const {invitationId} = this.route.snapshot.params;
+    const { invitationId } = this.route.snapshot.params;
     window.location.href = this.userService.getAcceptInvitationLink(invitationId);
   }
 

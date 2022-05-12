@@ -22,6 +22,17 @@ async def find_events(request: Request,
     return events
 
 
+@router.get("/contractor-events/{contractor_id}")
+@secure()
+@inject
+async def find_events(request: Request,
+                      contractor_id: UUID,
+                      appointment_client: AppointmentClient = Depends(Provide(Container.appointment_client))):
+    current_user = request.session['user']
+    events = await appointment_client.find_contractor_events(current_user['id'], contractor_id)
+    return events
+
+
 @router.post("/events")
 @secure()
 @inject

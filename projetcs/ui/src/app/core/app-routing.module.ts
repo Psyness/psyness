@@ -36,7 +36,7 @@ const routes: Routes = [
         component: PsychologistsComponent
       },
       {
-        path: 'psychologist',
+        path: 'psychologist/:psychologistId',
         component: PsychologistComponent
       },
       {

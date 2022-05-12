@@ -19,7 +19,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> {{ 'PSYCHOLOGISTS.ACTIONS_COLUMN' | translate }}</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button aria-label="Psychologist page link" routerLink="/psychologist">
+      <button mat-icon-button aria-label="Psychologist page link" routerLink="/psychologist/{{element.id}}">
         <mat-icon>calendar_today</mat-icon>
       </button>
     </td>
