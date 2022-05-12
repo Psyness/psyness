@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from '../pages/login/login.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { AuthorizedLayoutComponent } from "../components/authorized-layout/authorized-layout.component";
-import { ContactsComponent } from "../pages/contacts/contacts.component";
+import { ClientsComponent } from "../pages/clients/clients.component";
 import { CalendarComponent } from "../pages/calendar/calendar.component";
 import { TasksComponent } from "../pages/tasks/tasks.component";
 import { InvitationComponent } from "../pages/invitation/invitation.component";
@@ -26,8 +26,8 @@ const routes: Routes = [
         component: HomeComponent
       },
       {
-        path: 'contacts',
-        component: ContactsComponent
+        path: 'clients',
+        component: ClientsComponent
       },
       {
         path: 'calendar',

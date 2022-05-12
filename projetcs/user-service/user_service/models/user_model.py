@@ -26,9 +26,5 @@ class User(BaseModel):
     roles: List[UserRole]
 
 
-class Contact(User):
-    relation: UserRole
-
-
 class UserList(BaseModel):
-    users: List[Contact]
+    users: List[User]

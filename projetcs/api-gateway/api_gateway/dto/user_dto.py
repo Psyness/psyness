@@ -25,9 +25,5 @@ class UserDto(BaseModel):
     roles: List[UserRole]
 
 
-class ContactDto(UserDto):
-    relation: UserRole
-
-
 class UserListDto(BaseModel):
-    users: List[ContactDto]
+    users: List[UserDto]

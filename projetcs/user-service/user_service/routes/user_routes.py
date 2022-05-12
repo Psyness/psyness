@@ -6,26 +6,10 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from dependencies import Container
 from dto.user_dto import CreateUserDto
-from models.invitation_model import Invitation, InvitationStatus
 from models.user_model import User, UserList
-from services.contract_service import ContractService
-from services.invitation_service import InvitationService
 from services.user_service import UserService
 
 router = APIRouter()
-
-
-@router.get("/users/{username}/providers/{provider}")
-@inject
-async def get(provider: str,
-              username: str,
-              user_service: UserService = Depends(Provide[Container.user_service])) -> User:
-    user = await user_service.get(provider, username)
-
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    return user
 
 
 @router.post("/users/{username}/providers/{provider}/psychologists")
@@ -46,29 +30,30 @@ async def save_client(provider: str,
     return await user_service.save_client(provider, username, user)
 
 
-@router.post("/users/{inviter}/invitations")
+@router.get("/users/{username}/providers/{provider}")
 @inject
-async def create_invitation(
-        inviter: UUID,
-        invitation_service: InvitationService = Depends(Provide[Container.invitation_service])) -> Invitation:
-    return await invitation_service.save(inviter)
+async def get(provider: str,
+              username: str,
+              user_service: UserService = Depends(Provide[Container.user_service])) -> User:
+    user = await user_service.get(provider, username)
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return user
 
 
-@router.post("/users/{client_id}/invitations/{invitation_id}")
+@router.get("/psychologists/{user_id}/clients")
 @inject
-async def accept_invitation(
-        client_id: UUID,
-        invitation_id: UUID,
-        invitation_service: InvitationService = Depends(Provide[Container.invitation_service]),
-        contract_service: ContractService = Depends(Provide[Container.contract_service])) -> Invitation:
-    invitation = await invitation_service.get(invitation_id)
-    await contract_service.create_contract(invitation.inviter, client_id)
-    return await invitation_service.update_invitation_status(invitation_id, InvitationStatus.APPROVED)
+async def find_clients(user_id: UUID,
+                       query: Optional[str] = None,
+                       user_service: UserService = Depends(Provide[Container.user_service])) -> UserList:
+    return await user_service.find_clients(user_id, query)
 
 
-@router.get("/users/{user_id}/contacts")
+@router.get("/clients/{client_id}/psychologists")
 @inject
-async def find_users(user_id: UUID,
-                     query: Optional[str] = None,
-                     user_service: UserService = Depends(Provide[Container.user_service])) -> UserList:
-    return await user_service.find_contacts(user_id, query)
+async def find_clients(client_id: UUID,
+                       query: Optional[str] = None,
+                       user_service: UserService = Depends(Provide[Container.user_service])) -> UserList:
+    return await user_service.find_psychologists(client_id, query)

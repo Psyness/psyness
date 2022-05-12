@@ -11,7 +11,7 @@ from dependencies import Container
 router = APIRouter()
 
 
-@router.get("/clients")
+@router.get("/psychologists")
 @secure()
 @inject
 async def find_clients(
@@ -19,4 +19,4 @@ async def find_clients(
         filter: Optional[str] = None,
         user_client: UserClient = Depends(Provide(Container.user_client))):
     current_user = request.session['user']
-    return await user_client.find_clients(current_user['id'], filter)
+    return await user_client.find_psychologists(current_user['id'], filter)

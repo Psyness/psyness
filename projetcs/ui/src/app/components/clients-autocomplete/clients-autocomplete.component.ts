@@ -27,7 +27,7 @@ export class ClientsAutocompleteComponent implements OnInit {
         debounce(() => interval(400))
       )
       .subscribe(filter => {
-        this.clients = this.userService.findPsychologistClients({ filter })
+        this.clients = this.userService.findClients({ filter })
       });
   }
 

@@ -13,8 +13,8 @@ export class UserService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  findPsychologistClients(options: UserFilter = {}): Observable<User[]> {
-    return this.httpClient.get<UserListResponse>(`${environment.apiGatewayUrl}/contacts`, {
+  findClients(options: UserFilter = {}): Observable<User[]> {
+    return this.httpClient.get<UserListResponse>(`${environment.apiGatewayUrl}/clients`, {
       params: { ...options },
       withCredentials: true
     })

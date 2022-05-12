@@ -4,11 +4,11 @@ import { User } from "../../models/user";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-contacts',
-  templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.css']
+  selector: 'app-clients',
+  templateUrl: './clients.component.html',
+  styleUrls: ['./clients.component.css']
 })
-export class ContactsComponent implements OnInit {
+export class ClientsComponent implements OnInit {
 
   public displayedColumns: string[] = ['username', 'firstName', 'lastName']
   public users: User[] = [];
@@ -20,7 +20,7 @@ export class ContactsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.findPsychologistClients()
+    this.userService.findClients()
       .subscribe(users => {
         this.users = users
       });

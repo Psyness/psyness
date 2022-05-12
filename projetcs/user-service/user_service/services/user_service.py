@@ -21,6 +21,10 @@ class UserService:
         user = User(**create_user_dto.dict(), roles=[UserRole.CLIENT], id=uuid4())
         return await self._user_repository.save(provider, username, user)
 
-    async def find_contacts(self, user_id: UUID, query: str) -> UserList:
-        users = await self._user_repository.find_contacts(user_id=user_id, filter=query)
+    async def find_clients(self, psychologist_id: UUID, query: str) -> UserList:
+        users = await self._user_repository.find_clients(psychologist_id=psychologist_id, filter=query)
+        return UserList(users=users)
+
+    async def find_psychologists(self, client_id: UUID, query: str) -> UserList:
+        users = await self._user_repository.find_psychologists(client_id=client_id, filter=query)
         return UserList(users=users)
