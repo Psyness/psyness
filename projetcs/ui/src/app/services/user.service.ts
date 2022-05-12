@@ -30,6 +30,23 @@ export class UserService {
       );
   }
 
+  findPsychologists(options: UserFilter = {}): Observable<User[]> {
+    return this.httpClient.get<UserListResponse>(`${environment.apiGatewayUrl}/psychologists`, {
+      params: { ...options },
+      withCredentials: true
+    })
+      .pipe(
+        map(result => result.users.map(user => ({
+            id: user.id,
+            username: user.username,
+            lastName: user.last_name,
+            firstName: user.first_name,
+            relation: user.relation
+          }))
+        )
+      );
+  }
+
   createInvitation(): Observable<string> {
     return this.httpClient
       .post<InvitationResponse>(

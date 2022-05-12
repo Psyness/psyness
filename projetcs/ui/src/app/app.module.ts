@@ -45,6 +45,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { ConfirmEventDialogComponent } from './pages/calendar/confirm-event-dialog/confirm-event-dialog.component';
 import { ViewEventDialogComponent } from './pages/calendar/view-event-dialog/view-event-dialog.component';
 import { MatBadgeModule } from "@angular/material/badge";
+import { PsychologistsComponent } from './pages/psychologists/psychologists.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { MatBadgeModule } from "@angular/material/badge";
     EventDialogComponent,
     ClientsAutocompleteComponent,
     ConfirmEventDialogComponent,
-    ViewEventDialogComponent
+    ViewEventDialogComponent,
+    PsychologistsComponent
   ],
   imports: [
     BrowserModule,
