@@ -22,6 +22,12 @@
     "LAST_NAME_COLUMN": "Фамилия",
     "INVITE": "Пригласить клиента"
   },
+  "PSYCHOLOGISTS": {
+    "USERNAME_COLUMN": "Логин",
+    "FIRST_NAME_COLUMN": "Имя",
+    "LAST_NAME_COLUMN": "Фамилия",
+    "ACTIONS_COLUMN": "Действия"
+  },
   "EVENTS": {
     "DIALOG": {
       "TITLE": "Название встречи",

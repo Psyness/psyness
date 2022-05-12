@@ -9,7 +9,7 @@ import { UserService } from "../../services/user.service";
 })
 export class PsychologistsComponent implements OnInit {
 
-  public displayedColumns: string[] = ['username', 'firstName', 'lastName']
+  public displayedColumns: string[] = ['username', 'firstName', 'lastName', 'actions']
   public psychologists: User[] = [];
 
   constructor(
