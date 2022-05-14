@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { mergeMap, Observable } from 'rxjs';
 import { CalendarEvent } from "angular-calendar";
 import { AppointmentService } from "../../services/appointment.service";
@@ -14,6 +14,7 @@ import { User } from "../../models/user";
 
 @Component({
   selector: 'app-psychologist',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './psychologist.component.html',
   styleUrls: ['./psychologist.component.css']
 })

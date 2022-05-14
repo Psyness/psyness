@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
 import { EventDialogComponent } from "../../components/event-dialog/event-dialog.component";
@@ -14,6 +14,7 @@ import { ViewEventDialogComponent } from "../../components/view-event-dialog/vie
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
