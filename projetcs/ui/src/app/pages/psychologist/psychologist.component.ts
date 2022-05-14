@@ -3,7 +3,7 @@ import { mergeMap, Observable } from 'rxjs';
 import { CalendarEvent } from "angular-calendar";
 import { AppointmentService } from "../../services/appointment.service";
 import { ActivatedRoute } from "@angular/router";
-import { EventDialogComponent } from "../../components/event-dialog/event-dialog.component";
+import { CreateEventDialogComponent } from "../../components/create-event-dialog/create-event-dialog.component";
 import { endOfHour, startOfHour } from "date-fns";
 import { Appointment, AppointmentInfo, AppointmentStatus } from "../../models/appointment";
 import { ConfirmEventDialogComponent } from "../../components/confirm-event-dialog/confirm-event-dialog.component";
@@ -43,7 +43,7 @@ export class PsychologistComponent implements OnInit {
   }
 
   public showCreateEventDialog(event: { date: Date, sourceEvent: MouseEvent }) {
-    const dialogRef = this.dialog.open(EventDialogComponent, {
+    const dialogRef = this.dialog.open(CreateEventDialogComponent, {
       width: '450px',
       data: { start: startOfHour(event.date), end: endOfHour(event.date), title: '' },
     });

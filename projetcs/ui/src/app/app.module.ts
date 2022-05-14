@@ -30,7 +30,7 @@ import { InvitationComponent } from './pages/invitation/invitation.component';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { CalendarModule, DateAdapter } from "angular-calendar";
 import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
-import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
+import { CreateEventDialogComponent } from './components/create-event-dialog/create-event-dialog.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -58,7 +58,7 @@ import { PsychologistComponent } from './pages/psychologist/psychologist.compone
     CalendarComponent,
     TasksComponent,
     InvitationComponent,
-    EventDialogComponent,
+    CreateEventDialogComponent,
     ClientsAutocompleteComponent,
     ConfirmEventDialogComponent,
     ViewEventDialogComponent,

@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AppointmentStatus } from "../../models/appointment";
 
 @Component({
-  selector: 'app-view-event-dialog',
+  selector: 'app-view-create-event-dialog',
   templateUrl: './view-event-dialog.component.html',
   styleUrls: ['./view-event-dialog.component.css']
 })

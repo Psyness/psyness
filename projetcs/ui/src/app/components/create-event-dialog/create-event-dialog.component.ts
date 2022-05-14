@@ -5,11 +5,11 @@ import { UserInfo } from "../../models/user";
 import { FormControl } from "@angular/forms";
 
 @Component({
-  selector: 'app-event-dialog',
-  templateUrl: './event-dialog.component.html',
-  styleUrls: ['./event-dialog.component.css']
+  selector: 'app-create-event-dialog',
+  templateUrl: './create-event-dialog.component.html',
+  styleUrls: ['./create-event-dialog.component.css']
 })
-export class EventDialogComponent {
+export class CreateEventDialogComponent {
 
   @ViewChild('picker') startPicker: any;
   @ViewChild('picker') endPicker: any;
@@ -17,7 +17,7 @@ export class EventDialogComponent {
   public endDateControl = new FormControl();
 
   constructor(
-    public readonly dialogRef: MatDialogRef<EventDialogComponent>,
+    public readonly dialogRef: MatDialogRef<CreateEventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public appointment: Appointment
   ) {
   }

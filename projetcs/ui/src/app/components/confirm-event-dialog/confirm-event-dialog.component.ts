@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AppointmentStatus } from "../../models/appointment";
 
 @Component({
-  selector: 'app-confirm-event-dialog',
+  selector: 'app-confirm-create-event-dialog',
   templateUrl: './confirm-event-dialog.component.html',
   styleUrls: ['./confirm-event-dialog.component.css']
 })

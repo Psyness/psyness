@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
-import { EventDialogComponent } from "../../components/event-dialog/event-dialog.component";
+import { CreateEventDialogComponent } from "../../components/create-event-dialog/create-event-dialog.component";
 import { endOfHour, startOfHour } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
 import { Appointment, AppointmentInfo, AppointmentStatus } from "../../models/appointment";
@@ -38,7 +38,7 @@ export class CalendarComponent implements OnInit {
   }
 
   public showCreateEventDialog(event: { date: Date, sourceEvent: MouseEvent }) {
-    const dialogRef = this.dialog.open(EventDialogComponent, {
+    const dialogRef = this.dialog.open(CreateEventDialogComponent, {
       width: '450px',
       data: { start: startOfHour(event.date), end: endOfHour(event.date), title: '' },
     });
