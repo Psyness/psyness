@@ -17,7 +17,6 @@ export class AuthorizedLayoutComponent implements OnInit {
     {title: 'LAYOUT.NAV_ITEM_HOME', link: '/home'},
     {title: 'LAYOUT.NAV_ITEM_CLIENTS', link: '/clients'},
     {title: 'LAYOUT.NAV_ITEM_PSYCHOLOGISTS', link: '/psychologists'},
-    {title: 'LAYOUT.NAV_ITEM_CALENDAR', link: '/appointments'},
     {title: 'LAYOUT.NAV_ITEM_TASKS', link: '/tasks'}
   ];
 

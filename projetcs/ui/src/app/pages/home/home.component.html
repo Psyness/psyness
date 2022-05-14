@@ -1,1 +1,29 @@
-<p>home works!</p>
+<div fxLayout="row">
+  <div fxFlex="10">
+    <mat-list>
+      <mat-list-item>One</mat-list-item>
+      <mat-list-item>Two</mat-list-item>
+      <mat-list-item>Three</mat-list-item>
+    </mat-list>
+  </div>
+  <div fxFlex="90">
+    <ng-template #loading>
+      <div class="text-center">
+        <i class="fas fa-spin fa-spinner fa-5x"></i> <br/>
+        Loading events...
+      </div>
+    </ng-template>
+
+    <div *ngIf="appointments$ | async; else loading; let appointments">
+      <mwl-calendar-week-view
+        [viewDate]="viewDate"
+        [locale]="locale"
+        [events]="appointments"
+        (hourSegmentClicked)="showCreateEventDialog($event)"
+        (eventClicked)="showEditEventDialog($event)"
+      >
+      </mwl-calendar-week-view>
+    </div>
+  </div>
+</div>
+

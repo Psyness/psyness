@@ -23,7 +23,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from "@angular/material/menu";
 import { ClientsComponent } from './pages/clients/clients.component';
-import { AppointmentsComponent } from './pages/appointments/appointments.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { MatTableModule } from "@angular/material/table";
 import { InvitationComponent } from './pages/invitation/invitation.component';
@@ -56,7 +55,6 @@ import { PsychologistComponent } from './pages/psychologist/psychologist.compone
     HomeComponent,
     AuthorizedLayoutComponent,
     ClientsComponent,
-    AppointmentsComponent,
     TasksComponent,
     InvitationComponent,
     CreateEventDialogComponent,
