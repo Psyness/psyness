@@ -25,7 +25,3 @@ export interface User {
   firstName: string
   lastName: string
 }
-
-export interface Contact extends User{
-  relation: string
-}

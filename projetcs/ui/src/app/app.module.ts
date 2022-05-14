@@ -23,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from "@angular/material/menu";
 import { ClientsComponent } from './pages/clients/clients.component';
-import { CalendarComponent } from './pages/calendar/calendar.component';
+import { AppointmentsComponent } from './pages/appointments/appointments.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { MatTableModule } from "@angular/material/table";
 import { InvitationComponent } from './pages/invitation/invitation.component';
@@ -31,6 +31,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { CalendarModule, DateAdapter } from "angular-calendar";
 import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 import { CreateEventDialogComponent } from './components/create-event-dialog/create-event-dialog.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -55,7 +56,7 @@ import { PsychologistComponent } from './pages/psychologist/psychologist.compone
     HomeComponent,
     AuthorizedLayoutComponent,
     ClientsComponent,
-    CalendarComponent,
+    AppointmentsComponent,
     TasksComponent,
     InvitationComponent,
     CreateEventDialogComponent,
@@ -63,7 +64,8 @@ import { PsychologistComponent } from './pages/psychologist/psychologist.compone
     ConfirmEventDialogComponent,
     ViewEventDialogComponent,
     PsychologistsComponent,
-    PsychologistComponent
+    PsychologistComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

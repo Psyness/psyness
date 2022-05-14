@@ -4,7 +4,7 @@ import { LoginComponent } from '../pages/login/login.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { AuthorizedLayoutComponent } from "../components/authorized-layout/authorized-layout.component";
 import { ClientsComponent } from "../pages/clients/clients.component";
-import { CalendarComponent } from "../pages/calendar/calendar.component";
+import { AppointmentsComponent } from "../pages/appointments/appointments.component";
 import { TasksComponent } from "../pages/tasks/tasks.component";
 import { InvitationComponent } from "../pages/invitation/invitation.component";
 import { PsychologistsComponent } from "../pages/psychologists/psychologists.component";
@@ -41,7 +41,7 @@ const routes: Routes = [
       },
       {
         path: 'calendar',
-        component: CalendarComponent
+        component: AppointmentsComponent
       },
       {
         path: 'tasks',

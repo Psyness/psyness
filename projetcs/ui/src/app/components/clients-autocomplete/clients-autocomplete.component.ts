@@ -32,7 +32,8 @@ export class ClientsAutocompleteComponent implements OnInit {
   }
 
   onClientSelected({ option }: { option: MatOption }) {
-    this.setClientId.emit({ userId: option.id, clientFullName: option.value })
+    const userInfo: UserInfo = { userId: option.id, clientFullName: option.value }
+    this.setClientId.emit(userInfo);
   }
 
 }

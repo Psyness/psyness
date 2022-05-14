@@ -1,3 +1,6 @@
+import { CalendarEvent } from "angular-calendar";
+import { User } from "./user";
+
 export enum AppointmentStatus {
   PENDING = 'PENDING',
   APPROVED = 'APPROVED',
@@ -41,4 +44,10 @@ export interface AppointmentRequest {
 export interface AppointmentListResponse {
   user_id: string
   events: AppointmentResponse[]
+}
+
+export interface CalendarData {
+  attendeeId?: string;
+  appointments: CalendarEvent<AppointmentInfo>[]
+  users: User[]
 }
