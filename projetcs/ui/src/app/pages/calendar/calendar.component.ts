@@ -5,7 +5,7 @@ import { EventDialogComponent } from "../../components/event-dialog/event-dialog
 import { endOfHour, startOfHour } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
 import { Appointment, AppointmentInfo, AppointmentStatus } from "../../models/appointment";
-import { Observable } from "rxjs";
+import { mergeMap, Observable } from "rxjs";
 import { SessionService } from "../../services/session.service";
 import { User } from "../../models/user";
 import { ConfirmEventDialogComponent } from "../../components/confirm-event-dialog/confirm-event-dialog.component";
@@ -44,7 +44,9 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Required<Appointment>) => {
       if (result) {
-        this.appointments$ = this.appointmentService.saveAppointment(result);
+        this.appointments$ = this.appointmentService.saveAppointment(result).pipe(
+          mergeMap(() => this.appointmentService.getAppointments())
+        );
       }
     });
   }
@@ -66,7 +68,9 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: { appointmentId: string, status: AppointmentStatus }) => {
       if (result) {
-        this.appointments$ = this.appointmentService.updateAppointment(result.appointmentId, result.status);
+        this.appointments$ = this.appointmentService.updateAppointment(result.appointmentId, result.status).pipe(
+          mergeMap(() => this.appointmentService.getAppointments())
+        );
       }
     });
   }
@@ -79,7 +83,9 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: { appointmentId: string, status: AppointmentStatus }) => {
       if (result) {
-        this.appointments$ = this.appointmentService.updateAppointment(result.appointmentId, result.status);
+        this.appointments$ = this.appointmentService.updateAppointment(result.appointmentId, result.status).pipe(
+          mergeMap(() => this.appointmentService.getAppointments())
+        );
       }
     });
   }

@@ -12,7 +12,8 @@ export interface Appointment {
 }
 
 export interface AppointmentInfo {
-  initiator: string
+  initiator: string;
+  hidden?: boolean;
 }
 
 export interface AppointmentAttendee {

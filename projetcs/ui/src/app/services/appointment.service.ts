@@ -43,7 +43,8 @@ export class AppointmentService {
                 secondary: color
               },
               meta: {
-                initiator: event.initiator
+                initiator: event.initiator,
+                hidden: event.hidden
               }
             }
           })
@@ -68,7 +69,8 @@ export class AppointmentService {
                 secondary: color
               },
               meta: {
-                initiator: event.initiator
+                initiator: event.initiator,
+                hidden: event.hidden
               }
             }
           })
@@ -98,28 +100,22 @@ export class AppointmentService {
     return initiatedByCurrentUser ? colors.initiatorColor : colors.color;
   }
 
-  saveAppointment(appointment: Required<Appointment>): Observable<CalendarEvent<AppointmentInfo>[]> {
+  saveAppointment(appointment: Required<Appointment>): Observable<Appointment> {
     const event: AppointmentRequest = {
       title: appointment.title,
       start_time: appointment.start.getTime(),
       end_time: appointment.end.getTime(),
       attendee_id: appointment.attendeeId,
     }
-    return this.httpClient.post<void>(`${environment.apiGatewayUrl}/events`, event, {
+    return this.httpClient.post<Appointment>(`${environment.apiGatewayUrl}/events`, event, {
       withCredentials: true
-    })
-      .pipe(
-        mergeMap(() => this.getAppointments())
-      );
+    });
   }
 
-  updateAppointment(eventId: string, status: AppointmentStatus): Observable<CalendarEvent<AppointmentInfo>[]> {
-    return this.httpClient.post<void>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, { status }, {
+  updateAppointment(eventId: string, status: AppointmentStatus): Observable<Appointment> {
+    return this.httpClient.post<Appointment>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, { status }, {
       withCredentials: true
-    })
-      .pipe(
-        mergeMap(() => this.getAppointments())
-      );
+    });
   }
 
 }
