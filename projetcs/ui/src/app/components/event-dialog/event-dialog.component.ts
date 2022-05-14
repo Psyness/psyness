@@ -1,7 +1,7 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { Appointment } from "../../../models/appointment";
-import { UserInfo } from "../../../models/user";
+import { Appointment } from "../../models/appointment";
+import { UserInfo } from "../../models/user";
 import { FormControl } from "@angular/forms";
 
 @Component({

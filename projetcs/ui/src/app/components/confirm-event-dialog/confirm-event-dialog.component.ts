@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AppointmentStatus } from "../../../models/appointment";
+import { AppointmentStatus } from "../../models/appointment";
 
 @Component({
   selector: 'app-confirm-event-dialog',

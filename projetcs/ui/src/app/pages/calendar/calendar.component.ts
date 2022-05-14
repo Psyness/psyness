@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
-import { EventDialogComponent } from "./event-dialog/event-dialog.component";
+import { EventDialogComponent } from "../../components/event-dialog/event-dialog.component";
 import { endOfHour, startOfHour } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
 import { Appointment, AppointmentInfo, AppointmentStatus } from "../../models/appointment";
 import { Observable } from "rxjs";
 import { SessionService } from "../../services/session.service";
 import { User } from "../../models/user";
-import { ConfirmEventDialogComponent } from "./confirm-event-dialog/confirm-event-dialog.component";
-import { ViewEventDialogComponent } from "./view-event-dialog/view-event-dialog.component";
+import { ConfirmEventDialogComponent } from "../../components/confirm-event-dialog/confirm-event-dialog.component";
+import { ViewEventDialogComponent } from "../../components/view-event-dialog/view-event-dialog.component";
 
 @Component({
   selector: 'app-calendar',
