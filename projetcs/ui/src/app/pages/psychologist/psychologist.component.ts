@@ -45,7 +45,12 @@ export class PsychologistComponent implements OnInit {
   public showCreateEventDialog(event: { date: Date, sourceEvent: MouseEvent }) {
     const dialogRef = this.dialog.open(CreateEventDialogComponent, {
       width: '450px',
-      data: { start: startOfHour(event.date), end: endOfHour(event.date), title: '' },
+      data: {
+        start: startOfHour(event.date),
+        end: endOfHour(event.date),
+        title: 'Консультация',
+        attendeeId: this.psychologistId
+      },
     });
 
     dialogRef.afterClosed().subscribe((result: Required<Appointment>) => {

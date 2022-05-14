@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>{{ 'EVENTS.DIALOG.TITLE' | translate }}</h1>
 <div mat-dialog-content>
-  <app-clients-autocomplete (setClientId)="onClientSelected($event)"></app-clients-autocomplete>
+  <app-clients-autocomplete *ngIf="allowSelectAttendee"
+                            (setClientId)="onClientSelected($event)"></app-clients-autocomplete>
   <mat-form-field appearance="fill">
     <mat-label>{{ 'EVENTS.DIALOG.TITLE' | translate }}</mat-label>
     <input matInput [(ngModel)]="appointment.title">

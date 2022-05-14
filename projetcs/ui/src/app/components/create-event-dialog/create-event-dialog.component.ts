@@ -15,11 +15,13 @@ export class CreateEventDialogComponent {
   @ViewChild('picker') endPicker: any;
   public startDateControl = new FormControl();
   public endDateControl = new FormControl();
+  public allowSelectAttendee: boolean;
 
   constructor(
     public readonly dialogRef: MatDialogRef<CreateEventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public appointment: Appointment
   ) {
+    this.allowSelectAttendee = appointment.attendeeId === undefined;
   }
 
   onClientSelected(event: UserInfo) {
