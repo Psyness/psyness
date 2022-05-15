@@ -12,11 +12,11 @@ container.wire(packages=['routes'])
 
 app = FastAPI()
 app.container = container
+app.include_router(invitation_routes.router)
 app.include_router(google_login_routes.router)
 app.include_router(session_routes.router)
 app.include_router(client_routes.router)
 app.include_router(appointment_routes.router)
-app.include_router(invitation_routes.router)
 app.include_router(psychologist_routes.router)
 
 settings = Settings()
