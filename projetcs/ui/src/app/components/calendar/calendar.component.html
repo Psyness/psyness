@@ -21,6 +21,7 @@
       *ngIf="!calendarData.loading; else loading"
       [viewDate]="viewDate"
       [locale]="locale"
+      [weekStartsOn]="1"
       [events]="calendarData.appointments"
       (hourSegmentClicked)="showCreateEventDialog($event)"
       (eventClicked)="showEditEventDialog($event)"

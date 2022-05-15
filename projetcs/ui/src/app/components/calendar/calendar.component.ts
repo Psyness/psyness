@@ -1,20 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
 import { CreateEventDialogComponent } from "../create-event-dialog/create-event-dialog.component";
 import { endOfHour, startOfHour } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
 import { Appointment, AppointmentInfo, AppointmentStatus, CalendarData } from "../../models/appointment";
-import { Observable } from "rxjs";
 import { SessionService } from "../../services/session.service";
 import { User } from "../../models/user";
 import { ConfirmEventDialogComponent } from "../confirm-event-dialog/confirm-event-dialog.component";
@@ -29,7 +19,6 @@ import { MatSelectionListChange } from "@angular/material/list";
 })
 export class CalendarComponent implements OnInit {
 
-  public appointments$?: Observable<CalendarEvent<AppointmentInfo>[]>;
   public user?: User;
   public viewDate = new Date()
   public locale: string = 'ru';
