@@ -17,15 +17,14 @@
       </div>
     </ng-template>
 
-    <div *ngIf="!calendarData.loading; else loading">
-      <mwl-calendar-week-view
-        [viewDate]="viewDate"
-        [locale]="locale"
-        [events]="calendarData.appointments"
-        (hourSegmentClicked)="showCreateEventDialog($event)"
-        (eventClicked)="showEditEventDialog($event)"
-      >
-      </mwl-calendar-week-view>
-    </div>
+    <mwl-calendar-week-view
+      *ngIf="!calendarData.loading; else loading"
+      [viewDate]="viewDate"
+      [locale]="locale"
+      [events]="calendarData.appointments"
+      (hourSegmentClicked)="showCreateEventDialog($event)"
+      (eventClicked)="showEditEventDialog($event)"
+    >
+    </mwl-calendar-week-view>
   </div>
 </div>

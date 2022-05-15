@@ -27,7 +27,7 @@ import { MatSelectionListChange } from "@angular/material/list";
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit, OnChanges {
+export class CalendarComponent implements OnInit {
 
   public appointments$?: Observable<CalendarEvent<AppointmentInfo>[]>;
   public user?: User;
@@ -48,10 +48,6 @@ export class CalendarComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.sessionService.getSession()
       .subscribe(user => this.user = user)
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-
   }
 
   public onUserSelect(event: MatSelectionListChange) {
