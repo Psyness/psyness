@@ -48,6 +48,7 @@ export interface AppointmentListResponse {
 
 export interface CalendarData {
   attendeeId?: string;
+  loading: boolean;
   appointments: CalendarEvent<AppointmentInfo>[]
   users: User[]
 }

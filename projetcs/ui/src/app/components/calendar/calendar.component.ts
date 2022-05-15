@@ -1,6 +1,15 @@
-import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation
+} from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
-import { MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { CreateEventDialogComponent } from "../create-event-dialog/create-event-dialog.component";
 import { endOfHour, startOfHour } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
@@ -10,6 +19,7 @@ import { SessionService } from "../../services/session.service";
 import { User } from "../../models/user";
 import { ConfirmEventDialogComponent } from "../confirm-event-dialog/confirm-event-dialog.component";
 import { ViewEventDialogComponent } from "../view-event-dialog/view-event-dialog.component";
+import { MatSelectionListChange } from "@angular/material/list";
 
 @Component({
   selector: 'app-calendar',
@@ -17,26 +27,35 @@ import { ViewEventDialogComponent } from "../view-event-dialog/view-event-dialog
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnChanges {
 
   public appointments$?: Observable<CalendarEvent<AppointmentInfo>[]>;
   public user?: User;
   public viewDate = new Date()
   public locale: string = 'ru';
 
+  @Input() public calendarData: CalendarData = { appointments: [], users: [], loading: false };
   @Output() public reloadEvents = new EventEmitter<void>();
+  @Output() public setSelectedUserId = new EventEmitter<string>();
 
   constructor(
     private readonly dialog: MatDialog,
     private readonly appointmentService: AppointmentService,
     private readonly sessionService: SessionService,
-    @Inject(MAT_DIALOG_DATA) public readonly calendarData: CalendarData
   ) {
   }
 
   ngOnInit(): void {
     this.sessionService.getSession()
       .subscribe(user => this.user = user)
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
+
+  public onUserSelect(event: MatSelectionListChange) {
+    this.setSelectedUserId.emit(event.options[0]?.value)
   }
 
   public showCreateEventDialog(event: { date: Date, sourceEvent: MouseEvent }) {

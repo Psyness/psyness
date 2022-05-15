@@ -1,15 +1,31 @@
-<ng-template #loading>
-  <div class="text-center">
-    <i class="fas fa-spin fa-spinner fa-5x"></i> <br/>
-    Loading events...
+<div fxLayout="row">
+  <div fxFlex="15">
+    <mat-selection-list [multiple]="false" (selectionChange)="onUserSelect($event)">
+      <mat-list-option [value]="undefined">
+        {{'CALENDAR.ME' | translate}}
+      </mat-list-option>
+      <mat-list-option *ngFor="let user of calendarData.users" [value]="user.id">
+        {{user.firstName}} {{user.lastName}}
+      </mat-list-option>
+    </mat-selection-list>
   </div>
-</ng-template>
+  <div fxFlex="85">
+    <ng-template #loading>
+      <div class="text-center">
+        <i class="fas fa-spin fa-spinner fa-5x"></i> <br/>
+        Loading events...
+      </div>
+    </ng-template>
 
-<mwl-calendar-week-view
-  [viewDate]="viewDate"
-  [locale]="locale"
-  [events]="calendarData.appointments"
-  (hourSegmentClicked)="showCreateEventDialog($event)"
-  (eventClicked)="showEditEventDialog($event)"
->
-</mwl-calendar-week-view>
+    <div *ngIf="!calendarData.loading; else loading">
+      <mwl-calendar-week-view
+        [viewDate]="viewDate"
+        [locale]="locale"
+        [events]="calendarData.appointments"
+        (hourSegmentClicked)="showCreateEventDialog($event)"
+        (eventClicked)="showEditEventDialog($event)"
+      >
+      </mwl-calendar-week-view>
+    </div>
+  </div>
+</div>
