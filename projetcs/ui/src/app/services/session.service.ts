@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { User, UserResponse } from "../models/user";
+import { SessionUser, UserResponse } from "../models/user";
 
 
 @Injectable({
@@ -10,22 +10,23 @@ import { User, UserResponse } from "../models/user";
 })
 export class SessionService {
 
-  private currentUser?: User;
+  private currentUser?: SessionUser;
 
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  getSession(): Observable<User> {
+  getSession(): Observable<SessionUser> {
     if (this.currentUser) {
       return of(this.currentUser)
     }
-    return this.httpClient.get<UserResponse>(`${environment.apiGatewayUrl}/sessions/me`, {withCredentials: true})
+    return this.httpClient.get<UserResponse>(`${environment.apiGatewayUrl}/sessions/me`, { withCredentials: true })
       .pipe(
         map(user => ({
           id: user.id,
           username: user.username,
           lastName: user.last_name,
-          firstName: user.first_name
+          firstName: user.first_name,
+          roles: user.roles
         })),
         tap(currentUser => {
           this.currentUser = currentUser
@@ -38,7 +39,7 @@ export class SessionService {
   }
 
   logout(): Observable<void> {
-    return this.httpClient.get<void>(`${environment.apiGatewayUrl}/logout`, {withCredentials: true})
+    return this.httpClient.get<void>(`${environment.apiGatewayUrl}/logout`, { withCredentials: true })
   }
 
 }

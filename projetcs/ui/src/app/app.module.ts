@@ -44,27 +44,29 @@ import {
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { ConfirmEventDialogComponent } from './components/confirm-event-dialog/confirm-event-dialog.component';
 import { ViewEventDialogComponent } from './components/view-event-dialog/view-event-dialog.component';
-import { MatBadgeModule } from "@angular/material/badge";
 import { PsychologistsComponent } from './pages/psychologists/psychologists.component';
 import { PsychologistComponent } from './pages/psychologist/psychologist.component';
+import { AllowedRolesDirective } from "./directives/allowed-roles.directive";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-    AuthorizedLayoutComponent,
-    ClientsComponent,
-    TasksComponent,
-    InvitationComponent,
-    CreateEventDialogComponent,
-    ClientsAutocompleteComponent,
-    ConfirmEventDialogComponent,
-    ViewEventDialogComponent,
-    PsychologistsComponent,
-    PsychologistComponent,
-    CalendarComponent
-  ],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        HomeComponent,
+        AuthorizedLayoutComponent,
+        ClientsComponent,
+        TasksComponent,
+        InvitationComponent,
+        CreateEventDialogComponent,
+        ClientsAutocompleteComponent,
+        ConfirmEventDialogComponent,
+        ViewEventDialogComponent,
+        PsychologistsComponent,
+        PsychologistComponent,
+        CalendarComponent,
+        AllowedRolesDirective,
+        AllowedRolesDirective
+    ],
   imports: [
     BrowserModule,
     HttpClientModule,

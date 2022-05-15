@@ -8,7 +8,8 @@ export interface UserResponse {
   username: string
   first_name: string
   last_name: string,
-  relation: string
+  relation: string,
+  roles: UserRole[]
 }
 
 export interface UserListResponse {
@@ -29,4 +30,12 @@ export interface User {
   username: string
   firstName: string
   lastName: string
+}
+
+export interface SessionUser {
+  id: string
+  username: string
+  firstName: string
+  lastName: string,
+  roles: UserRole[]
 }

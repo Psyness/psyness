@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { SessionService } from "../../services/session.service";
-import { User, UserRole } from "../../models/user";
+import { SessionUser, UserRole } from "../../models/user";
 import { Router } from "@angular/router";
 
 @Component({
@@ -26,7 +26,7 @@ export class AuthorizedLayoutComponent implements OnInit {
       shareReplay()
     );
 
-  user?: User;
+  user?: SessionUser;
 
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
