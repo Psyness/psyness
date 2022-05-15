@@ -1,9 +1,6 @@
 <div fxLayout="row">
   <div fxFlex="15">
     <mat-selection-list [multiple]="false" (selectionChange)="onUserSelect($event)">
-      <mat-list-option [value]="undefined">
-        {{'CALENDAR.ME' | translate}}
-      </mat-list-option>
       <mat-list-option *ngFor="let user of calendarData.users" [value]="user.id">
         {{user.firstName}} {{user.lastName}}
       </mat-list-option>

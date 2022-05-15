@@ -11,7 +11,7 @@ import { MatDialog } from "@angular/material/dialog";
 })
 export class ClientsComponent implements OnInit {
 
-  public calendarData: CalendarData = { users: [] };
+  public calendarData: CalendarData = { users: [], alwaysShowUserCalendar: true };
   public viewDate = new Date()
   public locale: string = 'ru';
 

@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { CalendarEvent } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
 import { CreateEventDialogComponent } from "../create-event-dialog/create-event-dialog.component";
 import { addDays, endOfHour, endOfWeek, startOfHour, startOfWeek } from 'date-fns';
@@ -31,12 +31,11 @@ export class CalendarComponent implements OnInit, OnChanges {
   public locale: string = 'ru';
   public loading: boolean = false;
   public viewDate = new Date()
-  public calendarView = CalendarView.Week;
 
   public user?: User;
   public appointments: CalendarEvent<AppointmentInfo>[] = [];
 
-  @Input() public calendarData: CalendarData = { users: [] };
+  @Input() public calendarData: CalendarData = { users: [], alwaysShowUserCalendar: false };
   @Output() public setSelectedUserId = new EventEmitter<string>();
 
   constructor(
@@ -144,7 +143,7 @@ export class CalendarComponent implements OnInit, OnChanges {
     this.loading = true;
     const startTime = startOfWeek(this.viewDate, { weekStartsOn: 1 });
     const endTime = endOfWeek(this.viewDate, { weekStartsOn: 1 });
-    if (this.calendarData.attendeeId) {
+    if (!this.calendarData.alwaysShowUserCalendar && this.calendarData.attendeeId) {
       this.appointmentService.getContractorAppointments(this.calendarData.attendeeId, startTime, endTime)
         .subscribe(appointments => {
           this.loading = false;

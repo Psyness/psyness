@@ -11,7 +11,7 @@ import { UserService } from "../../services/user.service";
 })
 export class PsychologistsComponent implements OnInit {
 
-  public calendarData: CalendarData = { users: [] };
+  public calendarData: CalendarData = { users: [], alwaysShowUserCalendar: false };
   public viewDate = new Date()
   public locale: string = 'ru';
 

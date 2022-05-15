@@ -47,5 +47,6 @@ export interface AppointmentListResponse {
 
 export interface CalendarData {
   attendeeId?: string;
+  alwaysShowUserCalendar: boolean
   users: User[]
 }
