@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
 import { CreateEventDialogComponent } from "../create-event-dialog/create-event-dialog.component";
 import { endOfHour, endOfWeek, startOfHour, startOfWeek } from 'date-fns';
@@ -28,10 +28,12 @@ import { MatSelectionListChange } from "@angular/material/list";
 })
 export class CalendarComponent implements OnInit, OnChanges {
 
-  public user?: User;
-  public viewDate = new Date()
   public locale: string = 'ru';
   public loading: boolean = false;
+  public viewDate = new Date()
+  public calendarView = CalendarView.Week;
+
+  public user?: User;
   public appointments: CalendarEvent<AppointmentInfo>[] = [];
 
   @Input() public calendarData: CalendarData = { users: [] };

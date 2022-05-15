@@ -10,6 +10,25 @@
     </mat-selection-list>
   </div>
   <div fxFlex="85">
+    <div class="btn-group">
+      <button mat-raised-button
+              mwlCalendarPreviousView
+              [view]="calendarView"
+              [(viewDate)]="viewDate">
+        {{'CALENDAR.PREVIOUS_PERIOD' | translate}}
+      </button>
+      <button mat-raised-button
+              mwlCalendarToday
+              [(viewDate)]="viewDate">
+        {{'CALENDAR.TODAY' | translate}}
+      </button>
+      <button mat-raised-button
+              mwlCalendarNextView
+              [view]="calendarView"
+              [(viewDate)]="viewDate">
+        {{'CALENDAR.NEXT_PERIOD' | translate}}
+      </button>
+    </div>
     <ng-template #loadingTemplate>
       <div class="text-center">
         <i class="fas fa-spin fa-spinner fa-5x"></i> <br/>
