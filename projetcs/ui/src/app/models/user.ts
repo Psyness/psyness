@@ -1,3 +1,8 @@
+export enum UserRole {
+  CLIENT = 'CLIENT',
+  PSYCHOLOGIST = 'PSYCHOLOGIST'
+}
+
 export interface UserResponse {
   id: string
   username: string

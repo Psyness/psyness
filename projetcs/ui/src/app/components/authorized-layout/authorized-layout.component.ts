@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { SessionService } from "../../services/session.service";
-import { User } from "../../models/user";
+import { User, UserRole } from "../../models/user";
 import { Router } from "@angular/router";
 
 @Component({
@@ -14,10 +14,10 @@ import { Router } from "@angular/router";
 export class AuthorizedLayoutComponent implements OnInit {
 
   navigationItems = [
-    {title: 'LAYOUT.NAV_ITEM_HOME', link: '/home'},
-    {title: 'LAYOUT.NAV_ITEM_CLIENTS', link: '/clients'},
-    {title: 'LAYOUT.NAV_ITEM_PSYCHOLOGISTS', link: '/psychologists'},
-    {title: 'LAYOUT.NAV_ITEM_TASKS', link: '/tasks'}
+    { title: 'LAYOUT.NAV_ITEM_HOME', link: '/home', roles: [UserRole.CLIENT, UserRole.PSYCHOLOGIST] },
+    { title: 'LAYOUT.NAV_ITEM_CLIENTS', link: '/clients', roles: [UserRole.PSYCHOLOGIST] },
+    { title: 'LAYOUT.NAV_ITEM_PSYCHOLOGISTS', link: '/psychologists', roles: [UserRole.CLIENT] },
+    { title: 'LAYOUT.NAV_ITEM_TASKS', link: '/tasks', roles: [UserRole.PSYCHOLOGIST, UserRole.CLIENT] }
   ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
