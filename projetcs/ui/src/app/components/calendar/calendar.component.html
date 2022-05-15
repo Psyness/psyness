@@ -12,20 +12,16 @@
   <div fxFlex="85">
     <div class="btn-group">
       <button mat-raised-button
-              mwlCalendarPreviousView
-              [view]="calendarView"
-              [(viewDate)]="viewDate">
+              (click)="addDaysToView(-7)">
         {{'CALENDAR.PREVIOUS_PERIOD' | translate}}
       </button>
       <button mat-raised-button
-              mwlCalendarToday
-              [(viewDate)]="viewDate">
+              (click)="setTodayView()">
         {{'CALENDAR.TODAY' | translate}}
       </button>
       <button mat-raised-button
               mwlCalendarNextView
-              [view]="calendarView"
-              [(viewDate)]="viewDate">
+              (click)="addDaysToView(7)">
         {{'CALENDAR.NEXT_PERIOD' | translate}}
       </button>
     </div>

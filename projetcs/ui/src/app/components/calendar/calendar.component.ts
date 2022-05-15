@@ -11,7 +11,7 @@ import {
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
 import { CreateEventDialogComponent } from "../create-event-dialog/create-event-dialog.component";
-import { endOfHour, endOfWeek, startOfHour, startOfWeek } from 'date-fns';
+import { addDays, endOfHour, endOfWeek, startOfHour, startOfWeek } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
 import { Appointment, AppointmentInfo, AppointmentStatus, CalendarData } from "../../models/appointment";
 import { SessionService } from "../../services/session.service";
@@ -65,6 +65,16 @@ export class CalendarComponent implements OnInit, OnChanges {
 
   public onUserSelect(event: MatSelectionListChange) {
     this.setSelectedUserId.emit(event.options[0]?.value)
+  }
+
+  public setTodayView() {
+    this.viewDate = new Date();
+    this.reloadEvents();
+  }
+
+  public addDaysToView(numberOfDays: number) {
+    this.viewDate = addDays(this.viewDate, numberOfDays);
+    this.reloadEvents();
   }
 
   public showCreateEventDialog(event: { date: Date, sourceEvent: MouseEvent }) {
