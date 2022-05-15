@@ -10,7 +10,7 @@
     </mat-selection-list>
   </div>
   <div fxFlex="85">
-    <ng-template #loading>
+    <ng-template #loadingTemplate>
       <div class="text-center">
         <i class="fas fa-spin fa-spinner fa-5x"></i> <br/>
         Loading events...
@@ -18,11 +18,11 @@
     </ng-template>
 
     <mwl-calendar-week-view
-      *ngIf="!calendarData.loading; else loading"
+      *ngIf="!loading; else loadingTemplate"
       [viewDate]="viewDate"
       [locale]="locale"
       [weekStartsOn]="1"
-      [events]="calendarData.appointments"
+      [events]="appointments"
       (hourSegmentClicked)="showCreateEventDialog($event)"
       (eventClicked)="showEditEventDialog($event)"
     >

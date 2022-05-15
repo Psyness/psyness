@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation
+} from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
 import { CreateEventDialogComponent } from "../create-event-dialog/create-event-dialog.component";
@@ -17,14 +26,15 @@ import { MatSelectionListChange } from "@angular/material/list";
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnChanges {
 
   public user?: User;
   public viewDate = new Date()
   public locale: string = 'ru';
+  public loading: boolean = false;
+  public appointments: CalendarEvent<AppointmentInfo>[] = [];
 
-  @Input() public calendarData: CalendarData = { appointments: [], users: [], loading: false };
-  @Output() public reloadEvents = new EventEmitter<void>();
+  @Input() public calendarData: CalendarData = { users: [] };
   @Output() public setSelectedUserId = new EventEmitter<string>();
 
   constructor(
@@ -37,6 +47,18 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     this.sessionService.getSession()
       .subscribe(user => this.user = user)
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { currentValue, previousValue } = changes['calendarData'];
+
+    if (!previousValue) {
+      this.reloadEvents();
+    }
+    console.log(previousValue && currentValue.attendeeId !== previousValue.attendeeId)
+    if (previousValue && currentValue.attendeeId !== previousValue.attendeeId) {
+      this.reloadEvents();
+    }
   }
 
   public onUserSelect(event: MatSelectionListChange) {
@@ -61,7 +83,7 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: Required<Appointment>) => {
       if (result) {
         this.appointmentService.saveAppointment(result).subscribe(
-          () => this.reloadEvents.emit()
+          () => this.reloadEvents()
         );
       }
     });
@@ -85,7 +107,7 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: { appointmentId: string, status: AppointmentStatus }) => {
       if (result) {
         this.appointmentService.updateAppointment(result.appointmentId, result.status).subscribe(
-          () => this.reloadEvents.emit()
+          () => this.reloadEvents()
         );
       }
     });
@@ -100,10 +122,27 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: { appointmentId: string, status: AppointmentStatus }) => {
       if (result) {
         this.appointmentService.updateAppointment(result.appointmentId, result.status).subscribe(
-          () => this.reloadEvents.emit()
+          () => this.reloadEvents()
         );
       }
     });
+  }
+
+  public reloadEvents() {
+    this.loading = true;
+    if (this.calendarData.attendeeId) {
+      this.appointmentService.getContractorAppointments(this.calendarData.attendeeId)
+        .subscribe(appointments => {
+          this.loading = false;
+          this.appointments = appointments;
+        });
+    } else {
+      this.appointmentService.getAppointments()
+        .subscribe(appointments => {
+          this.loading = false;
+          this.appointments = appointments;
+        });
+    }
   }
 
 }

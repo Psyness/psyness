@@ -1,4 +1,3 @@
-import { CalendarEvent } from "angular-calendar";
 import { User } from "./user";
 
 export enum AppointmentStatus {
@@ -48,7 +47,5 @@ export interface AppointmentListResponse {
 
 export interface CalendarData {
   attendeeId?: string;
-  loading: boolean;
-  appointments: CalendarEvent<AppointmentInfo>[]
   users: User[]
 }
