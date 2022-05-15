@@ -10,12 +10,13 @@ class EventService:
     def __init__(self, event_repository: EventRepository):
         self._event_repository = event_repository
 
-    async def find_events(self, user_id: UUID) -> EventList:
-        events = await self._event_repository.find_events(user_id)
+    async def find_events(self, user_id: UUID, start_time: int, end_time: int) -> EventList:
+        events = await self._event_repository.find_events(user_id, start_time, end_time)
         return EventList(events=events)
 
-    async def find_contractor_events(self, user_id: UUID, contractor_id: UUID) -> ContractorEventList:
-        raw_events = await self._event_repository.find_events(contractor_id)
+    async def find_contractor_events(self, user_id: UUID, contractor_id: UUID, start_time: int,
+                                     end_time: int) -> ContractorEventList:
+        raw_events = await self._event_repository.find_events(contractor_id, start_time, end_time)
         adjusted_events = [self._adjust_event(event, user_id) for event in raw_events]
         return ContractorEventList(events=adjusted_events)
 

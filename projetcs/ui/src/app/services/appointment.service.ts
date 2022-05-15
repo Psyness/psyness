@@ -26,8 +26,12 @@ export class AppointmentService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  getAppointments(): Observable<CalendarEvent<AppointmentInfo>[]> {
+  getAppointments(startTime: Date, endTime: Date): Observable<CalendarEvent<AppointmentInfo>[]> {
     return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/events`, {
+      params: {
+        start_time: startTime.valueOf(),
+        end_time: endTime.valueOf()
+      },
       withCredentials: true
     })
       .pipe(
@@ -52,8 +56,12 @@ export class AppointmentService {
       );
   }
 
-  getContractorAppointments(contractorId: string): Observable<CalendarEvent[]> {
+  getContractorAppointments(contractorId: string, startTime: Date, endTime: Date): Observable<CalendarEvent[]> {
     return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/contractor-events/${contractorId}`, {
+      params: {
+        start_time: startTime.valueOf(),
+        end_time: endTime.valueOf()
+      },
       withCredentials: true
     })
       .pipe(

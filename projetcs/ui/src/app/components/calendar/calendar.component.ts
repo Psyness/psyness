@@ -11,7 +11,7 @@ import {
 import { CalendarEvent } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
 import { CreateEventDialogComponent } from "../create-event-dialog/create-event-dialog.component";
-import { endOfHour, startOfHour } from 'date-fns';
+import { endOfHour, endOfWeek, startOfHour, startOfWeek } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
 import { Appointment, AppointmentInfo, AppointmentStatus, CalendarData } from "../../models/appointment";
 import { SessionService } from "../../services/session.service";
@@ -130,14 +130,16 @@ export class CalendarComponent implements OnInit, OnChanges {
 
   public reloadEvents() {
     this.loading = true;
+    const startTime = startOfWeek(this.viewDate, { weekStartsOn: 1 });
+    const endTime = endOfWeek(this.viewDate, { weekStartsOn: 1 });
     if (this.calendarData.attendeeId) {
-      this.appointmentService.getContractorAppointments(this.calendarData.attendeeId)
+      this.appointmentService.getContractorAppointments(this.calendarData.attendeeId, startTime, endTime)
         .subscribe(appointments => {
           this.loading = false;
           this.appointments = appointments;
         });
     } else {
-      this.appointmentService.getAppointments()
+      this.appointmentService.getAppointments(startTime, endTime)
         .subscribe(appointments => {
           this.loading = false;
           this.appointments = appointments;

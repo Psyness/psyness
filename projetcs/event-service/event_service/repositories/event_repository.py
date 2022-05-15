@@ -12,10 +12,12 @@ class EventRepository:
     def __init__(self, engine: Engine):
         self._engine = engine
 
-    async def find_events(self, user_id: UUID):
+    async def find_events(self, user_id: UUID, start_time: int, end_time: int):
         with self._engine.connect() as conn:
             query = select(events_table) \
-                .where(events_table.c.attendees.op('@>')([{'uuid': str(user_id)}]))
+                .where(events_table.c.attendees.op('@>')([{'uuid': str(user_id)}])) \
+                .where(events_table.c.start_time <= end_time) \
+                .where(events_table.c.end_time >= start_time)
 
             events = conn.execute(query)
             return events.all()

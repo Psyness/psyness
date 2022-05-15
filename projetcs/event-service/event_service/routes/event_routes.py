@@ -13,16 +13,21 @@ router = APIRouter()
 @router.get("/users/{user_id}/events")
 @inject
 async def get_events(user_id: UUID,
+                     start_time: int,
+                     end_time: int,
                      event_service: EventService = Depends(Provide[Container.event_service])) -> EventList:
-    return await event_service.find_events(user_id)
+    return await event_service.find_events(user_id, start_time, end_time)
 
 
 @router.get("/users/{user_id}/contractor-events/{contractor_id}")
 @inject
-async def get_events(user_id: UUID,
-                     contractor_id: UUID,
-                     event_service: EventService = Depends(Provide[Container.event_service])) -> ContractorEventList:
-    return await event_service.find_contractor_events(user_id, contractor_id)
+async def get_contractor_events(user_id: UUID,
+                                start_time: int,
+                                end_time: int,
+                                contractor_id: UUID,
+                                event_service: EventService = Depends(
+                                    Provide[Container.event_service])) -> ContractorEventList:
+    return await event_service.find_contractor_events(user_id, contractor_id, start_time, end_time)
 
 
 @router.post("/users/{user_id}/events")

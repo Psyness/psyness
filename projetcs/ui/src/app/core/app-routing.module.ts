@@ -7,7 +7,6 @@ import { ClientsComponent } from "../pages/clients/clients.component";
 import { TasksComponent } from "../pages/tasks/tasks.component";
 import { InvitationComponent } from "../pages/invitation/invitation.component";
 import { PsychologistsComponent } from "../pages/psychologists/psychologists.component";
-import { PsychologistComponent } from "../pages/psychologist/psychologist.component";
 
 const routes: Routes = [
   {
@@ -33,10 +32,6 @@ const routes: Routes = [
       {
         path: 'psychologists',
         component: PsychologistsComponent
-      },
-      {
-        path: 'psychologist/:psychologistId',
-        component: PsychologistComponent
       },
       {
         path: 'tasks',

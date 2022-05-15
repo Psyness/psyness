@@ -45,7 +45,6 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { ConfirmEventDialogComponent } from './components/confirm-event-dialog/confirm-event-dialog.component';
 import { ViewEventDialogComponent } from './components/view-event-dialog/view-event-dialog.component';
 import { PsychologistsComponent } from './pages/psychologists/psychologists.component';
-import { PsychologistComponent } from './pages/psychologist/psychologist.component';
 import { AllowedRolesDirective } from "./directives/allowed-roles.directive";
 
 @NgModule({
@@ -62,7 +61,6 @@ import { AllowedRolesDirective } from "./directives/allowed-roles.directive";
         ConfirmEventDialogComponent,
         ViewEventDialogComponent,
         PsychologistsComponent,
-        PsychologistComponent,
         CalendarComponent,
         AllowedRolesDirective,
         AllowedRolesDirective

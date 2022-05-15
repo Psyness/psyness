@@ -16,9 +16,11 @@ router = APIRouter()
 @secure()
 @inject
 async def find_events(request: Request,
+                      start_time: int,
+                      end_time: int,
                       appointment_client: AppointmentClient = Depends(Provide(Container.appointment_client))):
     current_user = request.session['user']
-    events = await appointment_client.find_events(current_user['id'])
+    events = await appointment_client.find_events(current_user['id'], start_time, end_time)
     return events
 
 
@@ -27,9 +29,11 @@ async def find_events(request: Request,
 @inject
 async def find_events(request: Request,
                       contractor_id: UUID,
+                      start_time: int,
+                      end_time: int,
                       appointment_client: AppointmentClient = Depends(Provide(Container.appointment_client))):
     current_user = request.session['user']
-    events = await appointment_client.find_contractor_events(current_user['id'], contractor_id)
+    events = await appointment_client.find_contractor_events(current_user['id'], contractor_id, start_time, end_time)
     return events
 
 
