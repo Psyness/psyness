@@ -4,7 +4,8 @@ from uuid import UUID
 import httpx
 
 from configs.settings import Settings
-from dto.appointment_dto import EventListDto, EventDto, CreateEventDto, UpdateEventStatusDto, ContractorEventListDto
+from dto.appointment_dto import \
+    EventListDto, EventDto, CreateEventDto, UpdateEventStatusDto, ContractorEventListDto, OneTimeEventLink
 
 
 class AppointmentClient:
@@ -29,3 +30,7 @@ class AppointmentClient:
     async def update_event_status(self, user_id: UUID, event_id: UUID, event: UpdateEventStatusDto) -> EventDto:
         r = httpx.post(f'{self._event_service_url}/users/{user_id}/events/{event_id}/statuses', content=event.json())
         return EventDto.parse_raw(r.content)
+
+    async def create_one_time_appointment_link(self, psychologist_id) -> OneTimeEventLink:
+        r = httpx.post(f'{self._event_service_url}/users/{psychologist_id}/one-time-link')
+        return OneTimeEventLink.parse_raw(r.content)

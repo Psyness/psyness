@@ -50,3 +50,7 @@ export interface CalendarData {
   alwaysShowUserCalendar: boolean
   users: User[]
 }
+
+export interface OneTimeLink {
+  id: string
+}

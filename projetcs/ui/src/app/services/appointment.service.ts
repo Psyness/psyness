@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { map, Observable } from "rxjs";
+import {Injectable} from '@angular/core';
+import {map, Observable} from "rxjs";
 import {
   Appointment,
   AppointmentInfo,
   AppointmentListResponse,
   AppointmentRequest,
   AppointmentResponse,
-  AppointmentStatus
+  AppointmentStatus, OneTimeLink
 } from "../models/appointment";
-import { CalendarEvent } from "angular-calendar";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import {CalendarEvent} from "angular-calendar";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,9 @@ import { environment } from "../../environments/environment";
 export class AppointmentService {
 
   private eventColors: { [key in AppointmentStatus]: { initiatorColor: string, color: string } } = {
-    PENDING: { color: '#d9d7d7', initiatorColor: 'yellow' },
-    APPROVED: { color: 'blue', initiatorColor: 'blue' },
-    CANCELLED: { color: 'red', initiatorColor: 'red' },
+    PENDING: {color: '#d9d7d7', initiatorColor: 'yellow'},
+    APPROVED: {color: 'blue', initiatorColor: 'blue'},
+    CANCELLED: {color: 'red', initiatorColor: 'red'},
   }
 
   constructor(private readonly httpClient: HttpClient) {
@@ -87,7 +87,7 @@ export class AppointmentService {
   }
 
   private calculateColor(appointment: AppointmentResponse, user_id: string): string {
-    const { attendees, initiator } = appointment;
+    const {attendees, initiator} = appointment;
 
     if (appointment.hidden) {
       return 'black';
@@ -121,9 +121,18 @@ export class AppointmentService {
   }
 
   updateAppointment(eventId: string, status: AppointmentStatus): Observable<Appointment> {
-    return this.httpClient.post<Appointment>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, { status }, {
+    return this.httpClient.post<Appointment>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, {status}, {
       withCredentials: true
     });
+  }
+
+  createOneTimeAppointmentLink(): Observable<string> {
+    return this.httpClient.post<OneTimeLink>(`${environment.apiGatewayUrl}/events/one-time-link`, {}, {
+      withCredentials: true
+    })
+      .pipe(
+        map(result => (`${window.location.origin}/calendars/one-time-link/${result.id}`))
+      )
   }
 
 }

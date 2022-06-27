@@ -26,7 +26,8 @@
     "USERNAME_COLUMN": "Логин",
     "FIRST_NAME_COLUMN": "Имя",
     "LAST_NAME_COLUMN": "Фамилия",
-    "INVITE": "Пригласить клиента"
+    "INVITE": "Пригласить клиента",
+    "EVENT_LINK": "Создать ссылку на добавление встречи"
   },
   "PSYCHOLOGISTS": {
     "USERNAME_COLUMN": "Логин",

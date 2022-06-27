@@ -2,10 +2,11 @@ from uuid import UUID
 
 from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends
-from models.event import CreateEvent, EventList, Event, UpdateEventStatus, ContractorEventList
-from services.event_service import EventService
 
 from dependencies import Container
+from models.event import CreateEvent, EventList, Event, UpdateEventStatus, ContractorEventList
+from services.event_service import EventService
+from services.one_time_link_service import OneTimeLinkService
 
 router = APIRouter()
 
@@ -45,3 +46,12 @@ async def save_events(user_id: UUID,
                       event: UpdateEventStatus,
                       event_service: EventService = Depends(Provide[Container.event_service])) -> Event:
     return await event_service.update_event_status(user_id, event_id, event)
+
+
+@router.post("/users/{user_id}/one-time-link")
+@inject
+async def create_one_time_link(
+        user_id: UUID,
+        one_time_link_service: OneTimeLinkService = Depends(Provide[Container.one_time_link_service])
+):
+    return await one_time_link_service.create_one_time_link(user_id)

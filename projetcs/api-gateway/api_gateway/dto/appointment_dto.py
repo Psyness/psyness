@@ -24,6 +24,11 @@ class EventDto(BaseModel):
     attendees: List[EventAttendee]
 
 
+class OneTimeEventLink(BaseModel):
+    id: str
+    psychologist_id: str
+
+
 class EventListDto(BaseModel):
     user_id: str
     events: List[EventDto]

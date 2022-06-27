@@ -9,7 +9,7 @@ The platform that helps to psychologists to consult their clients
 * Poetry (dependency management tool)
 * Docker
 
-#Setup infrastructure
+# Setup infrastructure
 
 * Run `cd ${PSYNESS_HOME}`
 * Run `docker-compose up -d`
@@ -17,6 +17,7 @@ The platform that helps to psychologists to consult their clients
 # Run api-gateway
 
 * Run `cd ${PSYNESS_HOME}/projects/api-gateway`
+* Run `poetry shell`
 * Run `poetry install`
 * Run `cd api_gateway`
 * Run `touch .env`
@@ -35,6 +36,7 @@ The platform that helps to psychologists to consult their clients
 # Run user-service
 
 * Run `cd ${PSYNESS_HOME}/projects/user-service`
+* Run `poetry shell`
 * Run `poetry install`
 * Run `cd user_service`
 * Run `touch .env`
@@ -52,6 +54,7 @@ The platform that helps to psychologists to consult their clients
 
 * Run `cd ${PSYNESS_HOME}/projects/event-service`
 * Run `poetry install`
+* Run `poetry shell`
 * Run `cd event_service`
 * Run `touch .env`
 * Add to the `.env` file the next variables
@@ -78,9 +81,19 @@ The platform that helps to psychologists to consult their clients
 * Run `npm install`
 * Run `ng serve`
 
+# How to set up project in the idea
+
+* Install Python plugin from plugins marketplace.
+* Open project settings
+* Open SDKs tab
+* Add poetry SDK
+* Add `${PSYNESS_HOME}/projects/user-service/user_service` as a new_module to a project, selecting this folder as source root 
+* Add `${PSYNESS_HOME}/projects/api-gateway/api_gateway` as a new_module to a project, selecting as source root
+* Add `${PSYNESS_HOME}/projects/event-service/event_service` as a new_module to a project, selecting as source root
+
 # How to create new migration if required
 
-* Run `cd ${PSYNESS_HOME}/projects/use-service`
+* Run `cd ${PSYNESS_HOME}/projects/user-service`
 * Run `yoyo new ./migrations -m "EXPLANATION_OF_THE_MIGRATION"`
 * Run `:w` to save you changes
 * Run `:q` to exit vim

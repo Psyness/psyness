@@ -5,7 +5,9 @@ from sqlalchemy import create_engine
 
 from configs.settings import Settings
 from repositories.event_repository import EventRepository
+from repositories.one_time_link_repository import OneTimeLinkRepository
 from services.event_service import EventService
+from services.one_time_link_service import OneTimeLinkService
 
 
 class Container(containers.DeclarativeContainer):
@@ -27,4 +29,14 @@ class Container(containers.DeclarativeContainer):
     event_service = providers.Singleton(
         EventService,
         event_repository=event_repository
+    )
+
+    one_time_link_repository = providers.Singleton(
+        OneTimeLinkRepository,
+        engine=engine
+    )
+
+    one_time_link_service = providers.Singleton(
+        OneTimeLinkService,
+        one_time_link_repository=one_time_link_repository
     )

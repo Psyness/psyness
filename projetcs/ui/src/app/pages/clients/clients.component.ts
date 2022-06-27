@@ -3,6 +3,7 @@ import { UserService } from "../../services/user.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { CalendarData } from "../../models/appointment";
 import { MatDialog } from "@angular/material/dialog";
+import {AppointmentService} from "../../services/appointment.service";
 
 @Component({
   selector: 'app-clients',
@@ -18,7 +19,8 @@ export class ClientsComponent implements OnInit {
   constructor(
     private readonly dialog: MatDialog,
     private readonly snackBar: MatSnackBar,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly appointmentService: AppointmentService
   ) {
   }
 
@@ -34,5 +36,10 @@ export class ClientsComponent implements OnInit {
   createInvitation() {
     this.userService.createInvitation()
       .subscribe(invitationUrl => this.snackBar.open(invitationUrl, 'Close'))
+  }
+
+  createOneTimeAppointmentLink() {
+    this.appointmentService.createOneTimeAppointmentLink()
+      .subscribe(appointmentLinkUrl => this.snackBar.open(appointmentLinkUrl, 'Close'))
   }
 }
