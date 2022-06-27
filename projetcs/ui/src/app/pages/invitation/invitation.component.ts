@@ -11,7 +11,7 @@ export class InvitationComponent {
 
   constructor(
     private readonly userService: UserService,
-    private route: ActivatedRoute
+    private readonly route: ActivatedRoute
   ) {
   }
 

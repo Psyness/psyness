@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from "../../services/user.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { CalendarData } from "../../models/appointment";
+import { CalendarConfig } from "../../models/appointment";
 import { MatDialog } from "@angular/material/dialog";
 import {AppointmentService} from "../../services/appointment.service";
 
@@ -12,7 +12,7 @@ import {AppointmentService} from "../../services/appointment.service";
 })
 export class ClientsComponent implements OnInit {
 
-  public calendarData: CalendarData = { users: [], alwaysShowUserCalendar: true };
+  public calendarData: CalendarConfig = { users: [], alwaysShowUserCalendar: true };
   public viewDate = new Date()
   public locale: string = 'ru';
 

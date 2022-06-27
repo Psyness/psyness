@@ -1,21 +1,10 @@
 import { User } from "./user";
+import { CalendarEvent } from "angular-calendar";
 
 export enum AppointmentStatus {
   PENDING = 'PENDING',
   APPROVED = 'APPROVED',
   CANCELLED = 'CANCELLED'
-}
-
-export interface Appointment {
-  title: string;
-  attendeeId?: string;
-  start: Date;
-  end: Date;
-}
-
-export interface AppointmentInfo {
-  initiator: string;
-  hidden?: boolean;
 }
 
 export interface AppointmentAttendee {
@@ -33,6 +22,16 @@ export interface AppointmentResponse {
   attendees: AppointmentAttendee[]
 }
 
+export interface AppointmentListResponse {
+  user_id: string
+  events: AppointmentResponse[]
+}
+
+export interface AppointmentList {
+  userId: string,
+  events: Array<CalendarEvent<AppointmentInfo>>
+}
+
 export interface AppointmentRequest {
   title: string;
   attendee_id: string;
@@ -40,13 +39,21 @@ export interface AppointmentRequest {
   end_time: number;
 }
 
-export interface AppointmentListResponse {
-  user_id: string
-  events: AppointmentResponse[]
+export interface CreateAppointmentRequest {
+  title: string;
+  attendeeId?: string;
+  start: Date;
+  end: Date;
 }
 
-export interface CalendarData {
+export interface AppointmentInfo {
+  initiator: string;
+  hidden?: boolean;
+}
+
+export interface CalendarConfig {
   attendeeId?: string;
+  oneTimeLinkId?: string
   alwaysShowUserCalendar: boolean
   users: User[]
 }

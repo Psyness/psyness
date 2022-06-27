@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
-import { CalendarData } from "../../models/appointment";
+import { CalendarConfig } from "../../models/appointment";
 import { UserService } from "../../services/user.service";
 
 @Component({
@@ -11,7 +11,7 @@ import { UserService } from "../../services/user.service";
 })
 export class PsychologistsComponent implements OnInit {
 
-  public calendarData: CalendarData = { users: [], alwaysShowUserCalendar: false };
+  public calendarData: CalendarConfig = { users: [], alwaysShowUserCalendar: false };
   public viewDate = new Date()
   public locale: string = 'ru';
 

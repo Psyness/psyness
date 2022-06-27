@@ -46,6 +46,7 @@ import { ConfirmEventDialogComponent } from './components/confirm-event-dialog/c
 import { ViewEventDialogComponent } from './components/view-event-dialog/view-event-dialog.component';
 import { PsychologistsComponent } from './pages/psychologists/psychologists.component';
 import { AllowedRolesDirective } from "./directives/allowed-roles.directive";
+import { OneTimeLinkComponent } from './pages/one-time-link/one-time-link.component';
 
 @NgModule({
     declarations: [
@@ -63,7 +64,8 @@ import { AllowedRolesDirective } from "./directives/allowed-roles.directive";
         PsychologistsComponent,
         CalendarComponent,
         AllowedRolesDirective,
-        AllowedRolesDirective
+        AllowedRolesDirective,
+        OneTimeLinkComponent
     ],
   imports: [
     BrowserModule,

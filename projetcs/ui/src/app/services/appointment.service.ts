@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {map, Observable} from "rxjs";
 import {
-  Appointment,
+  CreateAppointmentRequest,
   AppointmentInfo,
   AppointmentListResponse,
   AppointmentRequest,
   AppointmentResponse,
-  AppointmentStatus, OneTimeLink
+  AppointmentStatus,
+  OneTimeLink, AppointmentList
 } from "../models/appointment";
 import {CalendarEvent} from "angular-calendar";
 import {HttpClient} from "@angular/common/http";
@@ -26,7 +27,7 @@ export class AppointmentService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  getAppointments(startTime: Date, endTime: Date): Observable<CalendarEvent<AppointmentInfo>[]> {
+  getAppointments(startTime: Date, endTime: Date): Observable<AppointmentList> {
     return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/events`, {
       params: {
         start_time: startTime.valueOf(),
@@ -35,28 +36,31 @@ export class AppointmentService {
       withCredentials: true
     })
       .pipe(
-        map(result => result.events.map(event => {
-            const color = this.calculateColor(event, result.user_id);
-            return {
-              id: event.id,
-              title: event.title,
-              start: new Date(event.start_time),
-              end: new Date(event.end_time),
-              color: {
-                primary: color,
-                secondary: color
-              },
-              meta: {
-                initiator: event.initiator,
-                hidden: event.hidden
+        map(result => ({
+            userId: result.user_id,
+            events: result.events.map(event => {
+              const color = this.calculateColor(event, result.user_id);
+              return {
+                id: event.id,
+                title: event.title,
+                start: new Date(event.start_time),
+                end: new Date(event.end_time),
+                color: {
+                  primary: color,
+                  secondary: color
+                },
+                meta: {
+                  initiator: event.initiator,
+                  hidden: event.hidden
+                }
               }
-            }
+            })
           })
         )
       );
   }
 
-  getContractorAppointments(contractorId: string, startTime: Date, endTime: Date): Observable<CalendarEvent[]> {
+  getContractorAppointments(contractorId: string, startTime: Date, endTime: Date): Observable<AppointmentList> {
     return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/contractor-events/${contractorId}`, {
       params: {
         start_time: startTime.valueOf(),
@@ -65,22 +69,58 @@ export class AppointmentService {
       withCredentials: true
     })
       .pipe(
-        map(result => result.events.map(event => {
-            const color = this.calculateColor(event, result.user_id);
-            return {
-              id: event.id,
-              title: event.title,
-              start: new Date(event.start_time),
-              end: new Date(event.end_time),
-              color: {
-                primary: color,
-                secondary: color
-              },
-              meta: {
-                initiator: event.initiator,
-                hidden: event.hidden
+        map(result => ({
+            userId: result.user_id,
+            events: result.events.map(event => {
+              const color = this.calculateColor(event, result.user_id);
+              return {
+                id: event.id,
+                title: event.title,
+                start: new Date(event.start_time),
+                end: new Date(event.end_time),
+                color: {
+                  primary: color,
+                  secondary: color
+                },
+                meta: {
+                  initiator: event.initiator,
+                  hidden: event.hidden
+                }
               }
-            }
+            })
+          })
+        )
+      );
+  }
+
+  getAppointmentsByLink(oneTimeLinkId: string, startTime: Date, endTime: Date): Observable<AppointmentList> {
+    return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/events/one-time-link/${oneTimeLinkId}`, {
+      params: {
+        start_time: startTime.valueOf(),
+        end_time: endTime.valueOf()
+      },
+      withCredentials: true
+    })
+      .pipe(
+        map(result => ({
+            userId: result.user_id,
+            events: result.events.map(event => {
+              const color = this.calculateColor(event, result.user_id);
+              return {
+                id: event.id,
+                title: event.title,
+                start: new Date(event.start_time),
+                end: new Date(event.end_time),
+                color: {
+                  primary: color,
+                  secondary: color
+                },
+                meta: {
+                  initiator: event.initiator,
+                  hidden: event.hidden
+                }
+              }
+            })
           })
         )
       );
@@ -108,20 +148,20 @@ export class AppointmentService {
     return initiatedByCurrentUser ? colors.initiatorColor : colors.color;
   }
 
-  saveAppointment(appointment: Required<Appointment>): Observable<Appointment> {
+  saveAppointment(appointment: Required<CreateAppointmentRequest>): Observable<CreateAppointmentRequest> {
     const event: AppointmentRequest = {
       title: appointment.title,
       start_time: appointment.start.getTime(),
       end_time: appointment.end.getTime(),
       attendee_id: appointment.attendeeId,
     }
-    return this.httpClient.post<Appointment>(`${environment.apiGatewayUrl}/events`, event, {
+    return this.httpClient.post<CreateAppointmentRequest>(`${environment.apiGatewayUrl}/events`, event, {
       withCredentials: true
     });
   }
 
-  updateAppointment(eventId: string, status: AppointmentStatus): Observable<Appointment> {
-    return this.httpClient.post<Appointment>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, {status}, {
+  updateAppointment(eventId: string, status: AppointmentStatus): Observable<CreateAppointmentRequest> {
+    return this.httpClient.post<CreateAppointmentRequest>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, {status}, {
       withCredentials: true
     });
   }

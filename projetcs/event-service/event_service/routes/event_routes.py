@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends
 
 from dependencies import Container
 from models.event import CreateEvent, EventList, Event, UpdateEventStatus, ContractorEventList
+from models.one_time_link import OneTimeLink
 from services.event_service import EventService
 from services.one_time_link_service import OneTimeLinkService
 
@@ -54,4 +55,20 @@ async def create_one_time_link(
         user_id: UUID,
         one_time_link_service: OneTimeLinkService = Depends(Provide[Container.one_time_link_service])
 ):
-    return await one_time_link_service.create_one_time_link(user_id)
+    return await one_time_link_service.create(user_id)
+
+
+@router.get("/one-time-link/{one_time_link_id}/events")
+@inject
+async def create_one_time_link(
+        one_time_link_id: UUID,
+        start_time: int,
+        end_time: int,
+        one_time_link_service: OneTimeLinkService = Depends(Provide[Container.one_time_link_service]),
+        event_service: EventService = Depends(Provide[Container.event_service])
+):
+    link: OneTimeLink = await one_time_link_service.get(one_time_link_id)
+    events: ContractorEventList = await event_service \
+        .find_contractor_events(None, link.psychologist_id, start_time=start_time, end_time=end_time)
+
+    return {'events': events.events, 'user_id': link.psychologist_id}

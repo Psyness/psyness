@@ -34,3 +34,9 @@ class AppointmentClient:
     async def create_one_time_appointment_link(self, psychologist_id) -> OneTimeEventLink:
         r = httpx.post(f'{self._event_service_url}/users/{psychologist_id}/one-time-link')
         return OneTimeEventLink.parse_raw(r.content)
+
+    async def get_link_events(self, one_time_link_id: UUID, start_time: int, end_time: int):
+        r = httpx.get(f'{self._event_service_url}/one-time-link/{one_time_link_id}/events',
+                      params={'start_time': start_time, 'end_time': end_time})
+        content = json.loads(r.content)
+        return ContractorEventListDto(events=content['events'], user_id=content['user_id'])

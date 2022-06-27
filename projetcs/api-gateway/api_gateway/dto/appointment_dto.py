@@ -56,5 +56,5 @@ class ContractorEventDto(BaseModel):
 
 
 class ContractorEventListDto(BaseModel):
-    user_id: str
+    user_id: Optional[str]
     events: List[ContractorEventDto]

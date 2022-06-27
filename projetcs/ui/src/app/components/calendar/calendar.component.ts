@@ -1,21 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { MatDialog } from "@angular/material/dialog";
 import { CreateEventDialogComponent } from "../create-event-dialog/create-event-dialog.component";
 import { addDays, endOfHour, endOfWeek, startOfHour, startOfWeek } from 'date-fns';
 import { AppointmentService } from "../../services/appointment.service";
-import { Appointment, AppointmentInfo, AppointmentStatus, CalendarData } from "../../models/appointment";
-import { SessionService } from "../../services/session.service";
-import { User } from "../../models/user";
+import { AppointmentInfo, AppointmentStatus, CalendarConfig, CreateAppointmentRequest } from "../../models/appointment";
 import { ConfirmEventDialogComponent } from "../confirm-event-dialog/confirm-event-dialog.component";
 import { ViewEventDialogComponent } from "../view-event-dialog/view-event-dialog.component";
 import { MatSelectionListChange } from "@angular/material/list";
@@ -26,28 +15,22 @@ import { MatSelectionListChange } from "@angular/material/list";
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit, OnChanges {
+export class CalendarComponent implements OnChanges {
 
   public locale: string = 'ru';
   public loading: boolean = false;
   public viewDate = new Date()
 
-  public user?: User;
+  public userId?: string;
   public appointments: CalendarEvent<AppointmentInfo>[] = [];
 
-  @Input() public calendarData: CalendarData = { users: [], alwaysShowUserCalendar: false };
+  @Input() public calendarData: CalendarConfig = { users: [], alwaysShowUserCalendar: false };
   @Output() public setSelectedUserId = new EventEmitter<string>();
 
   constructor(
     private readonly dialog: MatDialog,
-    private readonly appointmentService: AppointmentService,
-    private readonly sessionService: SessionService,
+    private readonly appointmentService: AppointmentService
   ) {
-  }
-
-  ngOnInit(): void {
-    this.sessionService.getSession()
-      .subscribe(user => this.user = user)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -91,7 +74,7 @@ export class CalendarComponent implements OnInit, OnChanges {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result: Required<Appointment>) => {
+    dialogRef.afterClosed().subscribe((result: Required<CreateAppointmentRequest>) => {
       if (result) {
         this.appointmentService.saveAppointment(result).subscribe(
           () => this.reloadEvents()
@@ -101,7 +84,7 @@ export class CalendarComponent implements OnInit, OnChanges {
   }
 
   public showEditEventDialog(event: { event: CalendarEvent<AppointmentInfo> }) {
-    if (event.event.meta?.initiator === this.user?.id) {
+    if (event.event.meta?.initiator === this.userId) {
       this.showViewDialog(event.event)
       return
     }
@@ -143,19 +126,33 @@ export class CalendarComponent implements OnInit, OnChanges {
     this.loading = true;
     const startTime = startOfWeek(this.viewDate, { weekStartsOn: 1 });
     const endTime = endOfWeek(this.viewDate, { weekStartsOn: 1 });
+
+    if (this.calendarData.oneTimeLinkId) {
+      this.appointmentService.getAppointmentsByLink(this.calendarData.oneTimeLinkId, startTime, endTime)
+        .subscribe(appointments => {
+          this.loading = false;
+          this.appointments = appointments.events;
+          this.setSelectedUserId.emit(appointments.userId);
+        });
+      return;
+    }
+
     if (!this.calendarData.alwaysShowUserCalendar && this.calendarData.attendeeId) {
       this.appointmentService.getContractorAppointments(this.calendarData.attendeeId, startTime, endTime)
         .subscribe(appointments => {
           this.loading = false;
-          this.appointments = appointments;
+          this.appointments = appointments.events;
+          this.userId = appointments.userId
         });
-    } else {
-      this.appointmentService.getAppointments(startTime, endTime)
-        .subscribe(appointments => {
-          this.loading = false;
-          this.appointments = appointments;
-        });
+      return;
     }
+
+    this.appointmentService.getAppointments(startTime, endTime)
+      .subscribe(appointments => {
+        this.loading = false;
+        this.appointments = appointments.events;
+        this.userId = appointments.userId
+      });
   }
 
 }
