@@ -15,3 +15,6 @@ class OneTimeLinkService:
 
     async def get(self, one_time_link_id):
         return await self._one_time_link_repository.get(one_time_link_id)
+
+    async def invalidate_link(self, one_time_link_id):
+        return await self._one_time_link_repository.set_used_by_id(one_time_link_id)

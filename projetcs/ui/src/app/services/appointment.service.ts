@@ -1,17 +1,16 @@
-import {Injectable} from '@angular/core';
-import {map, Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { map, Observable } from "rxjs";
 import {
-  CreateAppointmentRequest,
-  AppointmentInfo,
+  AppointmentList,
   AppointmentListResponse,
   AppointmentRequest,
   AppointmentResponse,
   AppointmentStatus,
-  OneTimeLink, AppointmentList
+  CreateAppointmentRequest,
+  OneTimeLink
 } from "../models/appointment";
-import {CalendarEvent} from "angular-calendar";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +18,9 @@ import {environment} from "../../environments/environment";
 export class AppointmentService {
 
   private eventColors: { [key in AppointmentStatus]: { initiatorColor: string, color: string } } = {
-    PENDING: {color: '#d9d7d7', initiatorColor: 'yellow'},
-    APPROVED: {color: 'blue', initiatorColor: 'blue'},
-    CANCELLED: {color: 'red', initiatorColor: 'red'},
+    PENDING: { color: '#d9d7d7', initiatorColor: 'yellow' },
+    APPROVED: { color: 'blue', initiatorColor: 'blue' },
+    CANCELLED: { color: 'red', initiatorColor: 'red' },
   }
 
   constructor(private readonly httpClient: HttpClient) {
@@ -35,29 +34,7 @@ export class AppointmentService {
       },
       withCredentials: true
     })
-      .pipe(
-        map(result => ({
-            userId: result.user_id,
-            events: result.events.map(event => {
-              const color = this.calculateColor(event, result.user_id);
-              return {
-                id: event.id,
-                title: event.title,
-                start: new Date(event.start_time),
-                end: new Date(event.end_time),
-                color: {
-                  primary: color,
-                  secondary: color
-                },
-                meta: {
-                  initiator: event.initiator,
-                  hidden: event.hidden
-                }
-              }
-            })
-          })
-        )
-      );
+      .pipe(map(result => this.convertEvent(result)));
   }
 
   getContractorAppointments(contractorId: string, startTime: Date, endTime: Date): Observable<AppointmentList> {
@@ -68,66 +45,89 @@ export class AppointmentService {
       },
       withCredentials: true
     })
+      .pipe(map(result => this.convertEvent(result)));
+  }
+
+  saveAppointment(appointment: Required<CreateAppointmentRequest>): Observable<CreateAppointmentRequest> {
+    const event: AppointmentRequest = {
+      title: appointment.title,
+      start_time: appointment.start.getTime(),
+      end_time: appointment.end.getTime(),
+      attendee_id: appointment.attendeeId,
+    }
+    return this.httpClient.post<CreateAppointmentRequest>(`${environment.apiGatewayUrl}/events`, event, {
+      withCredentials: true
+    });
+  }
+
+  updateAppointment(eventId: string, status: AppointmentStatus): Observable<CreateAppointmentRequest> {
+    return this.httpClient.post<CreateAppointmentRequest>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, { status }, {
+      withCredentials: true
+    });
+  }
+
+  createOneTimeAppointmentLink(): Observable<string> {
+    return this.httpClient.post<OneTimeLink>(`${environment.apiGatewayUrl}/one-time-link`, {}, {
+      withCredentials: true
+    })
       .pipe(
-        map(result => ({
-            userId: result.user_id,
-            events: result.events.map(event => {
-              const color = this.calculateColor(event, result.user_id);
-              return {
-                id: event.id,
-                title: event.title,
-                start: new Date(event.start_time),
-                end: new Date(event.end_time),
-                color: {
-                  primary: color,
-                  secondary: color
-                },
-                meta: {
-                  initiator: event.initiator,
-                  hidden: event.hidden
-                }
-              }
-            })
-          })
-        )
-      );
+        map(result => (`${window.location.origin}/calendars/one-time-link/${result.id}`))
+      )
   }
 
   getAppointmentsByLink(oneTimeLinkId: string, startTime: Date, endTime: Date): Observable<AppointmentList> {
-    return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/events/one-time-link/${oneTimeLinkId}`, {
+    return this.httpClient.get<AppointmentListResponse>(`${environment.apiGatewayUrl}/one-time-link/${oneTimeLinkId}/events`, {
       params: {
         start_time: startTime.valueOf(),
         end_time: endTime.valueOf()
       },
       withCredentials: true
     })
-      .pipe(
-        map(result => ({
-            userId: result.user_id,
-            events: result.events.map(event => {
-              const color = this.calculateColor(event, result.user_id);
-              return {
-                id: event.id,
-                title: event.title,
-                start: new Date(event.start_time),
-                end: new Date(event.end_time),
-                color: {
-                  primary: color,
-                  secondary: color
-                },
-                meta: {
-                  initiator: event.initiator,
-                  hidden: event.hidden
-                }
-              }
-            })
-          })
-        )
-      );
+      .pipe(map(result => this.convertEvent(result)));
+  }
+
+  saveAppointmentByLink(
+    appointment: Required<CreateAppointmentRequest>,
+    oneTimeLinkId: string
+  ): Observable<CreateAppointmentRequest> {
+    const event: AppointmentRequest = {
+      title: appointment.title,
+      start_time: appointment.start.getTime(),
+      end_time: appointment.end.getTime(),
+      attendee_id: appointment.attendeeId,
+    }
+    return this.httpClient.post<CreateAppointmentRequest>(
+      `${environment.apiGatewayUrl}/one-time-link/${oneTimeLinkId}/events`,
+      event,
+      { withCredentials: true }
+    );
+  }
+
+  private convertEvent(result: AppointmentListResponse): AppointmentList {
+    return {
+      userId: result.user_id,
+      events: result.events.map(event => {
+        const color = this.calculateColor(event, result.user_id);
+        return {
+          id: event.id,
+          title: event.title,
+          start: new Date(event.start_time),
+          end: new Date(event.end_time),
+          color: {
+            primary: color,
+            secondary: color
+          },
+          meta: {
+            initiator: event.initiator,
+            hidden: event.hidden
+          }
+        }
+      })
+    }
   }
 
   private calculateColor(appointment: AppointmentResponse, user_id: string): string {
-    const {attendees, initiator} = appointment;
+    const { attendees, initiator } = appointment;
 
     if (appointment.hidden) {
       return 'black';
@@ -146,33 +146,6 @@ export class AppointmentService {
     const initiatedByCurrentUser = user_id === initiator;
     const colors = this.eventColors[AppointmentStatus.PENDING];
     return initiatedByCurrentUser ? colors.initiatorColor : colors.color;
-  }
-
-  saveAppointment(appointment: Required<CreateAppointmentRequest>): Observable<CreateAppointmentRequest> {
-    const event: AppointmentRequest = {
-      title: appointment.title,
-      start_time: appointment.start.getTime(),
-      end_time: appointment.end.getTime(),
-      attendee_id: appointment.attendeeId,
-    }
-    return this.httpClient.post<CreateAppointmentRequest>(`${environment.apiGatewayUrl}/events`, event, {
-      withCredentials: true
-    });
-  }
-
-  updateAppointment(eventId: string, status: AppointmentStatus): Observable<CreateAppointmentRequest> {
-    return this.httpClient.post<CreateAppointmentRequest>(`${environment.apiGatewayUrl}/events/${eventId}/statuses`, {status}, {
-      withCredentials: true
-    });
-  }
-
-  createOneTimeAppointmentLink(): Observable<string> {
-    return this.httpClient.post<OneTimeLink>(`${environment.apiGatewayUrl}/events/one-time-link`, {}, {
-      withCredentials: true
-    })
-      .pipe(
-        map(result => (`${window.location.origin}/calendars/one-time-link/${result.id}`))
-      )
   }
 
 }

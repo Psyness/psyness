@@ -75,11 +75,18 @@ export class CalendarComponent implements OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((result: Required<CreateAppointmentRequest>) => {
-      if (result) {
-        this.appointmentService.saveAppointment(result).subscribe(
-          () => this.reloadEvents()
-        );
+      if (!result) {
+        return;
       }
+
+      if (this.calendarData.oneTimeLinkId) {
+        this.appointmentService.saveAppointmentByLink(result, this.calendarData.oneTimeLinkId)
+          .subscribe(() => this.reloadEvents());
+        return;
+      }
+
+      this.appointmentService.saveAppointment(result)
+        .subscribe(() => this.reloadEvents());
     });
   }
 

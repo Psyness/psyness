@@ -40,3 +40,7 @@ class AppointmentClient:
                       params={'start_time': start_time, 'end_time': end_time})
         content = json.loads(r.content)
         return ContractorEventListDto(events=content['events'], user_id=content['user_id'])
+
+    async def create_event_by_link(self, one_time_link_id, event: CreateEventDto):
+        r = httpx.post(f'{self._event_service_url}/one-time-link/{one_time_link_id}/events', content=event.json())
+        return EventDto.parse_raw(r.content)

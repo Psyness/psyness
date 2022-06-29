@@ -1,6 +1,7 @@
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 from sqlalchemy.sql import select
+from sqlalchemy import update
 
 from tables.one_time_link_table import one_time_link_table
 
@@ -27,3 +28,12 @@ class OneTimeLinkRepository:
                 .where(one_time_link_table.c.id == one_time_link_id)
             user = conn.execute(query)
             return user.first()
+
+    async def set_used_by_id(self, one_time_link_id):
+        with self._engine.connect() as conn:
+            query = update(one_time_link_table) \
+                .values(is_used=True) \
+                .where(one_time_link_table.c.id == one_time_link_id) \
+                .returning(one_time_link_table)
+            invitation = conn.execute(query)
+            return invitation.first()

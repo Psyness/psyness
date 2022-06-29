@@ -58,22 +58,3 @@ async def update_event_status(request: Request,
     current_user = request.session['user']
     return await appointment_client.update_event_status(current_user['id'], event_id, event_status_dto)
 
-
-@router.post("/events/one-time-link")
-@secure()
-@inject
-async def create_one_time_appointment_link(
-        request: Request,
-        appointment_client: AppointmentClient = Depends(Provide(Container.appointment_client))):
-    current_user = request.session['user']
-    return await appointment_client.create_one_time_appointment_link(current_user['id'])
-
-
-@router.get("/events/one-time-link/{one_time_link_id}")
-@inject
-async def create_one_time_appointment_link(
-        one_time_link_id: UUID,
-        start_time: int,
-        end_time: int,
-        appointment_client: AppointmentClient = Depends(Provide(Container.appointment_client))):
-    return await appointment_client.get_link_events(one_time_link_id, start_time, end_time)
