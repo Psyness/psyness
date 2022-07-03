@@ -14,6 +14,7 @@
     "NAV_ITEM_PSYCHOLOGISTS": "Психологи",
     "NAV_ITEM_CALENDAR": "Календарь",
     "NAV_ITEM_TASKS": "Задания",
+    "PROFILE": "Настройки",
     "LOGOUT": "Выйти"
   },
   "CALENDAR": {
@@ -50,5 +51,21 @@
   },
   "CLIENTS_AUTOCOMPLETE": {
     "CLIENT": "Клиент"
+  },
+  "PROFILES": {
+    "SCHEDULE": "Расписание",
+    "MONDAY": "Понедельник",
+    "TUESDAY": "Вторник",
+    "WEDNESDAY": "Среда",
+    "THURSDAY": "Четверг",
+    "FRIDAY": "Пятница",
+    "SATURDAY": "Суббота",
+    "SUNDAY": "Воскресенье",
+    "SAVE_SCHEDULE": "Сохранить расписание",
+    "DIALOG": {
+      "WORKING_TIME": "Рабочее время",
+      "START": "Начало",
+      "END": "Окончание"
+    }
   }
 }

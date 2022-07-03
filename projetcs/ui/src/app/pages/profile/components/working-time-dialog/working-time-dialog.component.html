@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{ 'PROFILES.DIALOG.WORKING_TIME' | translate }}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>{{ 'PROFILES.DIALOG.START' | translate }}</mat-label>
+    <input matInput
+           [ngxTimepicker]="startPicker"
+           [formControl]="startDateControl"
+           [format]="24">
+    <ngx-material-timepicker #startPicker [hoursOnly]="true" ></ngx-material-timepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ 'PROFILES.DIALOG.END' | translate }}</mat-label>
+    <input matInput
+           [ngxTimepicker]="endPicker"
+           [formControl]="endDateControl"
+           [format]="24">
+    <ngx-material-timepicker #endPicker [hoursOnly]="true"></ngx-material-timepicker>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="save()">{{ 'EVENTS.DIALOG.SAVE' | translate }}</button>
+  <button mat-button (click)="close()">{{ 'EVENTS.DIALOG.CLOSE' | translate }}</button>
+</div>

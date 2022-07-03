@@ -11,6 +11,7 @@ import {
 } from "../models/appointment";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
+import { UserSchedule, UserScheduleResponse } from "../models/schedule";
 
 @Injectable({
   providedIn: 'root'
@@ -101,6 +102,44 @@ export class AppointmentService {
       event,
       { withCredentials: true }
     );
+  }
+
+  saveSchedule(
+    schedule: UserSchedule
+  ): Observable<UserSchedule> {
+    const scheduleRequest = {
+      start_time: schedule.startTime,
+      type: schedule.type,
+      weeks: schedule.weeks.map(week => ({
+        monday: week.monday.map(daily => ({ start_time: daily.startTime, end_time: daily.endTime })),
+        tuesday: week.tuesday.map(daily => ({ start_time: daily.startTime, end_time: daily.endTime })),
+        wednesday: week.wednesday.map(daily => ({ start_time: daily.startTime, end_time: daily.endTime })),
+        thursday: week.thursday.map(daily => ({ start_time: daily.startTime, end_time: daily.endTime })),
+        friday: week.friday.map(daily => ({ start_time: daily.startTime, end_time: daily.endTime })),
+        saturday: week.saturday.map(daily => ({ start_time: daily.startTime, end_time: daily.endTime })),
+        sunday: week.sunday.map(daily => ({ start_time: daily.startTime, end_time: daily.endTime }))
+      }))
+    }
+    return this.httpClient.post<UserScheduleResponse>(
+      `${environment.apiGatewayUrl}/schedules`,
+      scheduleRequest,
+      { withCredentials: true }
+    )
+      .pipe(
+        map(response => ({
+          startTime: response.start_time,
+          type: response.type,
+          weeks: response.weeks.map(week => ({
+            monday: week.monday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            tuesday: week.tuesday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            wednesday: week.wednesday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            thursday: week.thursday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            friday: week.friday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            saturday: week.saturday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            sunday: week.sunday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time }))
+          }))
+        }))
+      )
   }
 
   private convertEvent(result: AppointmentListResponse): AppointmentList {

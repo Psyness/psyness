@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-title>
+    {{ 'PROFILES.SCHEDULE' | translate }}
+  </mat-card-title>
+  <mat-card-content>
+    <div *ngFor="let day of days">
+      <mat-chip-list aria-label="Fruit selection">
+        <div class="chip-label">
+          {{'PROFILES.' + day.toUpperCase() | translate }}:
+        </div>
+        <mat-chip
+          *ngFor="let time of $any(week)[day]"
+          (removed)="deleteTime($any(week)[day], time)">
+          {{time.startTime}} - {{time.endTime}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <button mat-icon-button (click)="openAddTimeDialog($any(week)[day])">
+          <mat-icon [color]="'primary'">add_circle</mat-icon>
+        </button>
+      </mat-chip-list>
+    </div>
+    <button mat-raised-button (click)="saveSchedule()">{{'PROFILES.SAVE_SCHEDULE' | translate}}</button>
+  </mat-card-content>
+</mat-card>

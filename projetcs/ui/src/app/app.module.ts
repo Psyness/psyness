@@ -47,6 +47,10 @@ import { ViewEventDialogComponent } from './components/view-event-dialog/view-ev
 import { PsychologistsComponent } from './pages/psychologists/psychologists.component';
 import { AllowedRolesDirective } from "./directives/allowed-roles.directive";
 import { OneTimeLinkComponent } from './pages/one-time-link/one-time-link.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { MatChipsModule } from "@angular/material/chips";
+import { WorkingTimeDialogComponent } from './pages/profile/components/working-time-dialog/working-time-dialog.component';
+import { NgxMaterialTimepickerModule } from "ngx-material-timepicker";
 
 @NgModule({
     declarations: [
@@ -65,7 +69,9 @@ import { OneTimeLinkComponent } from './pages/one-time-link/one-time-link.compon
         CalendarComponent,
         AllowedRolesDirective,
         AllowedRolesDirective,
-        OneTimeLinkComponent
+        OneTimeLinkComponent,
+        ProfileComponent,
+        WorkingTimeDialogComponent
     ],
   imports: [
     BrowserModule,
@@ -103,7 +109,9 @@ import { OneTimeLinkComponent } from './pages/one-time-link/one-time-link.compon
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatChipsModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [
     {

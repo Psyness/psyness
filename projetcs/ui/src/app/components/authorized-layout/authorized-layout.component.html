@@ -30,6 +30,9 @@
           <div *ngIf="user">
             <button mat-button [matMenuTriggerFor]="menu">{{user.firstName}} {{user.lastName}}</button>
             <mat-menu #menu="matMenu">
+              <a mat-menu-item routerLink="/profiles">
+                {{ 'LAYOUT.PROFILE' | translate }}
+              </a>
               <button mat-menu-item (click)="logout()">
                 {{ 'LAYOUT.LOGOUT' | translate }}
               </button>

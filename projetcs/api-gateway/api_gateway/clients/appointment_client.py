@@ -6,6 +6,7 @@ import httpx
 from configs.settings import Settings
 from dto.appointment_dto import \
     EventListDto, EventDto, CreateEventDto, UpdateEventStatusDto, ContractorEventListDto, OneTimeEventLink
+from dto.schedule_dto import UserSchedule
 
 
 class AppointmentClient:
@@ -41,6 +42,14 @@ class AppointmentClient:
         content = json.loads(r.content)
         return ContractorEventListDto(events=content['events'], user_id=content['user_id'])
 
-    async def create_event_by_link(self, one_time_link_id, event: CreateEventDto):
+    async def create_event_by_link(self, one_time_link_id, event: CreateEventDto) -> EventDto:
         r = httpx.post(f'{self._event_service_url}/one-time-link/{one_time_link_id}/events', content=event.json())
         return EventDto.parse_raw(r.content)
+
+    async def create_schedule(self, psychologist_id: UUID, schedule: UserSchedule) -> UserSchedule:
+        r = httpx.post(f'{self._event_service_url}/users/{psychologist_id}/schedules', content=schedule.json())
+        saved_schedule = json.loads(r.content)
+        return UserSchedule(type=saved_schedule.get('type'),
+                            psychologist_id=saved_schedule.get('psychologist_id'),
+                            weeks=[json.loads(week) for week in saved_schedule.get('schedule').get('weeks')],
+                            start_time=saved_schedule.get('start_time'))

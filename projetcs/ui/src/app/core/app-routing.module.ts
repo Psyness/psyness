@@ -8,6 +8,7 @@ import {TasksComponent} from "../pages/tasks/tasks.component";
 import {InvitationComponent} from "../pages/invitation/invitation.component";
 import {PsychologistsComponent} from "../pages/psychologists/psychologists.component";
 import {OneTimeLinkComponent} from "../pages/one-time-link/one-time-link.component";
+import { ProfileComponent } from "../pages/profile/profile.component";
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent
+      },
+      {
+        path: 'profiles',
+        component: ProfileComponent
       },
       {
         path: 'clients',
