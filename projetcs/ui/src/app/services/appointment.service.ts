@@ -104,6 +104,28 @@ export class AppointmentService {
     );
   }
 
+  getSchedule(): Observable<UserSchedule> {
+    return this.httpClient.get<UserScheduleResponse>(
+      `${environment.apiGatewayUrl}/schedules`,
+      { withCredentials: true }
+    )
+      .pipe(
+        map(response => ({
+          startTime: response.start_time,
+          type: response.type,
+          weeks: response.weeks.map(week => ({
+            monday: week.monday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            tuesday: week.tuesday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            wednesday: week.wednesday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            thursday: week.thursday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            friday: week.friday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            saturday: week.saturday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time })),
+            sunday: week.sunday.map(daily => ({ startTime: daily.start_time, endTime: daily.end_time }))
+          }))
+        }))
+      )
+  }
+
   saveSchedule(
     schedule: UserSchedule
   ): Observable<UserSchedule> {

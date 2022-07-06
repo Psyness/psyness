@@ -9,6 +9,14 @@ from services.shcedule_service import ScheduleService
 
 router = APIRouter()
 
+@router.get("/users/{psychologist_id}/schedules")
+@inject
+async def get_schedule(
+        psychologist_id: UUID,
+        schedule_service: ScheduleService = Depends(Provide[Container.schedule_service])
+):
+    return await schedule_service.get(psychologist_id)
+
 
 @router.post("/users/{psychologist_id}/schedules")
 @inject

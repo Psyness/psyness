@@ -10,12 +10,24 @@ from dto.schedule_dto import UserSchedule
 router = APIRouter()
 
 
+@router.get("/schedules")
+@secure()
+@inject
+async def get_schedule(
+        request: Request,
+        appointment_client: AppointmentClient = Depends(Provide(Container.appointment_client))
+):
+    current_user = request.session['user']
+    schedule = await appointment_client.get_schedule(current_user['id'])
+    return schedule
+
+
 @router.post("/schedules")
 @secure()
 @inject
 async def create_schedule(request: Request,
-                      schedule: UserSchedule,
-                      appointment_client: AppointmentClient = Depends(Provide(Container.appointment_client))):
+                          schedule: UserSchedule,
+                          appointment_client: AppointmentClient = Depends(Provide(Container.appointment_client))):
     current_user = request.session['user']
     saved_schedule = await appointment_client.create_schedule(current_user['id'], schedule)
     return saved_schedule

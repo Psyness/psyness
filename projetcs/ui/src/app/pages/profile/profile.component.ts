@@ -23,6 +23,8 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.appointmentService.getSchedule()
+      .subscribe(result => this.week = result.weeks[0]);
   }
 
   public deleteTime(times: Array<WorkingTime>, time: WorkingTime) {

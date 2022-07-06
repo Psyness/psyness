@@ -11,3 +11,6 @@ class ScheduleService:
 
     async def create(self, psychologist_id: UUID, schedule: CreateUserSchedule) -> UserSchedule:
         return await self._schedule_repository.save(psychologist_id, schedule)
+
+    async def get(self, psychologist_id: UUID) -> UserSchedule:
+        return await self._schedule_repository.get(psychologist_id)
